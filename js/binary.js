@@ -27599,6 +27599,7 @@ var isEuCountry = __webpack_require__(/*! ../../common/country_base */ "./src/ja
 var Guide = __webpack_require__(/*! ../../common/guide */ "./src/javascript/app/common/guide.js");
 var TopUpVirtualPopup = __webpack_require__(/*! ../../pages/user/account/top_up_virtual/pop_up */ "./src/javascript/app/pages/user/account/top_up_virtual/pop_up.js");
 var State = __webpack_require__(/*! ../../../_common/storage */ "./src/javascript/_common/storage.js").State;
+var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 
 var TradePage = function () {
     var events_initialized = 0;
@@ -27669,8 +27670,8 @@ var TradePage = function () {
     var displayBanner = function displayBanner() {
         BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
             if (!isEuCountry()) {
-                var $binary_grid_banner = $('#binary_grid_banner');
-                $binary_grid_banner.setVisibility(true);
+                var el_binary_grid_banner = getElementById('binary_grid_banner');
+                el_binary_grid_banner.setVisibility(1);
             }
         });
     };

@@ -2281,6 +2281,8 @@ a.previous-wrapper {
           display: -webkit-box !important;
           display: -ms-flexbox !important;
           display: flex !important; } }
+  #binary_grid_banner .button {
+    margin-bottom: 0; }
 
 .api_token fieldset {
   margin: 20px 0; }
