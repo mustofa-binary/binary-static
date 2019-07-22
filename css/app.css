@@ -2267,12 +2267,14 @@ a.previous-wrapper {
     left: -1px;
     top: -1px;
     margin-bottom: -1px;
-    position: relative; }
+    position: relative;
+    max-height: 90px; }
     @media (max-width: 480px) {
       #binary_grid_banner .banner-image {
         visibility: hidden;
         display: none; }
         #binary_grid_banner .banner-image-m {
+          max-height: 160px;
           position: relative;
           top: -1px;
           left: -0.5px;
@@ -2281,6 +2283,9 @@ a.previous-wrapper {
           display: -webkit-box !important;
           display: -ms-flexbox !important;
           display: flex !important; } }
+    @media (max-width: 768px) {
+      #binary_grid_banner .banner-image {
+        max-height: 110px; } }
   #binary_grid_banner .button {
     margin-bottom: 0; }
 
