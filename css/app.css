@@ -2283,9 +2283,6 @@ a.previous-wrapper {
           display: flex !important;
           max-height: 90px;
           max-width: 93px; } }
-    @media (max-width: 768px) {
-      #binary_grid_banner .banner-image {
-        max-height: 110px; } }
   @media (max-width: 480px) {
     #binary_grid_banner .banner-text {
       visibility: hidden;
