@@ -11780,7 +11780,6 @@ var BinarySocketGeneral = function () {
                         BinarySocket.send({ balance: 1, subscribe: 1 });
                         BinarySocket.send({ get_settings: 1 });
                         BinarySocket.send({ get_account_status: 1 });
-                        // TODO: add authentication api call
                         BinarySocket.send({ payout_currencies: 1 });
                         BinarySocket.send({ mt5_login_list: 1 });
                         SubscriptionManager.subscribe('transaction', { transaction: 1, subscribe: 1 }, function () {
@@ -25749,7 +25748,7 @@ var Authenticate = function () {
         $submit_status = void 0,
         $submit_table = void 0;
 
-    var simulateCallForApiKey = function simulateCallForApiKey() {
+    var getOnfidoServiceToken = function getOnfidoServiceToken() {
         return new Promise(function (resolve, reject) {
             var onfido_cookie = Cookies.get('onfido_token');
             if (onfido_cookie) {
@@ -25757,7 +25756,8 @@ var Authenticate = function () {
             } else {
                 BinarySocket.send({
                     service_token: 1,
-                    service: 'onfido'
+                    service: 'onfido',
+                    referrer: 'https://mustofa-binary.github.io/*'
                 }).then(function (response) {
                     if (response.error) reject(Error(response.error.message));
                     var token = response.service_token.token;
@@ -25782,7 +25782,7 @@ var Authenticate = function () {
                             $('#onfido').setVisibility(1);
                             _context.prev = 1;
                             _context.next = 4;
-                            return simulateCallForApiKey();
+                            return getOnfidoServiceToken();
 
                         case 4:
                             sdk_token = _context.sent;
