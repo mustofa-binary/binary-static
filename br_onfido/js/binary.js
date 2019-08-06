@@ -25756,8 +25756,7 @@ var Authenticate = function () {
             } else {
                 BinarySocket.send({
                     service_token: 1,
-                    service: 'onfido',
-                    referrer: 'https://mustofa-binary.github.io/*'
+                    service: 'onfido'
                 }).then(function (response) {
                     if (response.error) reject(Error(response.error.message));
                     var token = response.service_token.token;
