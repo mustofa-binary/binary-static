@@ -25832,7 +25832,9 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete() {
+    var handleComplete = function handleComplete(data) {
+        // eslint-disable-next-line no-console
+        console.log(data);
         onfido.tearDown();
         $('#upload_complete').setVisibility(1);
     };
