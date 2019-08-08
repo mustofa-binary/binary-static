@@ -25835,8 +25835,10 @@ var Authenticate = function () {
     }();
 
     var handleComplete = function handleComplete() {
-        onfido.tearDown();
-        $('#upload_complete').setVisibility(1);
+        BinarySocket.send({ reset_password: 1, loginid: Client.get('loginid') }).then(function () {
+            onfido.tearDown();
+            $('#upload_complete').setVisibility(1);
+        });
     };
 
     var init = function init() {
