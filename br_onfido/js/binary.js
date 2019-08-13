@@ -26277,34 +26277,38 @@ var Authenticate = function () {
                         case 6:
                             identity = authentication_status.identity, document = authentication_status.document;
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 10 : _context2.t0 === 'pending' ? 12 : _context2.t0 === 'rejected' ? 14 : _context2.t0 === 'verified' ? 16 : 18;
+                            _context2.next = _context2.t0 === 'none' ? 10 : _context2.t0 === 'pending' ? 12 : _context2.t0 === 'rejected' ? 14 : _context2.t0 === 'verified' ? 16 : _context2.t0 === 'suspected' ? 18 : 20;
                             break;
 
                         case 10:
                             initOnfido();
-                            return _context2.abrupt('break', 19);
+                            return _context2.abrupt('break', 21);
 
                         case 12:
                             $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 19);
+                            return _context2.abrupt('break', 21);
 
                         case 14:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 19);
+                            return _context2.abrupt('break', 21);
 
                         case 16:
                             $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 19);
+                            return _context2.abrupt('break', 21);
 
                         case 18:
-                            return _context2.abrupt('break', 19);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 21);
 
-                        case 19:
+                        case 20:
+                            return _context2.abrupt('break', 21);
+
+                        case 21:
                             _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 22 : _context2.t1 === 'pending' ? 33 : _context2.t1 === 'rejected' ? 35 : _context2.t1 === 'verified' ? 37 : 39;
+                            _context2.next = _context2.t1 === 'none' ? 24 : _context2.t1 === 'pending' ? 35 : _context2.t1 === 'rejected' ? 37 : _context2.t1 === 'verified' ? 39 : 41;
                             break;
 
-                        case 22:
+                        case 24:
                             init();
                             $('#not_authenticated').setVisibility(1);
                             language = getLanguage();
@@ -26326,27 +26330,27 @@ var Authenticate = function () {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 40);
-
-                        case 33:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                            return _context2.abrupt('break', 42);
 
                         case 35:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 42);
 
                         case 37:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 42);
 
                         case 39:
-                            return _context2.abrupt('break', 40);
-
-                        case 40:
-                            $('#authentication_loading').setVisibility(0);
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 42);
 
                         case 41:
+                            return _context2.abrupt('break', 42);
+
+                        case 42:
+                            $('#authentication_loading').setVisibility(0);
+
+                        case 43:
                         case 'end':
                             return _context2.stop();
                     }
