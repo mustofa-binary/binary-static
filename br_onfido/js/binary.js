@@ -26276,39 +26276,52 @@ var Authenticate = function () {
 
                         case 6:
                             identity = authentication_status.identity, document = authentication_status.document;
+
+                            if (identity.further_resubmissions_allowed) {
+                                _context2.next = 24;
+                                break;
+                            }
+
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 10 : _context2.t0 === 'pending' ? 12 : _context2.t0 === 'rejected' ? 14 : _context2.t0 === 'verified' ? 16 : _context2.t0 === 'suspected' ? 18 : 20;
+                            _context2.next = _context2.t0 === 'none' ? 11 : _context2.t0 === 'pending' ? 13 : _context2.t0 === 'rejected' ? 15 : _context2.t0 === 'verified' ? 17 : _context2.t0 === 'suspected' ? 19 : 21;
                             break;
 
-                        case 10:
+                        case 11:
                             initOnfido();
-                            return _context2.abrupt('break', 21);
+                            return _context2.abrupt('break', 22);
 
-                        case 12:
+                        case 13:
                             $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 21);
+                            return _context2.abrupt('break', 22);
 
-                        case 14:
+                        case 15:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 21);
+                            return _context2.abrupt('break', 22);
 
-                        case 16:
+                        case 17:
                             $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 21);
+                            return _context2.abrupt('break', 22);
 
-                        case 18:
+                        case 19:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 21);
-
-                        case 20:
-                            return _context2.abrupt('break', 21);
+                            return _context2.abrupt('break', 22);
 
                         case 21:
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 24 : _context2.t1 === 'pending' ? 35 : _context2.t1 === 'rejected' ? 37 : _context2.t1 === 'verified' ? 39 : 41;
+                            return _context2.abrupt('break', 22);
+
+                        case 22:
+                            _context2.next = 25;
                             break;
 
                         case 24:
+                            initOnfido();
+
+                        case 25:
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 28 : _context2.t1 === 'pending' ? 39 : _context2.t1 === 'rejected' ? 41 : _context2.t1 === 'suspected' ? 43 : _context2.t1 === 'verified' ? 45 : 47;
+                            break;
+
+                        case 28:
                             init();
                             $('#not_authenticated').setVisibility(1);
                             language = getLanguage();
@@ -26330,27 +26343,31 @@ var Authenticate = function () {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 42);
-
-                        case 35:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 42);
-
-                        case 37:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 42);
+                            return _context2.abrupt('break', 48);
 
                         case 39:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 42);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 48);
 
                         case 41:
-                            return _context2.abrupt('break', 42);
-
-                        case 42:
-                            $('#authentication_loading').setVisibility(0);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 48);
 
                         case 43:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 48);
+
+                        case 45:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 48);
+
+                        case 47:
+                            return _context2.abrupt('break', 48);
+
+                        case 48:
+                            $('#authentication_loading').setVisibility(0);
+
+                        case 49:
                         case 'end':
                             return _context2.stop();
                     }
