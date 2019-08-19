@@ -25848,10 +25848,12 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete(response) {
-        // eslint-disable-next-line
-        console.log(response);
-        BinarySocket.send({ reset_password: 1, loginid: Client.get('loginid') }).then(function () {
+    var handleComplete = function handleComplete() {
+        BinarySocket.send({
+            notification_event: 1,
+            category: 'authentication',
+            event: 'poi_documents_uploaded'
+        }).then(function () {
             onfido.tearDown();
             $('#upload_complete').setVisibility(1);
         });
