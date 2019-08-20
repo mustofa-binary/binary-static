@@ -11073,9 +11073,6 @@ var Header = function () {
                 document: function document() {
                     return hasVerification('document');
                 },
-                document_needs_action: function document_needs_action() {
-                    return hasStatus('document_needs_action');
-                },
                 unauthenticated: function unauthenticated() {
                     return hasVerification('unauthenticated');
                 },
@@ -11118,7 +11115,7 @@ var Header = function () {
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'document_needs_action', 'authenticate', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'authenticate', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
