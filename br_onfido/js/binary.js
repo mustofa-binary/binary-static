@@ -10992,10 +10992,12 @@ var Header = function () {
             };
             var hasVerification = function hasVerification(string) {
                 var verification_length = needs_verification.length;
+
                 if (string === 'unauthenticated') {
                     return verification_length === 2;
+                } else if (verification_length === 2) {
+                    return false;
                 }
-                if (verification_length === 2) return false;
 
                 return needs_verification.findIndex(function (s) {
                     return s === string;
@@ -11141,7 +11143,7 @@ var Header = function () {
             } else {
                 var el_account_status = createElement('span', { class: 'authenticated', 'data-balloon': localize('Account Authenticated'), 'data-balloon-pos': 'down' });
                 BinarySocket.wait('website_status', 'get_account_status', 'get_settings', 'balance').then(function () {
-                    needs_verification = State.getResponse('get_account_status.authentication.needs_verification') || {};
+                    needs_verification = State.getResponse('get_account_status.authentication.needs_verification') || [];
                     get_account_status = State.getResponse('get_account_status') || {};
                     status = get_account_status.status;
                     checkStatus(check_statuses_real);
@@ -26317,7 +26319,12 @@ var Authenticate = function () {
                             return _context2.abrupt('break', 22);
 
                         case 17:
-                            $('#verified').setVisibility(1);
+                            if (document.status === 'verified') {
+                                $('#authentication_verified').setVisibility(1);
+                                $('#authentication_tab').setVisibility(0);
+                            } else {
+                                $('#verified').setVisibility(1);
+                            }
                             return _context2.abrupt('break', 22);
 
                         case 19:
