@@ -11007,9 +11007,6 @@ var Header = function () {
             var has_no_tnc_limit = is_svg;
 
             var messages = {
-                authenticate: function authenticate() {
-                    return buildMessage(localizeKeepPlaceholders('[_1]Authenticate your account[_2] now to take full advantage of all payment methods available.'), 'user/authenticate');
-                },
                 cashier_locked: function cashier_locked() {
                     return localize('Deposits and withdrawals have been disabled on your account. Please check your email for more details.');
                 },
@@ -11061,9 +11058,6 @@ var Header = function () {
             };
 
             var validations = {
-                authenticate: function authenticate() {
-                    return +get_account_status.prompt_client_to_authenticate && !hasStatus('document_under_review');
-                },
                 cashier_locked: function cashier_locked() {
                     return hasStatus('cashier_locked');
                 },
@@ -11115,7 +11109,7 @@ var Header = function () {
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'authenticate', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
