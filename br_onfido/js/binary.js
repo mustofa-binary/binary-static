@@ -25852,12 +25852,11 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete(response) {
+    var handleComplete = function handleComplete() {
         BinarySocket.send({
             notification_event: 1,
             category: 'authentication',
-            event: 'poi_documents_uploaded',
-            parameters: response
+            event: 'poi_documents_uploaded'
         }).then(function () {
             onfido.tearDown();
             $('#upload_complete').setVisibility(1);
