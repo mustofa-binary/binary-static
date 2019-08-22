@@ -9782,7 +9782,7 @@ var BinaryLoader = function () {
                 });
             }
         } else if (config.not_authenticated && Client.isLoggedIn()) {
-            if (this_page === 'home') {
+            if (this_page === 'home' || this_page === 'new-account') {
                 BinaryPjax.load('' + Client.defaultRedirectUrl() + window.location.search, true);
             } else {
                 handleNotAuthenticated();
@@ -15079,6 +15079,7 @@ var AccountTransfer = function () {
         if (/iom|malta/.test(Client.get('landing_company_shortcode'))) {
             el_transfer_fee.setVisibility(0);
         }
+        setLoadingVisibility(0);
     };
 
     var setTransferFeeAmount = function setTransferFeeAmount() {
@@ -15099,8 +15100,14 @@ var AccountTransfer = function () {
     };
 
     var showError = function showError() {
+        setLoadingVisibility(0);
         getElementById(messages.parent).setVisibility(1);
         getElementById(messages.error).setVisibility(1);
+    };
+
+    var setLoadingVisibility = function setLoadingVisibility(is_loading_visible) {
+        getElementById('loading').setVisibility(is_loading_visible);
+        getElementById('transfer_between_accounts').setVisibility(!is_loading_visible);
     };
 
     var showForm = function showForm() {
@@ -15114,8 +15121,7 @@ var AccountTransfer = function () {
 
         FormManager.handleSubmit({
             form_selector: form_id_hash,
-            fnc_response_handler: responseHandler,
-            enable_button: true
+            fnc_response_handler: responseHandler
         });
     };
 
@@ -15130,7 +15136,11 @@ var AccountTransfer = function () {
             }, 5000);
         } else {
             BinarySocket.send({ transfer_between_accounts: 1 }).then(function (data) {
-                return populateReceipt(response, data);
+                populateReceipt(response, data);
+                // manually enable the button instead of inside form manager since the API response is slow
+                var el_button_submit = getElementById('btn_submit');
+                el_button_submit.removeAttribute('disabled');
+                el_button_submit.html(el_button_submit.getElementsByTagName('span')[0].textContent);
             });
         }
     };
@@ -15165,6 +15175,7 @@ var AccountTransfer = function () {
             return;
         }
 
+        setLoadingVisibility(1);
         el_transfer_fee = getElementById('transfer_fee');
         el_fee_amount = getElementById('transfer_fee_amount');
         el_fee_minimum = getElementById('transfer_fee_minimum');
@@ -15177,6 +15188,7 @@ var AccountTransfer = function () {
             client_currency = Client.get('currency');
             var min_amount = Currency.getTransferLimits(client_currency, 'min');
             if (!client_balance || client_balance < +min_amount) {
+                setLoadingVisibility(0);
                 getElementById(messages.parent).setVisibility(1);
                 if (client_currency) {
                     elementTextContent(getElementById('min_required_amount'), client_currency + ' ' + min_amount);
@@ -25747,7 +25759,6 @@ var toTitleCase = __webpack_require__(/*! ../../../../_common/string_util */ "./
 var TabSelector = __webpack_require__(/*! ../../../../_common/tab_selector */ "./src/javascript/_common/tab_selector.js");
 var Url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
-var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
 
 var Authenticate = function () {
     var is_any_upload_failed = false;
@@ -26257,8 +26268,9 @@ var Authenticate = function () {
 
     var getAuthenticationStatus = function getAuthenticationStatus() {
         return new Promise(function (resolve) {
-            BinarySocket.wait('get_account_status').then(function () {
-                var authentication_response = State.getResponse('get_account_status.authentication');
+            // check update account status
+            BinarySocket.send({ get_account_status: 1 }).then(function (response) {
+                var authentication_response = response.get_account_status.authentication;
                 resolve(authentication_response);
             });
         });
@@ -31209,20 +31221,6 @@ var MetaTraderConfig = function () {
                         resolve();
                     }
                 });
-            },
-            pre_submit: function pre_submit($form, acc_type, displayFormMessage) {
-                return BinarySocket.send({
-                    mt5_password_check: 1,
-                    login: accounts_info[acc_type].info.login,
-                    password: $form.find(fields.withdrawal.txt_main_pass.id).val()
-                }).then(function (response) {
-                    if (+response.mt5_password_check === 1) {
-                        return true;
-                    } else if (response.error) {
-                        displayFormMessage(response.error.message, 'withdrawal');
-                    }
-                    return false;
-                });
             }
         }
     };
@@ -31313,7 +31311,6 @@ var MetaTraderConfig = function () {
         },
         withdrawal: {
             txt_amount: { id: '#txt_amount_withdrawal', request_field: 'amount' },
-            txt_main_pass: { id: '#txt_main_pass_wd' },
             additional_fields: function additional_fields(acc_type) {
                 return {
                     from_mt5: accounts_info[acc_type].info.login,
@@ -31337,7 +31334,7 @@ var MetaTraderConfig = function () {
                     }, decimals: Currency.getDecimalPlaces(Client.get('currency')) }], ['custom', { func: function func() {
                         return Client.get('balance') && +Client.get('balance') >= +$(fields.deposit.txt_amount.id).val();
                     }, message: localize('You have insufficient funds in your Binary account, please <a href="[_1]">add funds</a>.', urlFor('cashier')) }]] }],
-            withdrawal: [{ selector: fields.withdrawal.txt_main_pass.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.withdrawal.txt_amount.id, validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', min: function min() {
+            withdrawal: [{ selector: fields.withdrawal.txt_amount.id, validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', min: function min() {
                         return getMinMT5TransferValue(getCurrency(Client.get('mt5_account')));
                     }, max: function max() {
                         return getMaxMT5TransferValue(getCurrency(Client.get('mt5_account')));
