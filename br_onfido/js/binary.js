@@ -25852,11 +25852,24 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete() {
+    var handleComplete = function handleComplete(response) {
+        var document_front = response.document_front,
+            document_back = response.document_back,
+            face = response.face;
+
+        var document_ids = [];
+        var face_id = face.id;
+
+        if (document_front) document_ids.push(document_front.id);
+        if (document_back) document_ids.push(document_back.id);
         BinarySocket.send({
             notification_event: 1,
             category: 'authentication',
-            event: 'poi_documents_uploaded'
+            event: 'poi_documents_uploaded',
+            parameters: {
+                poi_document_id: document_ids,
+                poi_photo_photo: face_id
+            }
         }).then(function () {
             onfido.tearDown();
             $('#upload_complete').setVisibility(1);
