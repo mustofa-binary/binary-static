@@ -11111,7 +11111,7 @@ var Header = function () {
             // real account checks in order
             var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
 
-            var check_statuses_mf = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail', 'identity', 'document', 'unauthenticated', 'unwelcome'];
+            var check_statuses_mf = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'identity', 'document', 'unauthenticated', 'unwelcome', 'mf_retail'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
