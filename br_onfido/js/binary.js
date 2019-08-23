@@ -26374,7 +26374,7 @@ var Authenticate = function () {
                                 break;
                             }
 
-                            $('#poi').removeClass('invisible');
+                            $('#poa').removeClass('invisible');
 
                             _context2.t1 = document.status;
                             _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 45 : _context2.t1 === 'rejected' ? 47 : _context2.t1 === 'suspected' ? 49 : _context2.t1 === 'verified' ? 51 : 53;
