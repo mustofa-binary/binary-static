@@ -11115,13 +11115,26 @@ var Header = function () {
             var check_statuses_virtual = ['residence'];
 
             var checkStatus = function checkStatus(check_statuses) {
+                var mf_message = '';
                 var notified = check_statuses.some(function (check_type) {
+                    var notification_message = '';
                     if (validations[check_type]()) {
                         // show MF retail message on Trading pages only
                         if (check_type === 'mf_retail' && !State.get('is_trading')) {
                             return false;
                         }
-                        displayNotification(messages[check_type](), false, check_type === 'mf_retail' ? 'MF_RETAIL_MESSAGE' : '');
+                        notification_message = messages[check_type]();
+                        if (Client.get('landing_company_shortcode') === 'maltainvest') {
+                            var authentication_type = ['identity', 'document', 'unauthenticated'];
+
+                            if (authentication_type.includes(check_type)) {
+                                mf_message = messages[check_type]();
+                            }
+                            if (mf_message && check_type === 'unwelcome') {
+                                notification_message = mf_message;
+                            }
+                        }
+                        displayNotification(notification_message, false, check_type === 'mf_retail' ? 'MF_RETAIL_MESSAGE' : '');
                         return true;
                     }
                     return false;
@@ -25853,24 +25866,11 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete(response) {
-        var document_front = response.document_front,
-            document_back = response.document_back,
-            face = response.face;
-
-        var document_ids = [];
-        var face_id = face.id;
-
-        if (document_front) document_ids.push(document_front.id);
-        if (document_back) document_ids.push(document_back.id);
+    var handleComplete = function handleComplete() {
         BinarySocket.send({
             notification_event: 1,
             category: 'authentication',
-            event: 'poi_documents_uploaded',
-            parameters: {
-                poi_document_id: document_ids,
-                poi_photo_photo: face_id
-            }
+            event: 'poi_documents_uploaded'
         }).then(function () {
             onfido.tearDown();
             $('#upload_complete').setVisibility(1);
@@ -26321,7 +26321,7 @@ var Authenticate = function () {
 
                             if (needs_verification.length === 2) {
                                 $('#poi').removeClass('invisible');
-                                $('#poi').removeClass('invisible');
+                                $('#poa').removeClass('invisible');
                             }
 
                             if (!needs_verification.includes('identity')) {
