@@ -26308,7 +26308,7 @@ var Authenticate = function () {
 
                             if (needs_verification.length === 2) {
                                 $('#poi').removeClass('invisible');
-                                $('#poi').removeClass('invisible');
+                                $('#poa').removeClass('invisible');
                             }
 
                             if (!needs_verification.includes('identity')) {
