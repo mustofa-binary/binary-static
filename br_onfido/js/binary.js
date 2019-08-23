@@ -25747,6 +25747,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var DocumentUploader = __webpack_require__(/*! @binary-com/binary-document-uploader */ "./node_modules/@binary-com/binary-document-uploader/DocumentUploader.js");
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var Onfido = __webpack_require__(/*! onfido-sdk-ui */ "./node_modules/onfido-sdk-ui/lib/index.js");
+var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
@@ -25852,24 +25853,11 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete(response) {
-        var document_front = response.document_front,
-            document_back = response.document_back,
-            face = response.face;
-
-        var document_ids = [];
-        var face_id = face.id;
-
-        if (document_front) document_ids.push(document_front.id);
-        if (document_back) document_ids.push(document_back.id);
+    var handleComplete = function handleComplete() {
         BinarySocket.send({
             notification_event: 1,
             category: 'authentication',
-            event: 'poi_documents_uploaded',
-            parameters: {
-                poi_document_id: document_ids,
-                poi_photo_photo: face_id
-            }
+            event: 'poi_documents_uploaded'
         }).then(function () {
             onfido.tearDown();
             $('#upload_complete').setVisibility(1);
@@ -26291,7 +26279,7 @@ var Authenticate = function () {
 
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, identity, document, language, language_based_link, $not_authenticated, link;
+            var authentication_status, identity, document, needs_verification, language, language_based_link, $not_authenticated, link;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26311,58 +26299,82 @@ var Authenticate = function () {
                             return _context2.abrupt('return');
 
                         case 6:
-                            identity = authentication_status.identity, document = authentication_status.document;
+                            identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
+
+
+                            if (!needs_verification.length) {
+                                BinaryPjax.load(Url.urlFor('user/settingsws'));
+                            }
+
+                            if (needs_verification.length === 2) {
+                                $('#poi').removeClass('invisible');
+                                $('#poi').removeClass('invisible');
+                            }
+
+                            if (!needs_verification.includes('identity')) {
+                                _context2.next = 29;
+                                break;
+                            }
+
+                            $('#poi').removeClass('invisible');
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 24;
+                                _context2.next = 28;
                                 break;
                             }
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 11 : _context2.t0 === 'pending' ? 13 : _context2.t0 === 'rejected' ? 15 : _context2.t0 === 'verified' ? 17 : _context2.t0 === 'suspected' ? 19 : 21;
+                            _context2.next = _context2.t0 === 'none' ? 15 : _context2.t0 === 'pending' ? 17 : _context2.t0 === 'rejected' ? 19 : _context2.t0 === 'verified' ? 21 : _context2.t0 === 'suspected' ? 23 : 25;
                             break;
 
-                        case 11:
-                            initOnfido();
-                            return _context2.abrupt('break', 22);
-
-                        case 13:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 22);
-
                         case 15:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 22);
+                            initOnfido();
+                            return _context2.abrupt('break', 26);
 
                         case 17:
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 26);
+
+                        case 19:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 26);
+
+                        case 21:
                             if (document.status === 'verified') {
                                 $('#authentication_verified').setVisibility(1);
                                 $('#authentication_tab').setVisibility(0);
                             } else {
                                 $('#verified').setVisibility(1);
                             }
-                            return _context2.abrupt('break', 22);
+                            return _context2.abrupt('break', 26);
 
-                        case 19:
+                        case 23:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 22);
-
-                        case 21:
-                            return _context2.abrupt('break', 22);
-
-                        case 22:
-                            _context2.next = 25;
-                            break;
-
-                        case 24:
-                            initOnfido();
+                            return _context2.abrupt('break', 26);
 
                         case 25:
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 28 : _context2.t1 === 'pending' ? 39 : _context2.t1 === 'rejected' ? 41 : _context2.t1 === 'suspected' ? 43 : _context2.t1 === 'verified' ? 45 : 47;
+                            return _context2.abrupt('break', 26);
+
+                        case 26:
+                            _context2.next = 29;
                             break;
 
                         case 28:
+                            initOnfido();
+
+                        case 29:
+                            if (!needs_verification.includes('document')) {
+                                _context2.next = 54;
+                                break;
+                            }
+
+                            $('#poi').removeClass('invisible');
+
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 45 : _context2.t1 === 'rejected' ? 47 : _context2.t1 === 'suspected' ? 49 : _context2.t1 === 'verified' ? 51 : 53;
+                            break;
+
+                        case 34:
                             init();
                             $('#not_authenticated').setVisibility(1);
                             language = getLanguage();
@@ -26384,31 +26396,31 @@ var Authenticate = function () {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 48);
-
-                        case 39:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 48);
-
-                        case 41:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 48);
-
-                        case 43:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 48);
+                            return _context2.abrupt('break', 54);
 
                         case 45:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 48);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
 
                         case 47:
-                            return _context2.abrupt('break', 48);
-
-                        case 48:
-                            $('#authentication_loading').setVisibility(0);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
 
                         case 49:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
+
+                        case 51:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
+
+                        case 53:
+                            return _context2.abrupt('break', 54);
+
+                        case 54:
+                            $('#authentication_loading').setVisibility(0);
+
+                        case 55:
                         case 'end':
                             return _context2.stop();
                     }
@@ -27417,8 +27429,15 @@ var Settings = function () {
             $('.real').setVisibility(!Client.get('is_virtual'));
 
             var status = State.getResponse('get_account_status.status') || [];
+            var authentication = State.getResponse('get_account_status.authentication') || {};
             if (!/social_signup/.test(status)) {
                 $('#change_password').setVisibility(1);
+            }
+
+            if (authentication.identity.status === 'verified' && authentication.document.status === 'verified') {
+                $('#authenticate').setVisibility(1);
+            } else if (!authentication.needs_verification.length) {
+                $('#authenticate').setVisibility(0);
             }
 
             // Professional Client menu should only be shown to maltainvest accounts.
