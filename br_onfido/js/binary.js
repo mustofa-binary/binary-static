@@ -26308,7 +26308,7 @@ var Authenticate = function () {
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
-                            if (!needs_verification.length) {
+                            if (!(identity.status === 'verified' && document.status === 'verified' && needs_verification.length)) {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
