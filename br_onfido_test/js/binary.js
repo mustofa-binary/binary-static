@@ -25747,6 +25747,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var DocumentUploader = __webpack_require__(/*! @binary-com/binary-document-uploader */ "./node_modules/@binary-com/binary-document-uploader/DocumentUploader.js");
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var Onfido = __webpack_require__(/*! onfido-sdk-ui */ "./node_modules/onfido-sdk-ui/lib/index.js");
+var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
@@ -26313,70 +26314,80 @@ var Authenticate = function () {
                         case 6:
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
+
+                            if (!needs_verification.length) {
+                                BinaryPjax.load(Url.urlFor('user/settingsws'));
+                            }
+
+                            if (needs_verification.length === 2) {
+                                $('#poi').removeClass('invisible');
+                                $('#poi').removeClass('invisible');
+                            }
+
                             if (!needs_verification.includes('identity')) {
-                                _context2.next = 27;
+                                _context2.next = 29;
                                 break;
                             }
 
                             $('#poi').removeClass('invisible');
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 26;
+                                _context2.next = 28;
                                 break;
                             }
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 13 : _context2.t0 === 'pending' ? 15 : _context2.t0 === 'rejected' ? 17 : _context2.t0 === 'verified' ? 19 : _context2.t0 === 'suspected' ? 21 : 23;
+                            _context2.next = _context2.t0 === 'none' ? 15 : _context2.t0 === 'pending' ? 17 : _context2.t0 === 'rejected' ? 19 : _context2.t0 === 'verified' ? 21 : _context2.t0 === 'suspected' ? 23 : 25;
                             break;
 
-                        case 13:
-                            initOnfido();
-                            return _context2.abrupt('break', 24);
-
                         case 15:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 24);
+                            initOnfido();
+                            return _context2.abrupt('break', 26);
 
                         case 17:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 24);
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 26);
 
                         case 19:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 26);
+
+                        case 21:
                             if (document.status === 'verified') {
                                 $('#authentication_verified').setVisibility(1);
                                 $('#authentication_tab').setVisibility(0);
                             } else {
                                 $('#verified').setVisibility(1);
                             }
-                            return _context2.abrupt('break', 24);
-
-                        case 21:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 24);
+                            return _context2.abrupt('break', 26);
 
                         case 23:
-                            return _context2.abrupt('break', 24);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 26);
 
-                        case 24:
-                            _context2.next = 27;
-                            break;
+                        case 25:
+                            return _context2.abrupt('break', 26);
 
                         case 26:
+                            _context2.next = 29;
+                            break;
+
+                        case 28:
                             initOnfido();
 
-                        case 27:
+                        case 29:
                             if (!needs_verification.includes('document')) {
-                                _context2.next = 52;
+                                _context2.next = 54;
                                 break;
                             }
 
                             $('#poi').removeClass('invisible');
 
                             _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 32 : _context2.t1 === 'pending' ? 43 : _context2.t1 === 'rejected' ? 45 : _context2.t1 === 'suspected' ? 47 : _context2.t1 === 'verified' ? 49 : 51;
+                            _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 45 : _context2.t1 === 'rejected' ? 47 : _context2.t1 === 'suspected' ? 49 : _context2.t1 === 'verified' ? 51 : 53;
                             break;
 
-                        case 32:
+                        case 34:
                             init();
                             $('#not_authenticated').setVisibility(1);
                             language = getLanguage();
@@ -26398,31 +26409,31 @@ var Authenticate = function () {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 52);
-
-                        case 43:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 52);
+                            return _context2.abrupt('break', 54);
 
                         case 45:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 52);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
 
                         case 47:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 52);
+                            return _context2.abrupt('break', 54);
 
                         case 49:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 52);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
 
                         case 51:
-                            return _context2.abrupt('break', 52);
-
-                        case 52:
-                            $('#authentication_loading').setVisibility(0);
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 54);
 
                         case 53:
+                            return _context2.abrupt('break', 54);
+
+                        case 54:
+                            $('#authentication_loading').setVisibility(0);
+
+                        case 55:
                         case 'end':
                             return _context2.stop();
                     }
