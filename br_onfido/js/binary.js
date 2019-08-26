@@ -25785,14 +25785,15 @@ var Authenticate = function () {
                     service_token: 1,
                     service: 'onfido'
                 }).then(function (response) {
-                    if (response.error) reject(Error(response.error.message));
+                    console.log(response); // eslint-disable-line
+                    if (response.error || !response.service_token) reject(Error(response.error.message));
                     var token = response.service_token.token;
-                    resolve(token);
                     var in_90_minutes = 1 / 16;
                     Cookies.set('onfido_token', token, {
                         expires: in_90_minutes,
                         secure: true
                     });
+                    resolve(token);
                 });
             }
         });
@@ -26308,7 +26309,7 @@ var Authenticate = function () {
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
-                            if (!(identity.status === 'verified' && document.status === 'verified' && needs_verification.length)) {
+                            if (identity.status !== 'verified' && document.status !== 'verified' && !needs_verification.length) {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
