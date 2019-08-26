@@ -11111,30 +11111,19 @@ var Header = function () {
             // real account checks in order
             var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
 
+            var check_statuses_mf = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'identity', 'document', 'unauthenticated', 'unwelcome', 'mf_retail'];
+
             // virtual checks
             var check_statuses_virtual = ['residence'];
 
             var checkStatus = function checkStatus(check_statuses) {
-                var mf_message = '';
                 var notified = check_statuses.some(function (check_type) {
-                    var notification_message = '';
                     if (validations[check_type]()) {
                         // show MF retail message on Trading pages only
                         if (check_type === 'mf_retail' && !State.get('is_trading')) {
                             return false;
                         }
-                        notification_message = messages[check_type]();
-                        if (Client.get('landing_company_shortcode') === 'maltainvest') {
-                            var authentication_type = ['identity', 'document', 'unauthenticated'];
-
-                            if (authentication_type.includes(check_type)) {
-                                mf_message = messages[check_type]();
-                            }
-                            if (mf_message && check_type === 'unwelcome') {
-                                notification_message = mf_message;
-                            }
-                        }
-                        displayNotification(notification_message, false, check_type === 'mf_retail' ? 'MF_RETAIL_MESSAGE' : '');
+                        displayNotification(messages[check_type](), false, check_type === 'mf_retail' ? 'MF_RETAIL_MESSAGE' : '');
                         return true;
                     }
                     return false;
@@ -11150,7 +11139,11 @@ var Header = function () {
                     needs_verification = State.getResponse('get_account_status.authentication.needs_verification') || [];
                     get_account_status = State.getResponse('get_account_status') || {};
                     status = get_account_status.status;
-                    checkStatus(check_statuses_real);
+                    if (Client.get('landing_company_shortcode') === 'maltainvest') {
+                        checkStatus(check_statuses_mf);
+                    } else {
+                        checkStatus(check_statuses_real);
+                    }
                     var is_fully_authenticated = hasStatus('authenticated') && !+get_account_status.prompt_client_to_authenticate;
                     $('.account-id')[is_fully_authenticated ? 'append' : 'remove'](el_account_status);
                 });
@@ -25782,102 +25775,29 @@ var Authenticate = function () {
         $submit_status = void 0,
         $submit_table = void 0;
 
-    var getOnfidoServiceToken = function getOnfidoServiceToken() {
-        return new Promise(function (resolve, reject) {
-            var onfido_cookie = Cookies.get('onfido_token');
-            if (onfido_cookie) {
-                resolve(onfido_cookie);
-            } else {
-                BinarySocket.send({
-                    service_token: 1,
-                    service: 'onfido'
-                }).then(function (response) {
-                    if (response.error) reject(Error(response.error.message));
-                    var token = response.service_token.token;
-                    resolve(token);
-                    var in_90_minutes = 1 / 16;
-                    Cookies.set('onfido_token', token, {
-                        expires: in_90_minutes,
-                        secure: true
-                    });
-                });
-            }
-        });
-    };
-
-    var initOnfido = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var sdk_token;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            $('#onfido').setVisibility(1);
-                            _context.prev = 1;
-                            _context.next = 4;
-                            return getOnfidoServiceToken();
-
-                        case 4:
-                            sdk_token = _context.sent;
-
-                            onfido = Onfido.init({
-                                containerId: 'onfido',
-                                language: {
-                                    locale: getLanguage().toLowerCase() || 'en',
-                                    /*
-                                        TODO: will move to steps after this issue resolved
-                                        https://github.com/onfido/onfido-sdk-ui/issues/391
-                                    */
-                                    phrases: { welcome: { next_button: localize('Verify identity') } }
-                                },
-                                token: sdk_token,
-                                useModal: false,
-                                onComplete: handleComplete,
-                                steps: [{
-                                    type: 'welcome',
-                                    options: {
-                                        title: localize('Verify it\'s you'),
-                                        nextButton: localize('Submit button'),
-                                        descriptions: [localize('Please verify your identity. This will only take a couple of minutes.')]
-                                    }
-                                }, 'document', 'face']
-                            });
-                            $('#authentication_loading').setVisibility(0);
-                            _context.next = 13;
-                            break;
-
-                        case 9:
-                            _context.prev = 9;
-                            _context.t0 = _context['catch'](1);
-
-                            $('#error_occured').setVisibility(1);
-                            $('#authentication_loading').setVisibility(0);
-
-                        case 13:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, undefined, [[1, 9]]);
-        }));
-
-        return function initOnfido() {
-            return _ref.apply(this, arguments);
-        };
-    }();
-
-    var handleComplete = function handleComplete() {
-        BinarySocket.send({
-            notification_event: 1,
-            category: 'authentication',
-            event: 'poi_documents_uploaded'
-        }).then(function () {
-            onfido.tearDown();
-            $('#upload_complete').setVisibility(1);
-        });
-    };
-
     var init = function init() {
+        file_checks = {};
+        $submit_status = $('.submit-status');
+        $submit_table = $submit_status.find('table tbody');
+
+        // Setup accordion
+        $('.files').accordion({
+            heightStyle: 'content',
+            collapsible: true,
+            active: false
+        });
+        // Setup Date picker
+        $('.date-picker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            minDate: '+6m'
+        });
+
+        $('.file-picker').on('change', onFileSelected);
+    };
+
+    var initUnsupported = function initUnsupported() {
         file_checks = {};
         $submit_status = $('.submit-status');
         $submit_table = $submit_status.find('table tbody');
@@ -26290,9 +26210,94 @@ var Authenticate = function () {
         });
     };
 
+    var getOnfidoServiceToken = function getOnfidoServiceToken() {
+        return new Promise(function (resolve, reject) {
+            var onfido_cookie = Cookies.get('onfido_token');
+            if (onfido_cookie) {
+                resolve(onfido_cookie);
+            } else {
+                BinarySocket.send({
+                    service_token: 1,
+                    service: 'onfido'
+                }).then(function (response) {
+                    console.log(response); // eslint-disable-line
+                    if (response.error || !response.service_token) reject(Error(response.error.message));
+                    var token = response.service_token.token;
+                    var in_90_minutes = 1 / 16;
+                    Cookies.set('onfido_token', token, {
+                        expires: in_90_minutes,
+                        secure: true
+                    });
+                    resolve(token);
+                });
+            }
+        });
+    };
+
+    var initOnfido = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token) {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            $('#onfido').setVisibility(1);
+                            try {
+                                onfido = Onfido.init({
+                                    containerId: 'onfido',
+                                    language: {
+                                        locale: getLanguage().toLowerCase() || 'en',
+                                        /*
+                                            TODO: will move to steps after this issue resolved
+                                            https://github.com/onfido/onfido-sdk-ui/issues/391
+                                        */
+                                        phrases: { welcome: { next_button: localize('Verify identity') } }
+                                    },
+                                    token: sdk_token,
+                                    useModal: false,
+                                    onComplete: handleComplete,
+                                    steps: [{
+                                        type: 'welcome',
+                                        options: {
+                                            title: localize('Verify it\'s you'),
+                                            nextButton: localize('Submit button'),
+                                            descriptions: [localize('Please verify your identity. This will only take a couple of minutes.')]
+                                        }
+                                    }, 'document', 'face']
+                                });
+                                $('#authentication_loading').setVisibility(0);
+                            } catch (err) {
+                                $('#error_occured').setVisibility(1);
+                                $('#authentication_loading').setVisibility(0);
+                            }
+
+                        case 2:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, undefined);
+        }));
+
+        return function initOnfido(_x) {
+            return _ref.apply(this, arguments);
+        };
+    }();
+
+    var handleComplete = function handleComplete() {
+        BinarySocket.send({
+            notification_event: 1,
+            category: 'authentication',
+            event: 'poi_documents_uploaded'
+        }).then(function () {
+            onfido.tearDown();
+            $('#upload_complete').setVisibility(1);
+        });
+    };
+
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, identity, document, needs_verification, language, language_based_link, $not_authenticated, link;
+            var authentication_status, onfido_token, identity, document, needs_verification, language, language_based_link, $not_authenticated_uns, link, _language, _language_based_link, $not_authenticated, _link;
+
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26302,20 +26307,25 @@ var Authenticate = function () {
 
                         case 2:
                             authentication_status = _context2.sent;
+                            _context2.next = 5;
+                            return getOnfidoServiceToken();
+
+                        case 5:
+                            onfido_token = _context2.sent;
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 6;
+                                _context2.next = 9;
                                 break;
                             }
 
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 6:
+                        case 9:
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
-                            if (!needs_verification.length) {
+                            if (identity.status !== 'verified' && document.status !== 'verified' && !needs_verification.length) {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
@@ -26325,115 +26335,172 @@ var Authenticate = function () {
                             }
 
                             if (!needs_verification.includes('identity')) {
-                                _context2.next = 29;
+                                _context2.next = 58;
                                 break;
                             }
 
-                            $('#poi').removeClass('invisible');
-
-                            if (identity.further_resubmissions_allowed) {
-                                _context2.next = 28;
+                            if (!(onfido_token.error === 'UnsupportedCountry')) {
+                                _context2.next = 39;
                                 break;
                             }
+
+                            $('#poi_uns').removeClass('invisible');
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 15 : _context2.t0 === 'pending' ? 17 : _context2.t0 === 'rejected' ? 19 : _context2.t0 === 'verified' ? 21 : _context2.t0 === 'suspected' ? 23 : 25;
+                            _context2.next = _context2.t0 === 'none' ? 18 : _context2.t0 === 'pending' ? 28 : _context2.t0 === 'rejected' ? 30 : _context2.t0 === 'suspected' ? 32 : _context2.t0 === 'verified' ? 34 : 36;
                             break;
 
-                        case 15:
-                            initOnfido();
-                            return _context2.abrupt('break', 26);
-
-                        case 17:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 26);
-
-                        case 19:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 26);
-
-                        case 21:
-                            if (document.status === 'verified') {
-                                $('#authentication_verified').setVisibility(1);
-                                $('#authentication_tab').setVisibility(0);
-                            } else {
-                                $('#verified').setVisibility(1);
-                            }
-                            return _context2.abrupt('break', 26);
-
-                        case 23:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 26);
-
-                        case 25:
-                            return _context2.abrupt('break', 26);
-
-                        case 26:
-                            _context2.next = 29;
-                            break;
-
-                        case 28:
-                            initOnfido();
-
-                        case 29:
-                            if (!needs_verification.includes('document')) {
-                                _context2.next = 54;
-                                break;
-                            }
-
-                            $('#poi').removeClass('invisible');
-
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 45 : _context2.t1 === 'rejected' ? 47 : _context2.t1 === 'suspected' ? 49 : _context2.t1 === 'verified' ? 51 : 53;
-                            break;
-
-                        case 34:
-                            init();
-                            $('#not_authenticated').setVisibility(1);
+                        case 18:
+                            initUnsupported();
+                            $('#not_authenticated_uns').setVisibility(1);
                             language = getLanguage();
                             language_based_link = ['ID', 'RU', 'PT'].includes(language) ? '_' + language : '';
-                            $not_authenticated = $('#not_authenticated');
+                            $not_authenticated_uns = $('#not_authenticated_uns');
                             link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/Authentication_Process' + language_based_link + '.pdf');
 
-
-                            $not_authenticated.setVisibility(1);
 
                             if (Client.isAccountOfType('financial')) {
                                 $('#not_authenticated_financial').setVisibility(1);
                                 link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
                             }
 
-                            $not_authenticated.find('.learn_more').setVisibility(1).find('a').attr('href', link);
+                            $not_authenticated_uns.find('.learn_more').setVisibility(1).find('a').attr('href', link);
 
                             if (isIdentificationNoExpiry(Client.get('residence'))) {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 54);
+                            return _context2.abrupt('break', 37);
 
-                        case 45:
+                        case 28:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            return _context2.abrupt('break', 37);
 
-                        case 47:
+                        case 30:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            return _context2.abrupt('break', 37);
 
-                        case 49:
+                        case 32:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            return _context2.abrupt('break', 37);
 
-                        case 51:
+                        case 34:
                             $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            return _context2.abrupt('break', 37);
 
-                        case 53:
-                            return _context2.abrupt('break', 54);
+                        case 36:
+                            return _context2.abrupt('break', 37);
+
+                        case 37:
+                            _context2.next = 58;
+                            break;
+
+                        case 39:
+                            $('#poi').removeClass('invisible');
+
+                            if (identity.further_resubmissions_allowed) {
+                                _context2.next = 57;
+                                break;
+                            }
+
+                            _context2.t1 = identity.status;
+                            _context2.next = _context2.t1 === 'none' ? 44 : _context2.t1 === 'pending' ? 46 : _context2.t1 === 'rejected' ? 48 : _context2.t1 === 'verified' ? 50 : _context2.t1 === 'suspected' ? 52 : 54;
+                            break;
+
+                        case 44:
+                            initOnfido(onfido_token);
+                            return _context2.abrupt('break', 55);
+
+                        case 46:
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 55);
+
+                        case 48:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 55);
+
+                        case 50:
+                            if (document.status === 'verified') {
+                                $('#authentication_verified').setVisibility(1);
+                                $('#authentication_tab').setVisibility(0);
+                            } else {
+                                $('#verified').setVisibility(1);
+                            }
+                            return _context2.abrupt('break', 55);
+
+                        case 52:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 55);
 
                         case 54:
-                            $('#authentication_loading').setVisibility(0);
+                            return _context2.abrupt('break', 55);
 
                         case 55:
+                            _context2.next = 58;
+                            break;
+
+                        case 57:
+                            initOnfido();
+
+                        case 58:
+                            if (!needs_verification.includes('document')) {
+                                _context2.next = 83;
+                                break;
+                            }
+
+                            $('#poa').removeClass('invisible');
+
+                            _context2.t2 = document.status;
+                            _context2.next = _context2.t2 === 'none' ? 63 : _context2.t2 === 'pending' ? 74 : _context2.t2 === 'rejected' ? 76 : _context2.t2 === 'suspected' ? 78 : _context2.t2 === 'verified' ? 80 : 82;
+                            break;
+
+                        case 63:
+                            init();
+                            $('#not_authenticated').setVisibility(1);
+                            _language = getLanguage();
+                            _language_based_link = ['ID', 'RU', 'PT'].includes(_language) ? '_' + _language : '';
+                            $not_authenticated = $('#not_authenticated');
+                            _link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/Authentication_Process' + _language_based_link + '.pdf');
+
+
+                            $not_authenticated.setVisibility(1);
+
+                            if (Client.isAccountOfType('financial')) {
+                                $('#not_authenticated_financial').setVisibility(1);
+                                _link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
+                            }
+
+                            $not_authenticated.find('.learn_more').setVisibility(1).find('a').attr('href', _link);
+
+                            if (isIdentificationNoExpiry(Client.get('residence'))) {
+                                $('#expiry_datepicker_proofid').setVisibility(0);
+                                $('#exp_date_2').datepicker('setDate', '2099-12-31');
+                            }
+                            return _context2.abrupt('break', 83);
+
+                        case 74:
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 83);
+
+                        case 76:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 83);
+
+                        case 78:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 83);
+
+                        case 80:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 83);
+
+                        case 82:
+                            return _context2.abrupt('break', 83);
+
+                        case 83:
+                            $('#authentication_loading').setVisibility(0);
+
+                        case 84:
                         case 'end':
                             return _context2.stop();
                     }
