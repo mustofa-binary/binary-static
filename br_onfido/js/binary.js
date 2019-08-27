@@ -26493,7 +26493,7 @@ var Authenticate = function () {
             removeButtonLoading();
             $button.setVisibility(0);
             $('.submit-status').setVisibility(0);
-            showUploadCompleteMessage('upload_complete', 'poa');
+            showUploadCompleteMessage('pending_poa', 'poa');
         }, 3000);
     };
 
@@ -26505,7 +26505,7 @@ var Authenticate = function () {
             removeButtonLoadingUns();
             $button_uns.setVisibility(0);
             $('.submit-status-uns').setVisibility(0);
-            showUploadCompleteMessage('upload_complete', 'poi_uns');
+            showUploadCompleteMessage('pending_poi_uns', 'poi_uns');
         }, 3000);
     };
 
@@ -26698,14 +26698,14 @@ var Authenticate = function () {
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
-                            if (identity.status !== 'verified' && document.status !== 'verified' && !needs_verification.length) {
+                            if (!(identity.status === 'verified' && document.status === 'verified') && !needs_verification.length) {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
                             if (needs_verification.length === 2 && onfido_token !== 'UnsupportedCountry') {
                                 $('#poi').removeClass('invisible');
                                 $('#poa').removeClass('invisible');
-                                TabSelector.repositionSelector();
+                                TabSelector.updateTabDisplay();
                             }
 
                             if (identity.status === 'verified' && document.status === 'verified') {
@@ -26725,7 +26725,7 @@ var Authenticate = function () {
 
                             onfido_unsupported = true;
                             $('#poi_uns').removeClass('invisible');
-                            TabSelector.repositionSelector();
+                            TabSelector.updateTabDisplay();
 
                             _context2.t0 = identity.status;
                             _context2.next = _context2.t0 === 'none' ? 22 : _context2.t0 === 'pending' ? 25 : _context2.t0 === 'rejected' ? 27 : _context2.t0 === 'suspected' ? 29 : _context2.t0 === 'verified' ? 31 : 33;
@@ -26761,7 +26761,7 @@ var Authenticate = function () {
 
                         case 36:
                             $('#poi').removeClass('invisible');
-                            TabSelector.repositionSelector();
+                            TabSelector.updateTabDisplay();
 
                             if (identity.further_resubmissions_allowed) {
                                 _context2.next = 55;
@@ -26809,7 +26809,7 @@ var Authenticate = function () {
                             }
 
                             $('#poa').removeClass('invisible');
-                            TabSelector.repositionSelector();
+                            TabSelector.updateTabDisplay();
 
                             _context2.t2 = document.status;
                             _context2.next = _context2.t2 === 'none' ? 62 : _context2.t2 === 'pending' ? 65 : _context2.t2 === 'rejected' ? 67 : _context2.t2 === 'suspected' ? 69 : _context2.t2 === 'verified' ? 71 : 73;
