@@ -25820,8 +25820,7 @@ var Authenticate = function () {
             changeYear: true,
             minDate: '+6m'
         });
-
-        $('#not_authenticate_uns .file-picker').on('change', onFileSelectedUns);
+        $('#not_authenticated_uns .file-picker').on('change', onFileSelectedUns);
     };
 
     /**
@@ -25868,7 +25867,6 @@ var Authenticate = function () {
         var $target = $(event.target);
         var file_name = event.target.files[0].name || '';
         var display_name = file_name.length > 20 ? file_name.slice(0, 10) + '..' + file_name.slice(-8) : file_name;
-
         $target.attr('data-status', '').parent().find('label').off('click')
         // Prevent opening file selector.
         .on('click', function (e) {
