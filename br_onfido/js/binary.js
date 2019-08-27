@@ -25769,107 +25769,16 @@ var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ ".
 
 var Authenticate = function () {
     var is_any_upload_failed = false;
+    var is_any_upload_failed_uns = false;
     var file_checks = {};
+    var file_checks_uns = {};
     var onfido = void 0,
         $button = void 0,
         $submit_status = void 0,
-        $submit_table = void 0;
-
-    var getOnfidoServiceToken = function getOnfidoServiceToken() {
-        return new Promise(function (resolve, reject) {
-            var onfido_cookie = Cookies.get('onfido_token');
-            if (onfido_cookie) {
-                resolve(onfido_cookie);
-            } else {
-                BinarySocket.send({
-                    service_token: 1,
-                    service: 'onfido'
-                }).then(function (response) {
-                    console.log(response); // eslint-disable-line
-                    if (response.error || !response.service_token) reject(Error(response.error.message));
-                    var token = response.service_token.token;
-                    var in_90_minutes = 1 / 16;
-                    Cookies.set('onfido_token', token, {
-                        expires: in_90_minutes,
-                        secure: true
-                    });
-                    resolve(token);
-                });
-            }
-        });
-    };
-
-    var initOnfido = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var sdk_token;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            $('#onfido').setVisibility(1);
-                            _context.prev = 1;
-                            _context.next = 4;
-                            return getOnfidoServiceToken();
-
-                        case 4:
-                            sdk_token = _context.sent;
-
-                            onfido = Onfido.init({
-                                containerId: 'onfido',
-                                language: {
-                                    locale: getLanguage().toLowerCase() || 'en',
-                                    /*
-                                        TODO: will move to steps after this issue resolved
-                                        https://github.com/onfido/onfido-sdk-ui/issues/391
-                                    */
-                                    phrases: { welcome: { next_button: localize('Verify identity') } }
-                                },
-                                token: sdk_token,
-                                useModal: false,
-                                onComplete: handleComplete,
-                                steps: [{
-                                    type: 'welcome',
-                                    options: {
-                                        title: localize('Verify it\'s you'),
-                                        nextButton: localize('Submit button'),
-                                        descriptions: [localize('Please verify your identity. This will only take a couple of minutes.')]
-                                    }
-                                }, 'document', 'face']
-                            });
-                            $('#authentication_loading').setVisibility(0);
-                            _context.next = 13;
-                            break;
-
-                        case 9:
-                            _context.prev = 9;
-                            _context.t0 = _context['catch'](1);
-
-                            $('#error_occured').setVisibility(1);
-                            $('#authentication_loading').setVisibility(0);
-
-                        case 13:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, undefined, [[1, 9]]);
-        }));
-
-        return function initOnfido() {
-            return _ref.apply(this, arguments);
-        };
-    }();
-
-    var handleComplete = function handleComplete() {
-        BinarySocket.send({
-            notification_event: 1,
-            category: 'authentication',
-            event: 'poi_documents_uploaded'
-        }).then(function () {
-            onfido.tearDown();
-            $('#upload_complete').setVisibility(1);
-        });
-    };
+        $submit_table = void 0,
+        $button_uns = void 0,
+        $submit_status_uns = void 0,
+        $submit_table_uns = void 0;
 
     var init = function init() {
         file_checks = {};
@@ -25877,20 +25786,42 @@ var Authenticate = function () {
         $submit_table = $submit_status.find('table tbody');
 
         // Setup accordion
-        $('.files').accordion({
+        $('#not_authenticated .files').accordion({
             heightStyle: 'content',
             collapsible: true,
             active: false
         });
         // Setup Date picker
-        $('.date-picker').datepicker({
+        $('#not_authenticated .date-picker').datepicker({
             dateFormat: 'yy-mm-dd',
             changeMonth: true,
             changeYear: true,
             minDate: '+6m'
         });
 
-        $('.file-picker').on('change', onFileSelected);
+        $('#not_authenticated .file-picker').on('change', onFileSelected);
+    };
+
+    var initUnsupported = function initUnsupported() {
+        file_checks_uns = {};
+        $submit_status_uns = $('.submit-status-uns');
+        $submit_table_uns = $submit_status_uns.find('table tbody');
+
+        // Setup accordion
+        $('#not_authenticated_uns .files').accordion({
+            heightStyle: 'content',
+            collapsible: true,
+            active: false
+        });
+        // Setup Date picker
+        $('#not_authenticated_uns .date-picker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            minDate: '+6m'
+        });
+
+        $('#not_authenticate_uns .file-picker').on('change', onFileSelectedUns);
     };
 
     /**
@@ -25929,6 +25860,29 @@ var Authenticate = function () {
         enableDisableSubmit();
     };
 
+    var onFileSelectedUns = function onFileSelectedUns(event) {
+        if (!event.target.files || !event.target.files.length) {
+            resetLabel(event);
+            return;
+        }
+        var $target = $(event.target);
+        var file_name = event.target.files[0].name || '';
+        var display_name = file_name.length > 20 ? file_name.slice(0, 10) + '..' + file_name.slice(-8) : file_name;
+
+        $target.attr('data-status', '').parent().find('label').off('click')
+        // Prevent opening file selector.
+        .on('click', function (e) {
+            if ($(e.target).is('span.remove')) e.preventDefault();
+        }).text(display_name).removeClass('error').addClass('selected').append($('<span/>', { class: 'remove' })).find('.remove').click(function (e) {
+            if ($(e.target).is('span.remove')) resetLabelUns(event);
+        });
+
+        // Hide success message on another file selected
+        hideSuccessUns();
+        // Change submit button state
+        enableDisableSubmitUns();
+    };
+
     // Reset file-selector label
     var resetLabel = function resetLabel(event) {
         var $target = $(event.target);
@@ -25941,6 +25895,20 @@ var Authenticate = function () {
         $target.val('').parent().find('label').text(default_text).removeClass('selected error').append($('<span/>', { class: 'add' }));
         // Change submit button state
         enableDisableSubmit();
+    };
+
+    // Reset file-selector label
+    var resetLabelUns = function resetLabelUns(event) {
+        var $target = $(event.target);
+        var default_text = toTitleCase($target.attr('id').split('_')[0]);
+        if (default_text !== 'Add') {
+            default_text = default_text === 'Back' ? localize('Reverse Side') : localize('Front Side');
+        }
+        fileTracker($target, false);
+        // Remove previously selected file and set the label
+        $target.val('').parent().find('label').text(default_text).removeClass('selected error').append($('<span/>', { class: 'add' }));
+        // Change submit button state
+        enableDisableSubmitUns();
     };
 
     /**
@@ -25968,6 +25936,31 @@ var Authenticate = function () {
         }
     };
 
+    /**
+     * Enables the submit button if any file is selected, also adds the event handler for the button.
+     * Disables the button if it no files are selected.
+     */
+    var enableDisableSubmitUns = function enableDisableSubmitUns() {
+        var $not_authenticated = $('#authentication_message_uns > div#not_authenticated_uns');
+        var $files = $not_authenticated.find('input[type="file"]');
+        $button = $not_authenticated.find('#btn_submit_uns');
+
+        var file_selected = $('label[class~="selected"]').length;
+        var has_file_error = $('label[class~="error"]').length;
+
+        if (file_selected && !has_file_error) {
+            if ($button.hasClass('button')) return;
+            $('#resolve_error').setVisibility(0);
+            $button.removeClass('button-disabled').addClass('button').off('click') // To avoid binding multiple click events
+            .click(function () {
+                return submitFilesUns($files);
+            });
+        } else {
+            if ($button.hasClass('button-disabled')) return;
+            $button.removeClass('button').addClass('button-disabled').off('click');
+        }
+    };
+
     var showButtonLoading = function showButtonLoading() {
         if ($button.length && !$button.find('.barspinner').length) {
             var $btn_text = $('<span/>', { text: $button.find('span').text(), class: 'invisible' });
@@ -25976,9 +25969,23 @@ var Authenticate = function () {
         }
     };
 
+    var showButtonLoadingUns = function showButtonLoadingUns() {
+        if ($button_uns.length && !$button_uns.find('.barspinner').length) {
+            var $btn_text = $('<span/>', { text: $button_uns.find('span').text(), class: 'invisible' });
+            showLoadingImage($button_uns.find('span'), 'white');
+            $button_uns.find('span').append($btn_text);
+        }
+    };
+
     var removeButtonLoading = function removeButtonLoading() {
         if ($button.length && $button.find('.barspinner').length) {
             $button.find('>span').html($button.find('>span>span').text());
+        }
+    };
+
+    var removeButtonLoadingUns = function removeButtonLoadingUns() {
+        if ($button_uns.length && $button_uns.find('.barspinner').length) {
+            $button_uns.find('>span').html($button_uns.find('>span>span').text());
         }
     };
 
@@ -26033,6 +26040,57 @@ var Authenticate = function () {
         processFiles(files);
     };
 
+    /**
+     * On submit button click
+     */
+    var submitFilesUns = function submitFilesUns($files) {
+        if ($button_uns.length && $button_uns.find('.barspinner').length) {
+            // it's still in submit process
+            return;
+        }
+        // Disable submit button
+        showButtonLoadingUns();
+        var files = [];
+        is_any_upload_failed_uns = false;
+        $submit_table_uns.children().remove();
+        $files.each(function (i, e) {
+            if (e.files && e.files.length) {
+                var $e = $(e);
+                var id = $e.attr('id');
+                var type = '' + ($e.attr('data-type') || '').replace(/\s/g, '_').toLowerCase();
+                var name = $e.attr('data-name');
+                var page_type = $e.attr('data-page-type');
+                var $inputs = $e.closest('.fields').find('input[type="text"]');
+                var file_obj = {
+                    file: e.files[0],
+                    chunkSize: 16384, // any higher than this sends garbage data to websocket currently.
+                    class: id,
+                    type: type,
+                    name: name,
+                    page_type: page_type
+                };
+                if ($inputs.length) {
+                    file_obj.id_number = $($inputs[0]).val();
+                    file_obj.exp_date = $($inputs[1]).val();
+                }
+                fileTrackerUns($e, true);
+                files.push(file_obj);
+
+                var display_name = name;
+                if (/front|back/.test(id)) {
+                    display_name += ' - ' + (/front/.test(id) ? localize('Front Side') : localize('Reverse Side'));
+                }
+
+                $submit_table_uns.append($('<tr/>', { id: file_obj.type, class: id }).append($('<td/>', { text: display_name })) // document type, e.g. Passport - Front Side
+                .append($('<td/>', { text: e.files[0].name, class: 'filename' })) // file name, e.g. sample.pdf
+                .append($('<td/>', { text: localize('Pending'), class: 'status' })) // status of uploading file, first set to Pending
+                );
+            }
+        });
+        $submit_status_uns.setVisibility(1);
+        processFilesUns(files);
+    };
+
     var processFiles = function processFiles(files) {
         var uploader = new DocumentUploader({ connection: BinarySocket.get() }); // send 'debug: true' here for debugging
         var idx_to_upload = 0;
@@ -26070,6 +26128,61 @@ var Authenticate = function () {
                         uploadNextFile();
                     }).catch(function (error) {
                         is_any_upload_failed = true;
+                        showError({
+                            message: error.message || localize('Failed'),
+                            class: error.passthrough ? error.passthrough.class : ''
+                        });
+                        uploadNextFile();
+                    });
+                };
+                var uploadNextFile = function uploadNextFile() {
+                    if (!isLastUpload()) {
+                        idx_to_upload += 1;
+                        uploadFile();
+                    }
+                };
+                uploadFile();
+            });
+        });
+    };
+
+    var processFilesUns = function processFilesUns(files) {
+        var uploader = new DocumentUploader({ connection: BinarySocket.get() }); // send 'debug: true' here for debugging
+        var idx_to_upload = 0;
+        var is_any_file_error = false;
+
+        compressImageFiles(files).then(function (files_to_process) {
+            readFilesUns(files_to_process).then(function (processed_files) {
+                processed_files.forEach(function (file) {
+                    if (file.message) {
+                        is_any_file_error = true;
+                        showErrorUns(file);
+                    }
+                });
+                var total_to_upload = processed_files.length;
+                if (is_any_file_error || !total_to_upload) {
+                    removeButtonLoadingUns();
+                    enableDisableSubmitUns();
+                    return; // don't start submitting files until all front-end validation checks pass
+                }
+
+                var isLastUpload = function isLastUpload() {
+                    return total_to_upload === idx_to_upload + 1;
+                };
+                // sequentially send files
+                var uploadFile = function uploadFile() {
+                    var $status = $submit_table_uns.find('.' + processed_files[idx_to_upload].passthrough.class + ' .status');
+                    $status.text(localize('Submitting') + '...');
+                    uploader.upload(processed_files[idx_to_upload]).then(function (api_response) {
+                        onResponseUns(api_response, isLastUpload());
+                        if (!api_response.error && !api_response.warning) {
+                            $status.text(localize('Submitted')).append($('<span/>', { class: 'checked' }));
+                            $('#' + api_response.passthrough.class).attr('type', 'hidden'); // don't allow users to change submitted files
+                            $('label[for=' + api_response.passthrough.class + ']').removeClass('selected error').find('span').attr('class', 'checked');
+                        }
+                        uploadNextFile();
+                    }).catch(function (error) {
+                        is_any_upload_failed_uns = true;
                         showError({
                             message: error.message || localize('Failed'),
                             class: error.passthrough ? error.passthrough.class : ''
@@ -26171,6 +26284,62 @@ var Authenticate = function () {
         return Promise.all(promises);
     };
 
+    // Returns file promise.
+    var readFilesUns = function readFilesUns(files) {
+        var promises = [];
+        files.forEach(function (f) {
+            var fr = new FileReader();
+            var promise = new Promise(function (resolve) {
+                fr.onload = function () {
+                    var $status = $submit_table_uns.find('.' + f.class + ' .status');
+                    $status.text(localize('Checking') + '...');
+
+                    var format = (f.file.type.split('/')[1] || (f.file.name.match(/\.([\w\d]+)$/) || [])[1] || '').toUpperCase();
+                    var obj = {
+                        filename: f.file.name,
+                        buffer: fr.result,
+                        documentType: f.type,
+                        pageType: f.page_type,
+                        documentFormat: format,
+                        documentId: f.id_number || undefined,
+                        expirationDate: f.exp_date || undefined,
+                        chunkSize: f.chunkSize,
+                        passthrough: {
+                            filename: f.file.name,
+                            name: f.name,
+                            class: f.class
+                        }
+                    };
+
+                    var error = { message: validate(obj) };
+                    if (error && error.message) {
+                        resolve({
+                            message: error.message,
+                            class: f.class
+                        });
+                    } else {
+                        $status.text(localize('Checked')).append($('<span/>', { class: 'checked' }));
+                    }
+
+                    resolve(obj);
+                };
+
+                fr.onerror = function () {
+                    resolve({
+                        message: localize('Unable to read file [_1]', f.file.name),
+                        class: f.class
+                    });
+                };
+                // Reading file.
+                fr.readAsArrayBuffer(f.file);
+            });
+
+            promises.push(promise);
+        });
+
+        return Promise.all(promises);
+    };
+
     var fileTracker = function fileTracker($e, selected) {
         var doc_type = ($e.attr('data-type') || '').replace(/\s/g, '_').toLowerCase();
         var file_type = ($e.attr('id').match(/\D+/g) || [])[0];
@@ -26180,6 +26349,18 @@ var Authenticate = function () {
             file_checks[doc_type][file_type] = true;
         } else if (file_checks[doc_type]) {
             file_checks[doc_type][file_type] = false;
+        }
+    };
+
+    var fileTrackerUns = function fileTrackerUns($e, selected) {
+        var doc_type = ($e.attr('data-type') || '').replace(/\s/g, '_').toLowerCase();
+        var file_type = ($e.attr('id').match(/\D+/g) || [])[0];
+        // Keep track of front and back sides of files.
+        if (selected) {
+            file_checks_uns[doc_type] = file_checks_uns[doc_type] || {};
+            file_checks_uns[doc_type][file_type] = true;
+        } else if (file_checks_uns[doc_type]) {
+            file_checks_uns[doc_type][file_type] = false;
         }
     };
 
@@ -26239,6 +26420,21 @@ var Authenticate = function () {
         enableDisableSubmit();
     };
 
+    var showErrorUns = function showErrorUns(obj_error) {
+        removeButtonLoadingUns();
+        var $error = $('#msg_form_uns');
+        var $file_error = $submit_table_uns.find('.' + obj_error.class + ' .status');
+        var message = obj_error.message;
+        if ($file_error.length) {
+            $file_error.text(message).addClass('error-msg');
+            $('label[for=' + obj_error.class + ']').addClass('error');
+            $('#resolve_error_uns').setVisibility(1);
+        } else {
+            $error.text(message).setVisibility(1);
+        }
+        enableDisableSubmitUns();
+    };
+
     var showSuccess = function showSuccess() {
         BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
             Header.displayAccountStatus();
@@ -26251,11 +26447,30 @@ var Authenticate = function () {
         }, 3000);
     };
 
+    var showSuccessUns = function showSuccessUns() {
+        BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+            Header.displayAccountStatus();
+        });
+        setTimeout(function () {
+            removeButtonLoadingUns();
+            $button_uns.setVisibility(0);
+            $('.submit-status-uns').setVisibility(0);
+            $('#pending_poi_uns').setVisibility(1);
+        }, 3000);
+    };
+
     var hideSuccess = function hideSuccess() {
         if ($button) {
             $button.setVisibility(1);
         }
         $('#pending_poa').setVisibility(0);
+    };
+
+    var hideSuccessUns = function hideSuccessUns() {
+        if ($button_uns) {
+            $button_uns.setVisibility(1);
+        }
+        $('#pending_poi_uns').setVisibility(0);
     };
 
     var onResponse = function onResponse(response, is_last_upload) {
@@ -26267,6 +26482,18 @@ var Authenticate = function () {
             });
         } else if (is_last_upload && !is_any_upload_failed) {
             showSuccess();
+        }
+    };
+
+    var onResponseUns = function onResponseUns(response, is_last_upload) {
+        if (response.warning || response.error) {
+            is_any_upload_failed = true;
+            showError({
+                message: response.message || (response.error ? response.error.message : localize('Failed')),
+                class: response.passthrough.class
+            });
+        } else if (is_last_upload && !is_any_upload_failed_uns) {
+            showSuccessUns();
         }
     };
 
@@ -26284,9 +26511,91 @@ var Authenticate = function () {
         });
     };
 
+    var getOnfidoServiceToken = function getOnfidoServiceToken() {
+        return new Promise(function (resolve) {
+            var onfido_cookie = Cookies.get('onfido_token');
+            if (onfido_cookie) {
+                resolve(onfido_cookie);
+            } else {
+                BinarySocket.send({
+                    service_token: 1,
+                    service: 'onfido'
+                }).then(function (response) {
+                    console.log(response); // eslint-disable-line
+                    if (response.error || !response.service_token) {
+                        resolve(response.error.code);
+                        return;
+                    }
+                    console.log('shouldnt be going here'); //eslint-disable-line
+                    var token = response.service_token.token;
+                    var in_90_minutes = 1 / 16;
+                    Cookies.set('onfido_token', token, {
+                        expires: in_90_minutes,
+                        secure: true
+                    });
+                    resolve(token);
+                });
+            }
+        });
+    };
+
+    var initOnfido = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token) {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            $('#onfido').setVisibility(1);
+                            try {
+                                onfido = Onfido.init({
+                                    containerId: 'onfido',
+                                    language: {
+                                        locale: getLanguage().toLowerCase() || 'en',
+                                        /*
+                                            TODO: will move to steps after this issue resolved
+                                            https://github.com/onfido/onfido-sdk-ui/issues/391
+                                        */
+                                        phrases: { welcome: { next_button: localize('Verify identity') } }
+                                    },
+                                    token: sdk_token,
+                                    useModal: false,
+                                    onComplete: handleComplete,
+                                    steps: ['document', 'face']
+                                });
+                                $('#authentication_loading').setVisibility(0);
+                            } catch (err) {
+                                $('#error_occured').setVisibility(1);
+                                $('#authentication_loading').setVisibility(0);
+                            }
+
+                        case 2:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, undefined);
+        }));
+
+        return function initOnfido(_x) {
+            return _ref.apply(this, arguments);
+        };
+    }();
+
+    var handleComplete = function handleComplete() {
+        BinarySocket.send({
+            notification_event: 1,
+            category: 'authentication',
+            event: 'poi_documents_uploaded'
+        }).then(function () {
+            onfido.tearDown();
+            $('#upload_complete').setVisibility(1);
+        });
+    };
+
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, identity, document, needs_verification, language, language_based_link, $not_authenticated, link;
+            var authentication_status, onfido_token, identity, document, needs_verification, language, language_based_link, $not_authenticated_uns, link, _language, _language_based_link, $not_authenticated, _link;
+
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26296,16 +26605,24 @@ var Authenticate = function () {
 
                         case 2:
                             authentication_status = _context2.sent;
+                            _context2.next = 5;
+                            return getOnfidoServiceToken();
+
+                        case 5:
+                            onfido_token = _context2.sent;
+
+
+                            console.log('should be here'); //eslint-disable-line
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 6;
+                                _context2.next = 10;
                                 break;
                             }
 
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 6:
+                        case 10:
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
@@ -26313,121 +26630,181 @@ var Authenticate = function () {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
-                            if (needs_verification.length === 2) {
+                            if (needs_verification.length === 2 && onfido_token !== 'UnsupportedCountry') {
                                 $('#poi').removeClass('invisible');
                                 $('#poa').removeClass('invisible');
                             }
 
                             if (!needs_verification.includes('identity')) {
-                                _context2.next = 29;
+                                _context2.next = 61;
                                 break;
                             }
 
-                            $('#poi').removeClass('invisible');
-
-                            if (identity.further_resubmissions_allowed) {
-                                _context2.next = 28;
+                            if (!(onfido_token === 'UnsupportedCountry')) {
+                                _context2.next = 41;
                                 break;
                             }
+
+                            $('#poi_uns').removeClass('invisible');
+                            TabSelector.repositionSelector();
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 15 : _context2.t0 === 'pending' ? 17 : _context2.t0 === 'rejected' ? 19 : _context2.t0 === 'verified' ? 21 : _context2.t0 === 'suspected' ? 23 : 25;
+                            _context2.next = _context2.t0 === 'none' ? 20 : _context2.t0 === 'pending' ? 30 : _context2.t0 === 'rejected' ? 32 : _context2.t0 === 'suspected' ? 34 : _context2.t0 === 'verified' ? 36 : 38;
                             break;
 
-                        case 15:
-                            initOnfido();
-                            return _context2.abrupt('break', 26);
-
-                        case 17:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 26);
-
-                        case 19:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 26);
-
-                        case 21:
-                            if (document.status === 'verified') {
-                                $('#authentication_verified').setVisibility(1);
-                                $('#authentication_tab').setVisibility(0);
-                            } else {
-                                $('#verified').setVisibility(1);
-                            }
-                            return _context2.abrupt('break', 26);
-
-                        case 23:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 26);
-
-                        case 25:
-                            return _context2.abrupt('break', 26);
-
-                        case 26:
-                            _context2.next = 29;
-                            break;
-
-                        case 28:
-                            initOnfido();
-
-                        case 29:
-                            if (!needs_verification.includes('document')) {
-                                _context2.next = 54;
-                                break;
-                            }
-
-                            $('#poa').removeClass('invisible');
-
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 45 : _context2.t1 === 'rejected' ? 47 : _context2.t1 === 'suspected' ? 49 : _context2.t1 === 'verified' ? 51 : 53;
-                            break;
-
-                        case 34:
-                            init();
-                            $('#not_authenticated').setVisibility(1);
+                        case 20:
+                            initUnsupported();
+                            $('#not_authenticated_uns').setVisibility(1);
                             language = getLanguage();
                             language_based_link = ['ID', 'RU', 'PT'].includes(language) ? '_' + language : '';
-                            $not_authenticated = $('#not_authenticated');
+                            $not_authenticated_uns = $('#not_authenticated_uns');
                             link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/Authentication_Process' + language_based_link + '.pdf');
 
-
-                            $not_authenticated.setVisibility(1);
 
                             if (Client.isAccountOfType('financial')) {
                                 $('#not_authenticated_financial').setVisibility(1);
                                 link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
                             }
 
-                            $not_authenticated.find('.learn_more').setVisibility(1).find('a').attr('href', link);
+                            $not_authenticated_uns.find('.learn_more').setVisibility(1).find('a').attr('href', link);
 
                             if (isIdentificationNoExpiry(Client.get('residence'))) {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 54);
+                            return _context2.abrupt('break', 39);
 
-                        case 45:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                        case 30:
+                            $('#pending_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 39);
+
+                        case 32:
+                            $('#unverified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 39);
+
+                        case 34:
+                            $('#unverified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 39);
+
+                        case 36:
+                            $('#verified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 39);
+
+                        case 38:
+                            return _context2.abrupt('break', 39);
+
+                        case 39:
+                            _context2.next = 61;
+                            break;
+
+                        case 41:
+                            $('#poi').removeClass('invisible');
+                            TabSelector.repositionSelector();
+
+                            if (identity.further_resubmissions_allowed) {
+                                _context2.next = 60;
+                                break;
+                            }
+
+                            _context2.t1 = identity.status;
+                            _context2.next = _context2.t1 === 'none' ? 47 : _context2.t1 === 'pending' ? 49 : _context2.t1 === 'rejected' ? 51 : _context2.t1 === 'verified' ? 53 : _context2.t1 === 'suspected' ? 55 : 57;
+                            break;
 
                         case 47:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            initOnfido(onfido_token);
+                            return _context2.abrupt('break', 58);
 
                         case 49:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 58);
 
                         case 51:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 54);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 58);
 
                         case 53:
-                            return _context2.abrupt('break', 54);
-
-                        case 54:
-                            $('#authentication_loading').setVisibility(0);
+                            if (document.status === 'verified') {
+                                $('#authentication_verified').setVisibility(1);
+                                $('#authentication_tab').setVisibility(0);
+                            } else {
+                                $('#verified').setVisibility(1);
+                            }
+                            return _context2.abrupt('break', 58);
 
                         case 55:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 58);
+
+                        case 57:
+                            return _context2.abrupt('break', 58);
+
+                        case 58:
+                            _context2.next = 61;
+                            break;
+
+                        case 60:
+                            initOnfido();
+
+                        case 61:
+                            if (!needs_verification.includes('document')) {
+                                _context2.next = 87;
+                                break;
+                            }
+
+                            $('#poa').removeClass('invisible');
+                            TabSelector.repositionSelector();
+
+                            _context2.t2 = document.status;
+                            _context2.next = _context2.t2 === 'none' ? 67 : _context2.t2 === 'pending' ? 78 : _context2.t2 === 'rejected' ? 80 : _context2.t2 === 'suspected' ? 82 : _context2.t2 === 'verified' ? 84 : 86;
+                            break;
+
+                        case 67:
+                            init();
+                            $('#not_authenticated').setVisibility(1);
+                            _language = getLanguage();
+                            _language_based_link = ['ID', 'RU', 'PT'].includes(_language) ? '_' + _language : '';
+                            $not_authenticated = $('#not_authenticated');
+                            _link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/Authentication_Process' + _language_based_link + '.pdf');
+
+
+                            $not_authenticated.setVisibility(1);
+
+                            if (Client.isAccountOfType('financial')) {
+                                $('#not_authenticated_financial').setVisibility(1);
+                                _link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
+                            }
+
+                            $not_authenticated.find('.learn_more').setVisibility(1).find('a').attr('href', _link);
+
+                            if (isIdentificationNoExpiry(Client.get('residence'))) {
+                                $('#expiry_datepicker_proofid').setVisibility(0);
+                                $('#exp_date_2').datepicker('setDate', '2099-12-31');
+                            }
+                            return _context2.abrupt('break', 87);
+
+                        case 78:
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 87);
+
+                        case 80:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 87);
+
+                        case 82:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 87);
+
+                        case 84:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 87);
+
+                        case 86:
+                            return _context2.abrupt('break', 87);
+
+                        case 87:
+                            $('#authentication_loading').setVisibility(0);
+
+                        case 88:
                         case 'end':
                             return _context2.stop();
                     }
