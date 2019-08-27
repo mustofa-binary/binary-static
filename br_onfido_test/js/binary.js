@@ -25769,11 +25769,16 @@ var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ ".
 
 var Authenticate = function () {
     var is_any_upload_failed = false;
+    var is_any_upload_failed_uns = false;
     var file_checks = {};
+    var file_checks_uns = {};
     var onfido = void 0,
         $button = void 0,
         $submit_status = void 0,
-        $submit_table = void 0;
+        $submit_table = void 0,
+        $button_uns = void 0,
+        $submit_status_uns = void 0,
+        $submit_table_uns = void 0;
 
     var init = function init() {
         file_checks = {};
@@ -25781,42 +25786,42 @@ var Authenticate = function () {
         $submit_table = $submit_status.find('table tbody');
 
         // Setup accordion
-        $('.files').accordion({
+        $('#not_authenticated .files').accordion({
             heightStyle: 'content',
             collapsible: true,
             active: false
         });
         // Setup Date picker
-        $('.date-picker').datepicker({
+        $('#not_authenticated .date-picker').datepicker({
             dateFormat: 'yy-mm-dd',
             changeMonth: true,
             changeYear: true,
             minDate: '+6m'
         });
 
-        $('.file-picker').on('change', onFileSelected);
+        $('#not_authenticated .file-picker').on('change', onFileSelected);
     };
 
     var initUnsupported = function initUnsupported() {
-        file_checks = {};
-        $submit_status = $('.submit-status');
-        $submit_table = $submit_status.find('table tbody');
+        file_checks_uns = {};
+        $submit_status_uns = $('.submit-status-uns');
+        $submit_table_uns = $submit_status_uns.find('table tbody');
 
         // Setup accordion
-        $('.files').accordion({
+        $('#not_authenticated_uns .files').accordion({
             heightStyle: 'content',
             collapsible: true,
             active: false
         });
         // Setup Date picker
-        $('.date-picker').datepicker({
+        $('#not_authenticated_uns .date-picker').datepicker({
             dateFormat: 'yy-mm-dd',
             changeMonth: true,
             changeYear: true,
             minDate: '+6m'
         });
 
-        $('.file-picker').on('change', onFileSelected);
+        $('.file-picker').on('change', onFileSelectedUns);
     };
 
     /**
@@ -25855,6 +25860,29 @@ var Authenticate = function () {
         enableDisableSubmit();
     };
 
+    var onFileSelectedUns = function onFileSelectedUns(event) {
+        if (!event.target.files || !event.target.files.length) {
+            resetLabel(event);
+            return;
+        }
+        var $target = $(event.target);
+        var file_name = event.target.files[0].name || '';
+        var display_name = file_name.length > 20 ? file_name.slice(0, 10) + '..' + file_name.slice(-8) : file_name;
+
+        $target.attr('data-status', '').parent().find('label').off('click')
+        // Prevent opening file selector.
+        .on('click', function (e) {
+            if ($(e.target).is('span.remove')) e.preventDefault();
+        }).text(display_name).removeClass('error').addClass('selected').append($('<span/>', { class: 'remove' })).find('.remove').click(function (e) {
+            if ($(e.target).is('span.remove')) resetLabelUns(event);
+        });
+
+        // Hide success message on another file selected
+        hideSuccessUns();
+        // Change submit button state
+        enableDisableSubmitUns();
+    };
+
     // Reset file-selector label
     var resetLabel = function resetLabel(event) {
         var $target = $(event.target);
@@ -25867,6 +25895,20 @@ var Authenticate = function () {
         $target.val('').parent().find('label').text(default_text).removeClass('selected error').append($('<span/>', { class: 'add' }));
         // Change submit button state
         enableDisableSubmit();
+    };
+
+    // Reset file-selector label
+    var resetLabelUns = function resetLabelUns(event) {
+        var $target = $(event.target);
+        var default_text = toTitleCase($target.attr('id').split('_')[0]);
+        if (default_text !== 'Add') {
+            default_text = default_text === 'Back' ? localize('Reverse Side') : localize('Front Side');
+        }
+        fileTracker($target, false);
+        // Remove previously selected file and set the label
+        $target.val('').parent().find('label').text(default_text).removeClass('selected error').append($('<span/>', { class: 'add' }));
+        // Change submit button state
+        enableDisableSubmitUns();
     };
 
     /**
@@ -25894,6 +25936,31 @@ var Authenticate = function () {
         }
     };
 
+    /**
+     * Enables the submit button if any file is selected, also adds the event handler for the button.
+     * Disables the button if it no files are selected.
+     */
+    var enableDisableSubmitUns = function enableDisableSubmitUns() {
+        var $not_authenticated = $('#authentication-message-uns > div#not_authenticated_uns');
+        var $files = $not_authenticated.find('input[type="file"]');
+        $button = $not_authenticated.find('#btn_submit_uns');
+
+        var file_selected = $('label[class~="selected"]').length;
+        var has_file_error = $('label[class~="error"]').length;
+
+        if (file_selected && !has_file_error) {
+            if ($button.hasClass('button')) return;
+            $('#resolve_error').setVisibility(0);
+            $button.removeClass('button-disabled').addClass('button').off('click') // To avoid binding multiple click events
+            .click(function () {
+                return submitFilesUns($files);
+            });
+        } else {
+            if ($button.hasClass('button-disabled')) return;
+            $button.removeClass('button').addClass('button-disabled').off('click');
+        }
+    };
+
     var showButtonLoading = function showButtonLoading() {
         if ($button.length && !$button.find('.barspinner').length) {
             var $btn_text = $('<span/>', { text: $button.find('span').text(), class: 'invisible' });
@@ -25902,9 +25969,23 @@ var Authenticate = function () {
         }
     };
 
+    var showButtonLoadingUns = function showButtonLoadingUns() {
+        if ($button_uns.length && !$button_uns.find('.barspinner').length) {
+            var $btn_text = $('<span/>', { text: $button_uns.find('span').text(), class: 'invisible' });
+            showLoadingImage($button_uns.find('span'), 'white');
+            $button_uns.find('span').append($btn_text);
+        }
+    };
+
     var removeButtonLoading = function removeButtonLoading() {
         if ($button.length && $button.find('.barspinner').length) {
             $button.find('>span').html($button.find('>span>span').text());
+        }
+    };
+
+    var removeButtonLoadingUns = function removeButtonLoadingUns() {
+        if ($button_uns.length && $button_uns.find('.barspinner').length) {
+            $button_uns.find('>span').html($button_uns.find('>span>span').text());
         }
     };
 
@@ -25959,6 +26040,57 @@ var Authenticate = function () {
         processFiles(files);
     };
 
+    /**
+     * On submit button click
+     */
+    var submitFilesUns = function submitFilesUns($files) {
+        if ($button_uns.length && $button_uns.find('.barspinner').length) {
+            // it's still in submit process
+            return;
+        }
+        // Disable submit button
+        showButtonLoadingUns();
+        var files = [];
+        is_any_upload_failed_uns = false;
+        $submit_table_uns.children().remove();
+        $files.each(function (i, e) {
+            if (e.files && e.files.length) {
+                var $e = $(e);
+                var id = $e.attr('id');
+                var type = '' + ($e.attr('data-type') || '').replace(/\s/g, '_').toLowerCase();
+                var name = $e.attr('data-name');
+                var page_type = $e.attr('data-page-type');
+                var $inputs = $e.closest('.fields').find('input[type="text"]');
+                var file_obj = {
+                    file: e.files[0],
+                    chunkSize: 16384, // any higher than this sends garbage data to websocket currently.
+                    class: id,
+                    type: type,
+                    name: name,
+                    page_type: page_type
+                };
+                if ($inputs.length) {
+                    file_obj.id_number = $($inputs[0]).val();
+                    file_obj.exp_date = $($inputs[1]).val();
+                }
+                fileTrackerUns($e, true);
+                files.push(file_obj);
+
+                var display_name = name;
+                if (/front|back/.test(id)) {
+                    display_name += ' - ' + (/front/.test(id) ? localize('Front Side') : localize('Reverse Side'));
+                }
+
+                $submit_table_uns.append($('<tr/>', { id: file_obj.type, class: id }).append($('<td/>', { text: display_name })) // document type, e.g. Passport - Front Side
+                .append($('<td/>', { text: e.files[0].name, class: 'filename' })) // file name, e.g. sample.pdf
+                .append($('<td/>', { text: localize('Pending'), class: 'status' })) // status of uploading file, first set to Pending
+                );
+            }
+        });
+        $submit_status_uns.setVisibility(1);
+        processFilesUns(files);
+    };
+
     var processFiles = function processFiles(files) {
         var uploader = new DocumentUploader({ connection: BinarySocket.get() }); // send 'debug: true' here for debugging
         var idx_to_upload = 0;
@@ -25996,6 +26128,61 @@ var Authenticate = function () {
                         uploadNextFile();
                     }).catch(function (error) {
                         is_any_upload_failed = true;
+                        showError({
+                            message: error.message || localize('Failed'),
+                            class: error.passthrough ? error.passthrough.class : ''
+                        });
+                        uploadNextFile();
+                    });
+                };
+                var uploadNextFile = function uploadNextFile() {
+                    if (!isLastUpload()) {
+                        idx_to_upload += 1;
+                        uploadFile();
+                    }
+                };
+                uploadFile();
+            });
+        });
+    };
+
+    var processFilesUns = function processFilesUns(files) {
+        var uploader = new DocumentUploader({ connection: BinarySocket.get() }); // send 'debug: true' here for debugging
+        var idx_to_upload = 0;
+        var is_any_file_error = false;
+
+        compressImageFiles(files).then(function (files_to_process) {
+            readFilesUns(files_to_process).then(function (processed_files) {
+                processed_files.forEach(function (file) {
+                    if (file.message) {
+                        is_any_file_error = true;
+                        showErrorUns(file);
+                    }
+                });
+                var total_to_upload = processed_files.length;
+                if (is_any_file_error || !total_to_upload) {
+                    removeButtonLoadingUns();
+                    enableDisableSubmitUns();
+                    return; // don't start submitting files until all front-end validation checks pass
+                }
+
+                var isLastUpload = function isLastUpload() {
+                    return total_to_upload === idx_to_upload + 1;
+                };
+                // sequentially send files
+                var uploadFile = function uploadFile() {
+                    var $status = $submit_table_uns.find('.' + processed_files[idx_to_upload].passthrough.class + ' .status');
+                    $status.text(localize('Submitting') + '...');
+                    uploader.upload(processed_files[idx_to_upload]).then(function (api_response) {
+                        onResponseUns(api_response, isLastUpload());
+                        if (!api_response.error && !api_response.warning) {
+                            $status.text(localize('Submitted')).append($('<span/>', { class: 'checked' }));
+                            $('#' + api_response.passthrough.class).attr('type', 'hidden'); // don't allow users to change submitted files
+                            $('label[for=' + api_response.passthrough.class + ']').removeClass('selected error').find('span').attr('class', 'checked');
+                        }
+                        uploadNextFile();
+                    }).catch(function (error) {
+                        is_any_upload_failed_uns = true;
                         showError({
                             message: error.message || localize('Failed'),
                             class: error.passthrough ? error.passthrough.class : ''
@@ -26097,6 +26284,62 @@ var Authenticate = function () {
         return Promise.all(promises);
     };
 
+    // Returns file promise.
+    var readFilesUns = function readFilesUns(files) {
+        var promises = [];
+        files.forEach(function (f) {
+            var fr = new FileReader();
+            var promise = new Promise(function (resolve) {
+                fr.onload = function () {
+                    var $status = $submit_table_uns.find('.' + f.class + ' .status');
+                    $status.text(localize('Checking') + '...');
+
+                    var format = (f.file.type.split('/')[1] || (f.file.name.match(/\.([\w\d]+)$/) || [])[1] || '').toUpperCase();
+                    var obj = {
+                        filename: f.file.name,
+                        buffer: fr.result,
+                        documentType: f.type,
+                        pageType: f.page_type,
+                        documentFormat: format,
+                        documentId: f.id_number || undefined,
+                        expirationDate: f.exp_date || undefined,
+                        chunkSize: f.chunkSize,
+                        passthrough: {
+                            filename: f.file.name,
+                            name: f.name,
+                            class: f.class
+                        }
+                    };
+
+                    var error = { message: validate(obj) };
+                    if (error && error.message) {
+                        resolve({
+                            message: error.message,
+                            class: f.class
+                        });
+                    } else {
+                        $status.text(localize('Checked')).append($('<span/>', { class: 'checked' }));
+                    }
+
+                    resolve(obj);
+                };
+
+                fr.onerror = function () {
+                    resolve({
+                        message: localize('Unable to read file [_1]', f.file.name),
+                        class: f.class
+                    });
+                };
+                // Reading file.
+                fr.readAsArrayBuffer(f.file);
+            });
+
+            promises.push(promise);
+        });
+
+        return Promise.all(promises);
+    };
+
     var fileTracker = function fileTracker($e, selected) {
         var doc_type = ($e.attr('data-type') || '').replace(/\s/g, '_').toLowerCase();
         var file_type = ($e.attr('id').match(/\D+/g) || [])[0];
@@ -26106,6 +26349,18 @@ var Authenticate = function () {
             file_checks[doc_type][file_type] = true;
         } else if (file_checks[doc_type]) {
             file_checks[doc_type][file_type] = false;
+        }
+    };
+
+    var fileTrackerUns = function fileTrackerUns($e, selected) {
+        var doc_type = ($e.attr('data-type') || '').replace(/\s/g, '_').toLowerCase();
+        var file_type = ($e.attr('id').match(/\D+/g) || [])[0];
+        // Keep track of front and back sides of files.
+        if (selected) {
+            file_checks_uns[doc_type] = file_checks_uns[doc_type] || {};
+            file_checks_uns[doc_type][file_type] = true;
+        } else if (file_checks_uns[doc_type]) {
+            file_checks_uns[doc_type][file_type] = false;
         }
     };
 
@@ -26165,6 +26420,21 @@ var Authenticate = function () {
         enableDisableSubmit();
     };
 
+    var showErrorUns = function showErrorUns(obj_error) {
+        removeButtonLoadingUns();
+        var $error = $('#msg_form_uns');
+        var $file_error = $submit_table_uns.find('.' + obj_error.class + ' .status');
+        var message = obj_error.message;
+        if ($file_error.length) {
+            $file_error.text(message).addClass('error-msg');
+            $('label[for=' + obj_error.class + ']').addClass('error');
+            $('#resolve_error_uns').setVisibility(1);
+        } else {
+            $error.text(message).setVisibility(1);
+        }
+        enableDisableSubmitUns();
+    };
+
     var showSuccess = function showSuccess() {
         BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
             Header.displayAccountStatus();
@@ -26177,11 +26447,30 @@ var Authenticate = function () {
         }, 3000);
     };
 
+    var showSuccessUns = function showSuccessUns() {
+        BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+            Header.displayAccountStatus();
+        });
+        setTimeout(function () {
+            removeButtonLoadingUns();
+            $button_uns.setVisibility(0);
+            $('.submit-status-uns').setVisibility(0);
+            $('#pending_poi_uns').setVisibility(1);
+        }, 3000);
+    };
+
     var hideSuccess = function hideSuccess() {
         if ($button) {
             $button.setVisibility(1);
         }
         $('#pending_poa').setVisibility(0);
+    };
+
+    var hideSuccessUns = function hideSuccessUns() {
+        if ($button_uns) {
+            $button_uns.setVisibility(1);
+        }
+        $('#pending_poi_uns').setVisibility(0);
     };
 
     var onResponse = function onResponse(response, is_last_upload) {
@@ -26193,6 +26482,18 @@ var Authenticate = function () {
             });
         } else if (is_last_upload && !is_any_upload_failed) {
             showSuccess();
+        }
+    };
+
+    var onResponseUns = function onResponseUns(response, is_last_upload) {
+        if (response.warning || response.error) {
+            is_any_upload_failed = true;
+            showError({
+                message: response.message || (response.error ? response.error.message : localize('Failed')),
+                class: response.passthrough.class
+            });
+        } else if (is_last_upload && !is_any_upload_failed_uns) {
+            showSuccessUns();
         }
     };
 
@@ -26211,7 +26512,7 @@ var Authenticate = function () {
     };
 
     var getOnfidoServiceToken = function getOnfidoServiceToken() {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             var onfido_cookie = Cookies.get('onfido_token');
             if (onfido_cookie) {
                 resolve(onfido_cookie);
@@ -26221,7 +26522,11 @@ var Authenticate = function () {
                     service: 'onfido'
                 }).then(function (response) {
                     console.log(response); // eslint-disable-line
-                    if (response.error || !response.service_token) reject(Error(response.error.message));
+                    if (response.error || !response.service_token) {
+                        resolve(response.error.code);
+                        return;
+                    }
+                    console.log('shouldnt be going here'); //eslint-disable-line
                     var token = response.service_token.token;
                     var in_90_minutes = 1 / 16;
                     Cookies.set('onfido_token', token, {
@@ -26255,14 +26560,7 @@ var Authenticate = function () {
                                     token: sdk_token,
                                     useModal: false,
                                     onComplete: handleComplete,
-                                    steps: [{
-                                        type: 'welcome',
-                                        options: {
-                                            title: localize('Verify it\'s you'),
-                                            nextButton: localize('Submit button'),
-                                            descriptions: [localize('Please verify your identity. This will only take a couple of minutes.')]
-                                        }
-                                    }, 'document', 'face']
+                                    steps: ['document', 'face']
                                 });
                                 $('#authentication_loading').setVisibility(0);
                             } catch (err) {
@@ -26313,15 +26611,18 @@ var Authenticate = function () {
                         case 5:
                             onfido_token = _context2.sent;
 
+
+                            console.log('should be here'); //eslint-disable-line
+
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 9;
+                                _context2.next = 10;
                                 break;
                             }
 
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 9:
+                        case 10:
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
@@ -26329,28 +26630,28 @@ var Authenticate = function () {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
-                            if (needs_verification.length === 2) {
+                            if (needs_verification.length === 2 && onfido_token !== 'UnsupportedCountry') {
                                 $('#poi').removeClass('invisible');
                                 $('#poa').removeClass('invisible');
                             }
 
                             if (!needs_verification.includes('identity')) {
-                                _context2.next = 58;
+                                _context2.next = 59;
                                 break;
                             }
 
-                            if (!(onfido_token.error === 'UnsupportedCountry')) {
-                                _context2.next = 39;
+                            if (!(onfido_token === 'UnsupportedCountry')) {
+                                _context2.next = 40;
                                 break;
                             }
 
                             $('#poi_uns').removeClass('invisible');
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 18 : _context2.t0 === 'pending' ? 28 : _context2.t0 === 'rejected' ? 30 : _context2.t0 === 'suspected' ? 32 : _context2.t0 === 'verified' ? 34 : 36;
+                            _context2.next = _context2.t0 === 'none' ? 19 : _context2.t0 === 'pending' ? 29 : _context2.t0 === 'rejected' ? 31 : _context2.t0 === 'suspected' ? 33 : _context2.t0 === 'verified' ? 35 : 37;
                             break;
 
-                        case 18:
+                        case 19:
                             initUnsupported();
                             $('#not_authenticated_uns').setVisibility(1);
                             language = getLanguage();
@@ -26370,91 +26671,91 @@ var Authenticate = function () {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 37);
+                            return _context2.abrupt('break', 38);
 
-                        case 28:
+                        case 29:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 37);
+                            return _context2.abrupt('break', 38);
 
-                        case 30:
+                        case 31:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 37);
+                            return _context2.abrupt('break', 38);
 
-                        case 32:
+                        case 33:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 37);
+                            return _context2.abrupt('break', 38);
 
-                        case 34:
+                        case 35:
                             $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 37);
-
-                        case 36:
-                            return _context2.abrupt('break', 37);
+                            return _context2.abrupt('break', 38);
 
                         case 37:
-                            _context2.next = 58;
+                            return _context2.abrupt('break', 38);
+
+                        case 38:
+                            _context2.next = 59;
                             break;
 
-                        case 39:
+                        case 40:
                             $('#poi').removeClass('invisible');
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 57;
+                                _context2.next = 58;
                                 break;
                             }
 
                             _context2.t1 = identity.status;
-                            _context2.next = _context2.t1 === 'none' ? 44 : _context2.t1 === 'pending' ? 46 : _context2.t1 === 'rejected' ? 48 : _context2.t1 === 'verified' ? 50 : _context2.t1 === 'suspected' ? 52 : 54;
+                            _context2.next = _context2.t1 === 'none' ? 45 : _context2.t1 === 'pending' ? 47 : _context2.t1 === 'rejected' ? 49 : _context2.t1 === 'verified' ? 51 : _context2.t1 === 'suspected' ? 53 : 55;
                             break;
 
-                        case 44:
+                        case 45:
                             initOnfido(onfido_token);
-                            return _context2.abrupt('break', 55);
+                            return _context2.abrupt('break', 56);
 
-                        case 46:
+                        case 47:
                             $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 55);
+                            return _context2.abrupt('break', 56);
 
-                        case 48:
+                        case 49:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 55);
+                            return _context2.abrupt('break', 56);
 
-                        case 50:
+                        case 51:
                             if (document.status === 'verified') {
                                 $('#authentication_verified').setVisibility(1);
                                 $('#authentication_tab').setVisibility(0);
                             } else {
                                 $('#verified').setVisibility(1);
                             }
-                            return _context2.abrupt('break', 55);
+                            return _context2.abrupt('break', 56);
 
-                        case 52:
+                        case 53:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 55);
-
-                        case 54:
-                            return _context2.abrupt('break', 55);
+                            return _context2.abrupt('break', 56);
 
                         case 55:
-                            _context2.next = 58;
+                            return _context2.abrupt('break', 56);
+
+                        case 56:
+                            _context2.next = 59;
                             break;
 
-                        case 57:
+                        case 58:
                             initOnfido();
 
-                        case 58:
+                        case 59:
                             if (!needs_verification.includes('document')) {
-                                _context2.next = 83;
+                                _context2.next = 84;
                                 break;
                             }
 
                             $('#poa').removeClass('invisible');
 
                             _context2.t2 = document.status;
-                            _context2.next = _context2.t2 === 'none' ? 63 : _context2.t2 === 'pending' ? 74 : _context2.t2 === 'rejected' ? 76 : _context2.t2 === 'suspected' ? 78 : _context2.t2 === 'verified' ? 80 : 82;
+                            _context2.next = _context2.t2 === 'none' ? 64 : _context2.t2 === 'pending' ? 75 : _context2.t2 === 'rejected' ? 77 : _context2.t2 === 'suspected' ? 79 : _context2.t2 === 'verified' ? 81 : 83;
                             break;
 
-                        case 63:
+                        case 64:
                             init();
                             $('#not_authenticated').setVisibility(1);
                             _language = getLanguage();
@@ -26476,31 +26777,32 @@ var Authenticate = function () {
                                 $('#expiry_datepicker_proofid').setVisibility(0);
                                 $('#exp_date_2').datepicker('setDate', '2099-12-31');
                             }
-                            return _context2.abrupt('break', 83);
+                            return _context2.abrupt('break', 84);
 
-                        case 74:
+                        case 75:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 83);
+                            return _context2.abrupt('break', 84);
 
-                        case 76:
+                        case 77:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 83);
+                            return _context2.abrupt('break', 84);
 
-                        case 78:
+                        case 79:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 83);
+                            return _context2.abrupt('break', 84);
 
-                        case 80:
+                        case 81:
                             $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 83);
-
-                        case 82:
-                            return _context2.abrupt('break', 83);
+                            return _context2.abrupt('break', 84);
 
                         case 83:
-                            $('#authentication_loading').setVisibility(0);
+                            return _context2.abrupt('break', 84);
 
                         case 84:
+                            $('#authentication_loading').setVisibility(0);
+                            TabSelector.repositionSelector();
+
+                        case 86:
                         case 'end':
                             return _context2.stop();
                     }
