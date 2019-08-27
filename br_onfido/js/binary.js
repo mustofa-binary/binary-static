@@ -25862,7 +25862,7 @@ var Authenticate = function () {
 
     var onFileSelectedUns = function onFileSelectedUns(event) {
         if (!event.target.files || !event.target.files.length) {
-            resetLabel(event);
+            resetLabelUns(event);
             return;
         }
         var $target = $(event.target);
@@ -25943,21 +25943,21 @@ var Authenticate = function () {
     var enableDisableSubmitUns = function enableDisableSubmitUns() {
         var $not_authenticated = $('#authentication_message_uns > div#not_authenticated_uns');
         var $files = $not_authenticated.find('input[type="file"]');
-        $button = $not_authenticated.find('#btn_submit_uns');
+        $button_uns = $not_authenticated.find('#btn_submit_uns');
 
         var file_selected = $('label[class~="selected"]').length;
         var has_file_error = $('label[class~="error"]').length;
 
         if (file_selected && !has_file_error) {
-            if ($button.hasClass('button')) return;
+            if ($button_uns.hasClass('button')) return;
             $('#resolve_error').setVisibility(0);
-            $button.removeClass('button-disabled').addClass('button').off('click') // To avoid binding multiple click events
+            $button_uns.removeClass('button-disabled').addClass('button').off('click') // To avoid binding multiple click events
             .click(function () {
                 return submitFilesUns($files);
             });
         } else {
-            if ($button.hasClass('button-disabled')) return;
-            $button.removeClass('button').addClass('button-disabled').off('click');
+            if ($button_uns.hasClass('button-disabled')) return;
+            $button_uns.removeClass('button').addClass('button-disabled').off('click');
         }
     };
 
@@ -26151,7 +26151,7 @@ var Authenticate = function () {
         var idx_to_upload = 0;
         var is_any_file_error = false;
 
-        compressImageFiles(files).then(function (files_to_process) {
+        compressImageFilesUns(files).then(function (files_to_process) {
             readFilesUns(files_to_process).then(function (processed_files) {
                 processed_files.forEach(function (file) {
                     if (file.message) {
@@ -26183,7 +26183,7 @@ var Authenticate = function () {
                         uploadNextFile();
                     }).catch(function (error) {
                         is_any_upload_failed_uns = true;
-                        showError({
+                        showErrorUns({
                             message: error.message || localize('Failed'),
                             class: error.passthrough ? error.passthrough.class : ''
                         });
@@ -26208,6 +26208,33 @@ var Authenticate = function () {
                 if (isImageType(f.file.name)) {
                     var $status = $submit_table.find('.' + f.class + ' .status');
                     var $filename = $submit_table.find('.' + f.class + ' .filename');
+                    $status.text(localize('Compressing Image') + '...');
+
+                    ConvertToBase64(f.file).then(function (img) {
+                        CompressImage(img).then(function (compressed_img) {
+                            var file_arr = f;
+                            file_arr.file = compressed_img;
+                            $filename.text(file_arr.file.name);
+                            resolve(file_arr);
+                        });
+                    });
+                } else {
+                    resolve(f);
+                }
+            });
+            promises.push(promise);
+        });
+
+        return Promise.all(promises);
+    };
+
+    var compressImageFilesUns = function compressImageFilesUns(files) {
+        var promises = [];
+        files.forEach(function (f) {
+            var promise = new Promise(function (resolve) {
+                if (isImageType(f.file.name)) {
+                    var $status = $submit_table_uns.find('.' + f.class + ' .status');
+                    var $filename = $submit_table_uns.find('.' + f.class + ' .filename');
                     $status.text(localize('Compressing Image') + '...');
 
                     ConvertToBase64(f.file).then(function (img) {
@@ -26487,7 +26514,7 @@ var Authenticate = function () {
 
     var onResponseUns = function onResponseUns(response, is_last_upload) {
         if (response.warning || response.error) {
-            is_any_upload_failed = true;
+            is_any_upload_failed_uns = true;
             showError({
                 message: response.message || (response.error ? response.error.message : localize('Failed')),
                 class: response.passthrough.class
