@@ -11138,7 +11138,7 @@ var Header = function () {
                     needs_verification = State.getResponse('get_account_status.authentication.needs_verification') || [];
                     get_account_status = State.getResponse('get_account_status') || {};
                     status = get_account_status.status;
-                    if (Client.get('landing_company_shortcode') === 'maltainvest') {
+                    if (Client.get('landing_company_shortcode') === 'maltainvest' || Client.get('landing_company_shortcode') === 'malta') {
                         checkStatus(check_statuses_mf);
                     } else {
                         checkStatus(check_statuses_real);
