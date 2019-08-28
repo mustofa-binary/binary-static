@@ -26685,7 +26685,7 @@ var Authenticate = function () {
                     {
                         if (needs_poa) {
                             $('#redirect_' + type).setVisibility(1);
-                            $('#trading_' + type + ' .button').on('click', function () {
+                            $('#redirect_' + type + ' .button').on('click', function () {
                                 BinaryPjax.load(Url.urlFor('user/authenticate') + '?authentication_tab=poa');
                             });
                         } else {
