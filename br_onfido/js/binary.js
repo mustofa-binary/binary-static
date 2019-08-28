@@ -10676,6 +10676,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var BinaryPjax = __webpack_require__(/*! ./binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
@@ -11026,7 +11027,7 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Please set your [_1]30-day turnover limit[_2] to remove deposit limits.'), 'user/security/self_exclusionws');
                 },
                 identity: function identity() {
-                    return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Identity[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate', '?authentication_tab=poi');
+                    return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Identity[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate', '?authentication_tab=' + (Cookies.get('is_onfido_unsupported') ? 'poi_uns' : 'poi'));
                 },
                 mf_retail: function mf_retail() {
                     return buildMessage(localizeKeepPlaceholders('Binary Options Trading has been disabled on your account. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
@@ -11429,6 +11430,8 @@ module.exports = NetworkMonitor;
 "use strict";
 
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/client.js");
@@ -11503,51 +11506,108 @@ var Page = function () {
         });
     };
 
-    var onLoad = function onLoad() {
-        if (State.get('is_loaded_by_pjax')) {
-            Url.reset();
-            updateLinksURL('#content');
-        } else {
-            init();
-            if (!isLoginPages()) {
-                Language.setCookie(Language.urlLang());
+    var onLoad = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            if (!State.get('is_loaded_by_pjax')) {
+                                _context.next = 5;
+                                break;
+                            }
 
-                if (!ClientBase.get('is_virtual')) {
-                    // TODO: uncomment below to enable interview popup dialog
-                    // InterviewPopup.onLoad();
+                            Url.reset();
+                            updateLinksURL('#content');
+                            _context.next = 16;
+                            break;
+
+                        case 5:
+                            init();
+                            if (!isLoginPages()) {
+                                Language.setCookie(Language.urlLang());
+
+                                if (!ClientBase.get('is_virtual')) {
+                                    // TODO: uncomment below to enable interview popup dialog
+                                    // InterviewPopup.onLoad();
+                                }
+                            }
+                            _context.next = 9;
+                            return getOnfidoServiceToken();
+
+                        case 9:
+                            Header.onLoad();
+                            Footer.onLoad();
+                            Language.setCookie();
+                            Menu.makeMobileMenu();
+                            updateLinksURL('body');
+                            recordAffiliateExposure();
+                            endpointNotification();
+
+                        case 16:
+                            Contents.onLoad();
+
+                            if (sessionStorage.getItem('showLoginPage')) {
+                                sessionStorage.removeItem('showLoginPage');
+                                Login.redirectToLogin();
+                            }
+                            if (Client.isLoggedIn()) {
+                                BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
+                                    RealityCheck.onLoad();
+                                    Menu.init();
+                                });
+                            } else {
+                                Menu.init();
+                                if (!LocalStore.get('date_first_contact')) {
+                                    BinarySocket.wait('time').then(function (response) {
+                                        LocalStore.set('date_first_contact', toISOFormat(moment(response.time * 1000).utc()));
+                                    });
+                                }
+                                if (!LocalStore.get('signup_device')) {
+                                    LocalStore.set('signup_device', isMobile() ? 'mobile' : 'desktop');
+                                }
+                            }
+                            TrafficSource.setData();
+
+                        case 20:
+                        case 'end':
+                            return _context.stop();
+                    }
                 }
-            }
-            Header.onLoad();
-            Footer.onLoad();
-            Language.setCookie();
-            Menu.makeMobileMenu();
-            updateLinksURL('body');
-            recordAffiliateExposure();
-            endpointNotification();
-        }
-        Contents.onLoad();
+            }, _callee, undefined);
+        }));
 
-        if (sessionStorage.getItem('showLoginPage')) {
-            sessionStorage.removeItem('showLoginPage');
-            Login.redirectToLogin();
-        }
-        if (Client.isLoggedIn()) {
-            BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
-                RealityCheck.onLoad();
-                Menu.init();
-            });
-        } else {
-            Menu.init();
-            if (!LocalStore.get('date_first_contact')) {
-                BinarySocket.wait('time').then(function (response) {
-                    LocalStore.set('date_first_contact', toISOFormat(moment(response.time * 1000).utc()));
+        return function onLoad() {
+            return _ref.apply(this, arguments);
+        };
+    }();
+
+    var getOnfidoServiceToken = function getOnfidoServiceToken() {
+        return new Promise(function (resolve) {
+            var onfido_cookie = Cookies.get('onfido_token');
+
+            if (!onfido_cookie) {
+                BinarySocket.send({
+                    service_token: 1,
+                    service: 'onfido'
+                }).then(function (response) {
+                    if (response.error || !response.service_token) {
+                        if (response.error.code === 'UnsupportedCountry') {
+                            Cookies.set('is_onfido_unsupported', true);
+                        }
+                        resolve();
+                        return;
+                    }
+                    var token = response.service_token.token;
+                    var in_90_minutes = 1 / 16;
+                    Cookies.set('onfido_token', token, {
+                        expires: in_90_minutes,
+                        secure: true
+                    });
                 });
             }
-            if (!LocalStore.get('signup_device')) {
-                LocalStore.set('signup_device', isMobile() ? 'mobile' : 'desktop');
-            }
-        }
-        TrafficSource.setData();
+            resolve();
+        });
     };
 
     var recordAffiliateExposure = function recordAffiliateExposure() {
@@ -25744,6 +25804,7 @@ var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/jav
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
+var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var CompressImage = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").compressImg;
 var ConvertToBase64 = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").convertToBase64;
 var isImageType = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").isImageType;
@@ -26561,34 +26622,6 @@ var Authenticate = function () {
         });
     };
 
-    var getOnfidoServiceToken = function getOnfidoServiceToken() {
-        return new Promise(function (resolve) {
-            var onfido_cookie = Cookies.get('onfido_token');
-            if (onfido_cookie) {
-                resolve(onfido_cookie);
-            } else {
-                BinarySocket.send({
-                    service_token: 1,
-                    service: 'onfido'
-                }).then(function (response) {
-                    console.log(response); // eslint-disable-line
-                    if (response.error || !response.service_token) {
-                        resolve(response.error.code);
-                        return;
-                    }
-                    console.log('shouldnt be going here'); //eslint-disable-line
-                    var token = response.service_token.token;
-                    var in_90_minutes = 1 / 16;
-                    Cookies.set('onfido_token', token, {
-                        expires: in_90_minutes,
-                        secure: true
-                    });
-                    resolve(token);
-                });
-            }
-        });
-    };
-
     var initOnfido = function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token) {
             return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -26715,24 +26748,19 @@ var Authenticate = function () {
 
                         case 2:
                             authentication_status = _context2.sent;
-                            _context2.next = 5;
-                            return getOnfidoServiceToken();
+                            onfido_token = Cookies.get('onfido_token');
 
-                        case 5:
-                            onfido_token = _context2.sent;
-
-
-                            console.log('should be here'); //eslint-disable-line
+                            onfido_unsupported = Cookies.get('is_onfido_unsupported');
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 10;
+                                _context2.next = 8;
                                 break;
                             }
 
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 10:
+                        case 8:
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
 
 
@@ -26740,9 +26768,10 @@ var Authenticate = function () {
                                 BinaryPjax.load(Url.urlFor('user/settingsws'));
                             }
 
-                            if (needs_verification.length === 2 && onfido_token !== 'UnsupportedCountry') {
+                            if (needs_verification.length === 2 && !onfido_unsupported) {
                                 $('#poi').removeClass('invisible');
                                 $('#poa').removeClass('invisible');
+                                TabSelector.slideSelector('authentication_tab_selector', getElementById('poi'));
                             }
 
                             if (identity.status === 'verified' && document.status === 'verified') {
@@ -26751,100 +26780,100 @@ var Authenticate = function () {
                             }
 
                             if (!needs_verification.includes('identity')) {
-                                _context2.next = 54;
-                                break;
-                            }
-
-                            if (!(onfido_token === 'UnsupportedCountry')) {
-                                _context2.next = 35;
-                                break;
-                            }
-
-                            onfido_unsupported = true;
-                            $('#poi_uns').removeClass('invisible');
-
-                            _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 21 : _context2.t0 === 'pending' ? 24 : _context2.t0 === 'rejected' ? 26 : _context2.t0 === 'suspected' ? 28 : _context2.t0 === 'verified' ? 30 : 32;
-                            break;
-
-                        case 21:
-                            initUnsupported();
-                            $('#not_authenticated_uns').setVisibility(1);
-                            return _context2.abrupt('break', 33);
-
-                        case 24:
-                            $('#pending_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 33);
-
-                        case 26:
-                            $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 33);
-
-                        case 28:
-                            $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 33);
-
-                        case 30:
-                            $('#verified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 33);
-
-                        case 32:
-                            return _context2.abrupt('break', 33);
-
-                        case 33:
-                            _context2.next = 54;
-                            break;
-
-                        case 35:
-                            $('#poi').removeClass('invisible');
-
-                            if (identity.further_resubmissions_allowed) {
                                 _context2.next = 53;
                                 break;
                             }
 
-                            _context2.t1 = identity.status;
-                            _context2.next = _context2.t1 === 'none' ? 40 : _context2.t1 === 'pending' ? 42 : _context2.t1 === 'rejected' ? 44 : _context2.t1 === 'verified' ? 46 : _context2.t1 === 'suspected' ? 48 : 50;
+                            if (!onfido_unsupported) {
+                                _context2.next = 33;
+                                break;
+                            }
+
+                            $('#poi_uns').removeClass('invisible');
+                            TabSelector.slideSelector('authentication_tab_selector', getElementById('poi_uns'));
+                            _context2.t0 = identity.status;
+                            _context2.next = _context2.t0 === 'none' ? 19 : _context2.t0 === 'pending' ? 22 : _context2.t0 === 'rejected' ? 24 : _context2.t0 === 'suspected' ? 26 : _context2.t0 === 'verified' ? 28 : 30;
                             break;
 
-                        case 40:
+                        case 19:
+                            initUnsupported();
+                            $('#not_authenticated_uns').setVisibility(1);
+                            return _context2.abrupt('break', 31);
+
+                        case 22:
+                            $('#pending_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 31);
+
+                        case 24:
+                            $('#unverified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 31);
+
+                        case 26:
+                            $('#unverified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 31);
+
+                        case 28:
+                            $('#verified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 31);
+
+                        case 30:
+                            return _context2.abrupt('break', 31);
+
+                        case 31:
+                            _context2.next = 53;
+                            break;
+
+                        case 33:
+                            $('#poi').removeClass('invisible');
+                            TabSelector.slideSelector('authentication_tab_selector', getElementById('poi'));
+
+                            if (identity.further_resubmissions_allowed) {
+                                _context2.next = 52;
+                                break;
+                            }
+
+                            _context2.t1 = identity.status;
+                            _context2.next = _context2.t1 === 'none' ? 39 : _context2.t1 === 'pending' ? 41 : _context2.t1 === 'rejected' ? 43 : _context2.t1 === 'verified' ? 45 : _context2.t1 === 'suspected' ? 47 : 49;
+                            break;
+
+                        case 39:
                             initOnfido(onfido_token);
-                            return _context2.abrupt('break', 51);
+                            return _context2.abrupt('break', 50);
 
-                        case 42:
+                        case 41:
                             $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 51);
+                            return _context2.abrupt('break', 50);
 
-                        case 44:
+                        case 43:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 51);
+                            return _context2.abrupt('break', 50);
 
-                        case 46:
+                        case 45:
                             $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 51);
+                            return _context2.abrupt('break', 50);
 
-                        case 48:
+                        case 47:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 51);
+                            return _context2.abrupt('break', 50);
+
+                        case 49:
+                            return _context2.abrupt('break', 50);
 
                         case 50:
-                            return _context2.abrupt('break', 51);
-
-                        case 51:
-                            _context2.next = 54;
+                            _context2.next = 53;
                             break;
 
-                        case 53:
+                        case 52:
                             initOnfido();
 
-                        case 54:
+                        case 53:
                             if (!needs_verification.includes('document')) {
                                 _context2.next = 71;
                                 break;
                             }
 
                             $('#poa').removeClass('invisible');
-
+                            TabSelector.slideSelector('authentication_tab_selector', getElementById('poa'));
                             _context2.t2 = document.status;
                             _context2.next = _context2.t2 === 'none' ? 59 : _context2.t2 === 'pending' ? 62 : _context2.t2 === 'rejected' ? 64 : _context2.t2 === 'suspected' ? 66 : _context2.t2 === 'verified' ? 68 : 70;
                             break;
@@ -27875,10 +27904,12 @@ module.exports = ProfitTableUI;
 "use strict";
 
 
+var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
+var urlFor = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 
 var Settings = function () {
     var onLoad = function onLoad() {
@@ -27889,6 +27920,16 @@ var Settings = function () {
             var authentication = State.getResponse('get_account_status.authentication') || {};
             if (!/social_signup/.test(status)) {
                 $('#change_password').setVisibility(1);
+            }
+
+            if (authentication.needs_verification.includes('identity')) {
+                if (Cookies.get('is_onfido_unsupported')) {
+                    $('#authenticate a').attr('href', urlFor('user/authenticate') + '?authentication_tab=poi_uns');
+                } else {
+                    $('#authenticate a').attr('href', urlFor('user/authenticate') + '?authentication_tab=poi');
+                }
+            } else {
+                $('#authenticate a').attr('href', urlFor('user/authenticate') + '?authentication_tab=poa');
             }
 
             if (authentication.identity.status === 'verified' && authentication.document.status === 'verified') {
