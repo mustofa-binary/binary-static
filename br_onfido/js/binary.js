@@ -11016,7 +11016,7 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Address[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 unauthenticated: function unauthenticated() {
-                    return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Address and Proof of Identity[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate');
+                    return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Address and Proof of Identity[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate', '?authentication_tab=' + (Cookies.get('is_onfido_unsupported') ? 'poi_uns' : 'poi'));
                 },
                 excluded_until: function excluded_until() {
                     return buildMessage(localizeKeepPlaceholders('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
