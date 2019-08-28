@@ -26538,7 +26538,7 @@ var Authenticate = function () {
     var onResponseUns = function onResponseUns(response, is_last_upload) {
         if (response.warning || response.error) {
             is_any_upload_failed_uns = true;
-            showError({
+            showErrorUns({
                 message: response.message || (response.error ? response.error.message : localize('Failed')),
                 class: response.passthrough.class
             });
@@ -26647,20 +26647,58 @@ var Authenticate = function () {
         BinarySocket.wait('get_account_status').then(function () {
             $('#' + id_to_show).setVisibility(1);
             var needs_verification = State.getResponse('get_account_status.authentication.needs_verification');
-            if (needs_verification.includes('document')) {
-                $('#redirect_' + type).setVisibility(1);
-                $('#' + id_to_show + ' .button').on('click', function () {
-                    if (onfido_unsupported) {
-                        BinaryPjax.load(Url.urlFor('user/authenticate') + '?authentication_tab=' + (type === 'poi_uns' ? 'poa' : 'poi_uns'));
-                    } else {
-                        BinaryPjax.load(Url.urlFor('user/authenticate') + '?authentication_tab=' + (type === 'poi' ? 'poa' : 'poi'));
+            var needs_poa = needs_verification.includes('document');
+            var needs_poi = needs_verification.includes('identity');
+
+            switch (type) {
+                case 'poi':
+                    {
+                        if (needs_poa) {
+                            $('#redirect_' + type).setVisibility(1);
+                            $('#trading_' + type + ' .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('user/authenticate') + '?authentication_tab=poa');
+                            });
+                        } else {
+                            $('#trading_' + type).setVisibility(1);
+                            $('#trading_' + type + ' .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                        }
+                        break;
                     }
-                });
-            } else {
-                $('#trading_poi').setVisibility(1);
-                $('#upload_complete .button').on('click', function () {
-                    BinaryPjax.load(Url.urlFor('trading'));
-                });
+                case 'poi_uns':
+                    {
+                        if (needs_poa) {
+                            $('#redirect_' + type).setVisibility(1);
+                            $('#redirect_' + type + ' .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('user/authenticate') + '?authentication_tab=poa');
+                            });
+                        } else {
+                            $('#trading_' + type).setVisibility(1);
+                            $('#trading_' + type + ' .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                        }
+                        break;
+                    }
+                case 'poa':
+                    {
+                        if (needs_poi) {
+                            $('#redirect_' + type).setVisibility(1);
+                            $('#redirect_' + type + ' .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('user/authenticate') + '?authentication_tab=' + (onfido_unsupported ? 'poi_uns' : 'poi'));
+                            });
+                        } else {
+                            $('#trading_' + type).setVisibility(1);
+                            $('#trading_' + type + ' .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                        }
+                        break;
+                    }
+                default:
+                    break;
+
             }
         });
     };
@@ -26705,7 +26743,6 @@ var Authenticate = function () {
                             if (needs_verification.length === 2 && onfido_token !== 'UnsupportedCountry') {
                                 $('#poi').removeClass('invisible');
                                 $('#poa').removeClass('invisible');
-                                TabSelector.updateTabDisplay();
                             }
 
                             if (identity.status === 'verified' && document.status === 'verified') {
@@ -26714,135 +26751,133 @@ var Authenticate = function () {
                             }
 
                             if (!needs_verification.includes('identity')) {
-                                _context2.next = 56;
+                                _context2.next = 54;
                                 break;
                             }
 
                             if (!(onfido_token === 'UnsupportedCountry')) {
-                                _context2.next = 36;
+                                _context2.next = 35;
                                 break;
                             }
 
                             onfido_unsupported = true;
                             $('#poi_uns').removeClass('invisible');
-                            TabSelector.updateTabDisplay();
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 22 : _context2.t0 === 'pending' ? 25 : _context2.t0 === 'rejected' ? 27 : _context2.t0 === 'suspected' ? 29 : _context2.t0 === 'verified' ? 31 : 33;
+                            _context2.next = _context2.t0 === 'none' ? 21 : _context2.t0 === 'pending' ? 24 : _context2.t0 === 'rejected' ? 26 : _context2.t0 === 'suspected' ? 28 : _context2.t0 === 'verified' ? 30 : 32;
                             break;
 
-                        case 22:
+                        case 21:
                             initUnsupported();
                             $('#not_authenticated_uns').setVisibility(1);
-                            return _context2.abrupt('break', 34);
+                            return _context2.abrupt('break', 33);
 
-                        case 25:
+                        case 24:
                             $('#pending_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 34);
+                            return _context2.abrupt('break', 33);
 
-                        case 27:
+                        case 26:
                             $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 34);
+                            return _context2.abrupt('break', 33);
 
-                        case 29:
+                        case 28:
                             $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 34);
+                            return _context2.abrupt('break', 33);
 
-                        case 31:
+                        case 30:
                             $('#verified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 34);
+                            return _context2.abrupt('break', 33);
+
+                        case 32:
+                            return _context2.abrupt('break', 33);
 
                         case 33:
-                            return _context2.abrupt('break', 34);
-
-                        case 34:
-                            _context2.next = 56;
+                            _context2.next = 54;
                             break;
 
-                        case 36:
+                        case 35:
                             $('#poi').removeClass('invisible');
-                            TabSelector.updateTabDisplay();
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 55;
+                                _context2.next = 53;
                                 break;
                             }
 
                             _context2.t1 = identity.status;
-                            _context2.next = _context2.t1 === 'none' ? 42 : _context2.t1 === 'pending' ? 44 : _context2.t1 === 'rejected' ? 46 : _context2.t1 === 'verified' ? 48 : _context2.t1 === 'suspected' ? 50 : 52;
+                            _context2.next = _context2.t1 === 'none' ? 40 : _context2.t1 === 'pending' ? 42 : _context2.t1 === 'rejected' ? 44 : _context2.t1 === 'verified' ? 46 : _context2.t1 === 'suspected' ? 48 : 50;
                             break;
+
+                        case 40:
+                            initOnfido(onfido_token);
+                            return _context2.abrupt('break', 51);
 
                         case 42:
-                            initOnfido(onfido_token);
-                            return _context2.abrupt('break', 53);
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 51);
 
                         case 44:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 53);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 51);
 
                         case 46:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 53);
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 51);
 
                         case 48:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 53);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 51);
 
                         case 50:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 53);
+                            return _context2.abrupt('break', 51);
 
-                        case 52:
-                            return _context2.abrupt('break', 53);
-
-                        case 53:
-                            _context2.next = 56;
+                        case 51:
+                            _context2.next = 54;
                             break;
 
-                        case 55:
+                        case 53:
                             initOnfido();
 
-                        case 56:
+                        case 54:
                             if (!needs_verification.includes('document')) {
-                                _context2.next = 74;
+                                _context2.next = 71;
                                 break;
                             }
 
                             $('#poa').removeClass('invisible');
-                            TabSelector.updateTabDisplay();
 
                             _context2.t2 = document.status;
-                            _context2.next = _context2.t2 === 'none' ? 62 : _context2.t2 === 'pending' ? 65 : _context2.t2 === 'rejected' ? 67 : _context2.t2 === 'suspected' ? 69 : _context2.t2 === 'verified' ? 71 : 73;
+                            _context2.next = _context2.t2 === 'none' ? 59 : _context2.t2 === 'pending' ? 62 : _context2.t2 === 'rejected' ? 64 : _context2.t2 === 'suspected' ? 66 : _context2.t2 === 'verified' ? 68 : 70;
                             break;
 
-                        case 62:
+                        case 59:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 74);
+                            return _context2.abrupt('break', 71);
 
-                        case 65:
+                        case 62:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 74);
+                            return _context2.abrupt('break', 71);
 
-                        case 67:
+                        case 64:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 74);
+                            return _context2.abrupt('break', 71);
 
-                        case 69:
+                        case 66:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 74);
+                            return _context2.abrupt('break', 71);
+
+                        case 68:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 71);
+
+                        case 70:
+                            return _context2.abrupt('break', 71);
 
                         case 71:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 74);
+                            $('#authentication_loading').setVisibility(0);
+                            TabSelector.updateTabDisplay();
 
                         case 73:
-                            return _context2.abrupt('break', 74);
-
-                        case 74:
-                            $('#authentication_loading').setVisibility(0);
-
-                        case 75:
                         case 'end':
                             return _context2.stop();
                     }
