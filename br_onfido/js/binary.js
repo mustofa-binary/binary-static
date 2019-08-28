@@ -26837,7 +26837,7 @@ var Authenticate = function () {
 
                         case 42:
                             $('#unverified').setVisibility(1);
-                            $('#unverified_poi .button').on('click', function () {
+                            $('#unverified .button').on('click', function () {
                                 BinaryPjax.load(Url.urlFor('trading'));
                             });
                             return _context2.abrupt('break', 51);
@@ -26848,7 +26848,7 @@ var Authenticate = function () {
 
                         case 47:
                             $('#unverified').setVisibility(1);
-                            $('#unverified_poi .button').on('click', function () {
+                            $('#unverified .button').on('click', function () {
                                 BinaryPjax.load(Url.urlFor('trading'));
                             });
                             return _context2.abrupt('break', 51);
