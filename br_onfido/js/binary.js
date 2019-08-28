@@ -26772,119 +26772,137 @@ var Authenticate = function () {
                             }
 
                             if (!onfido_unsupported) {
-                                _context2.next = 31;
+                                _context2.next = 33;
                                 break;
                             }
 
                             $('#poi_uns').removeClass('invisible');
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 17 : _context2.t0 === 'pending' ? 20 : _context2.t0 === 'rejected' ? 22 : _context2.t0 === 'suspected' ? 24 : _context2.t0 === 'verified' ? 26 : 28;
+                            _context2.next = _context2.t0 === 'none' ? 17 : _context2.t0 === 'pending' ? 20 : _context2.t0 === 'rejected' ? 22 : _context2.t0 === 'suspected' ? 25 : _context2.t0 === 'verified' ? 28 : 30;
                             break;
 
                         case 17:
                             initUnsupported();
                             $('#not_authenticated_uns').setVisibility(1);
-                            return _context2.abrupt('break', 29);
+                            return _context2.abrupt('break', 31);
 
                         case 20:
                             $('#pending_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 29);
+                            return _context2.abrupt('break', 31);
 
                         case 22:
                             $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 29);
+                            $('#unverified_poi_uns .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                            return _context2.abrupt('break', 31);
 
-                        case 24:
+                        case 25:
                             $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 29);
-
-                        case 26:
-                            $('#verified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 29);
+                            $('#unverified_poi_uns .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                            return _context2.abrupt('break', 31);
 
                         case 28:
-                            return _context2.abrupt('break', 29);
+                            $('#verified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 31);
 
-                        case 29:
-                            _context2.next = 50;
-                            break;
+                        case 30:
+                            return _context2.abrupt('break', 31);
 
                         case 31:
+                            _context2.next = 54;
+                            break;
+
+                        case 33:
                             $('#poi').removeClass('invisible');
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 49;
+                                _context2.next = 53;
                                 break;
                             }
 
                             _context2.t1 = identity.status;
-                            _context2.next = _context2.t1 === 'none' ? 36 : _context2.t1 === 'pending' ? 38 : _context2.t1 === 'rejected' ? 40 : _context2.t1 === 'verified' ? 42 : _context2.t1 === 'suspected' ? 44 : 46;
+                            _context2.next = _context2.t1 === 'none' ? 38 : _context2.t1 === 'pending' ? 40 : _context2.t1 === 'rejected' ? 42 : _context2.t1 === 'verified' ? 45 : _context2.t1 === 'suspected' ? 47 : 50;
                             break;
-
-                        case 36:
-                            initOnfido(onfido_token);
-                            return _context2.abrupt('break', 47);
 
                         case 38:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 47);
+                            initOnfido(onfido_token);
+                            return _context2.abrupt('break', 51);
 
                         case 40:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 47);
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 51);
 
                         case 42:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 47);
-
-                        case 44:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 47);
+                            $('#unverified_poi .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                            return _context2.abrupt('break', 51);
 
-                        case 46:
-                            return _context2.abrupt('break', 47);
+                        case 45:
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 51);
 
                         case 47:
-                            _context2.next = 50;
-                            break;
-
-                        case 49:
-                            initOnfido();
+                            $('#unverified').setVisibility(1);
+                            $('#unverified_poi .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                            return _context2.abrupt('break', 51);
 
                         case 50:
-                            _context2.t2 = document.status;
-                            _context2.next = _context2.t2 === 'none' ? 53 : _context2.t2 === 'pending' ? 56 : _context2.t2 === 'rejected' ? 58 : _context2.t2 === 'suspected' ? 60 : _context2.t2 === 'verified' ? 62 : 64;
+                            return _context2.abrupt('break', 51);
+
+                        case 51:
+                            _context2.next = 54;
                             break;
 
                         case 53:
+                            initOnfido();
+
+                        case 54:
+                            _context2.t2 = document.status;
+                            _context2.next = _context2.t2 === 'none' ? 57 : _context2.t2 === 'pending' ? 60 : _context2.t2 === 'rejected' ? 62 : _context2.t2 === 'suspected' ? 65 : _context2.t2 === 'verified' ? 68 : 70;
+                            break;
+
+                        case 57:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 65);
-
-                        case 56:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
-
-                        case 58:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
+                            return _context2.abrupt('break', 71);
 
                         case 60:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 71);
 
                         case 62:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
-
-                        case 64:
-                            return _context2.abrupt('break', 65);
+                            $('#unverified_poa').setVisibility(1);
+                            $('#unverified_poa .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                            return _context2.abrupt('break', 71);
 
                         case 65:
+                            $('#unverified_poa').setVisibility(1);
+                            $('#unverified_poa .button').on('click', function () {
+                                BinaryPjax.load(Url.urlFor('trading'));
+                            });
+                            return _context2.abrupt('break', 71);
+
+                        case 68:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 71);
+
+                        case 70:
+                            return _context2.abrupt('break', 71);
+
+                        case 71:
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 67:
+                        case 73:
                         case 'end':
                             return _context2.stop();
                     }
