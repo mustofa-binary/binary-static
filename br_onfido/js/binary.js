@@ -26787,7 +26787,7 @@ var Authenticate = function () {
                             return _context2.abrupt('break', 31);
 
                         case 20:
-                            $('#pending_poi_uns').setVisibility(1);
+                            showUploadCompleteMessage('pending_poi_uns', 'poi_uns');
                             return _context2.abrupt('break', 31);
 
                         case 22:
@@ -26832,7 +26832,7 @@ var Authenticate = function () {
                             return _context2.abrupt('break', 51);
 
                         case 40:
-                            $('#upload_complete').setVisibility(1);
+                            showUploadCompleteMessage('upload_complete', 'poi');
                             return _context2.abrupt('break', 51);
 
                         case 42:
@@ -26874,7 +26874,7 @@ var Authenticate = function () {
                             return _context2.abrupt('break', 71);
 
                         case 60:
-                            $('#pending_poa').setVisibility(1);
+                            showUploadCompleteMessage('pending_poa', 'poa');
                             return _context2.abrupt('break', 71);
 
                         case 62:
