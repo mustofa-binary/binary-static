@@ -25804,7 +25804,6 @@ var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/jav
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
-var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var CompressImage = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").compressImg;
 var ConvertToBase64 = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").convertToBase64;
 var isImageType = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").isImageType;
@@ -26738,7 +26737,7 @@ var Authenticate = function () {
 
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, onfido_token, identity, document, needs_verification;
+            var authentication_status, onfido_token, identity, document;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26761,152 +26760,128 @@ var Authenticate = function () {
                             return _context2.abrupt('return');
 
                         case 8:
-                            identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
+                            identity = authentication_status.identity, document = authentication_status.document;
 
-
-                            if (!(identity.status === 'verified' && document.status === 'verified') && !needs_verification.length) {
-                                BinaryPjax.load(Url.urlFor('user/settingsws'));
-                            }
-
-                            if (needs_verification.length === 2 && !onfido_unsupported) {
-                                $('#poi').removeClass('invisible');
-                                $('#poa').removeClass('invisible');
-                                TabSelector.slideSelector('authentication_tab_selector', getElementById('poi'));
-                            }
 
                             if (identity.status === 'verified' && document.status === 'verified') {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_verified').setVisibility(1);
                             }
 
-                            if (!needs_verification.includes('identity')) {
-                                _context2.next = 53;
-                                break;
-                            }
-
                             if (!onfido_unsupported) {
-                                _context2.next = 33;
+                                _context2.next = 29;
                                 break;
                             }
 
                             $('#poi_uns').removeClass('invisible');
-                            TabSelector.slideSelector('authentication_tab_selector', getElementById('poi_uns'));
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 19 : _context2.t0 === 'pending' ? 22 : _context2.t0 === 'rejected' ? 24 : _context2.t0 === 'suspected' ? 26 : _context2.t0 === 'verified' ? 28 : 30;
+                            _context2.next = _context2.t0 === 'none' ? 15 : _context2.t0 === 'pending' ? 18 : _context2.t0 === 'rejected' ? 20 : _context2.t0 === 'suspected' ? 22 : _context2.t0 === 'verified' ? 24 : 26;
                             break;
 
-                        case 19:
+                        case 15:
                             initUnsupported();
                             $('#not_authenticated_uns').setVisibility(1);
-                            return _context2.abrupt('break', 31);
+                            return _context2.abrupt('break', 27);
+
+                        case 18:
+                            $('#pending_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 27);
+
+                        case 20:
+                            $('#unverified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 27);
 
                         case 22:
-                            $('#pending_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 31);
+                            $('#unverified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 27);
 
                         case 24:
-                            $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 31);
+                            $('#verified_poi_uns').setVisibility(1);
+                            return _context2.abrupt('break', 27);
 
                         case 26:
-                            $('#unverified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 31);
+                            return _context2.abrupt('break', 27);
 
-                        case 28:
-                            $('#verified_poi_uns').setVisibility(1);
-                            return _context2.abrupt('break', 31);
-
-                        case 30:
-                            return _context2.abrupt('break', 31);
-
-                        case 31:
-                            _context2.next = 53;
+                        case 27:
+                            _context2.next = 48;
                             break;
 
-                        case 33:
+                        case 29:
                             $('#poi').removeClass('invisible');
-                            TabSelector.slideSelector('authentication_tab_selector', getElementById('poi'));
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 52;
+                                _context2.next = 47;
                                 break;
                             }
 
                             _context2.t1 = identity.status;
-                            _context2.next = _context2.t1 === 'none' ? 39 : _context2.t1 === 'pending' ? 41 : _context2.t1 === 'rejected' ? 43 : _context2.t1 === 'verified' ? 45 : _context2.t1 === 'suspected' ? 47 : 49;
+                            _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 36 : _context2.t1 === 'rejected' ? 38 : _context2.t1 === 'verified' ? 40 : _context2.t1 === 'suspected' ? 42 : 44;
                             break;
 
-                        case 39:
+                        case 34:
                             initOnfido(onfido_token);
-                            return _context2.abrupt('break', 50);
+                            return _context2.abrupt('break', 45);
 
-                        case 41:
+                        case 36:
                             $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            return _context2.abrupt('break', 45);
 
-                        case 43:
+                        case 38:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            return _context2.abrupt('break', 45);
+
+                        case 40:
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 45);
+
+                        case 42:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 45);
+
+                        case 44:
+                            return _context2.abrupt('break', 45);
 
                         case 45:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            _context2.next = 48;
+                            break;
 
                         case 47:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 50);
-
-                        case 49:
-                            return _context2.abrupt('break', 50);
-
-                        case 50:
-                            _context2.next = 53;
-                            break;
-
-                        case 52:
                             initOnfido();
 
-                        case 53:
-                            if (!needs_verification.includes('document')) {
-                                _context2.next = 71;
-                                break;
-                            }
-
-                            $('#poa').removeClass('invisible');
-                            TabSelector.slideSelector('authentication_tab_selector', getElementById('poa'));
+                        case 48:
                             _context2.t2 = document.status;
-                            _context2.next = _context2.t2 === 'none' ? 59 : _context2.t2 === 'pending' ? 62 : _context2.t2 === 'rejected' ? 64 : _context2.t2 === 'suspected' ? 66 : _context2.t2 === 'verified' ? 68 : 70;
+                            _context2.next = _context2.t2 === 'none' ? 51 : _context2.t2 === 'pending' ? 54 : _context2.t2 === 'rejected' ? 56 : _context2.t2 === 'suspected' ? 58 : _context2.t2 === 'verified' ? 60 : 62;
                             break;
 
-                        case 59:
+                        case 51:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 71);
+                            return _context2.abrupt('break', 63);
+
+                        case 54:
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 63);
+
+                        case 56:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 63);
+
+                        case 58:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 63);
+
+                        case 60:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 63);
 
                         case 62:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 71);
+                            return _context2.abrupt('break', 63);
 
-                        case 64:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 71);
-
-                        case 66:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 71);
-
-                        case 68:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 71);
-
-                        case 70:
-                            return _context2.abrupt('break', 71);
-
-                        case 71:
+                        case 63:
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 73:
+                        case 65:
                         case 'end':
                             return _context2.stop();
                     }
