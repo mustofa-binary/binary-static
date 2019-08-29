@@ -26777,6 +26777,7 @@ var Authenticate = function () {
 
                         case 17:
                             if (onfido_unsupported) {
+                                $('#not_authenticated_uns').setVisibility(1);
                                 initUnsupported();
                             } else {
                                 initOnfido(onfido_token);
