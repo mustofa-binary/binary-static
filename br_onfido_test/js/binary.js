@@ -10958,6 +10958,7 @@ var Header = function () {
     var displayAccountStatus = function displayAccountStatus() {
         BinarySocket.wait('authorize', 'landing_company').then(function () {
             var get_account_status = void 0,
+                authentication = void 0,
                 needs_verification = void 0,
                 status = void 0;
             var is_svg = Client.get('landing_company_shortcode') === 'svg';
@@ -10990,6 +10991,17 @@ var Header = function () {
             };
             var hasVerification = function hasVerification(string) {
                 var verification_length = needs_verification.length;
+                var _authentication = authentication,
+                    identity = _authentication.identity,
+                    document = _authentication.document;
+
+
+                if (string === 'unsubmitted') {
+                    if (verification_length) {
+                        return identity.status === 'none' || document.status === 'none';
+                    }
+                    return false;
+                }
 
                 if (string === 'unauthenticated') {
                     return verification_length === 2;
@@ -11016,6 +11028,9 @@ var Header = function () {
                 },
                 unauthenticated: function unauthenticated() {
                     return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Address and Proof of Identity[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate', '?authentication_tab=poi');
+                },
+                unsubmitted: function unsubmitted() {
+                    return buildMessage(localizeKeepPlaceholders('Please [_1]authenticate[_2] your account to continue trading.'), 'user/authenticate', '?authentication_tab=poi');
                 },
                 excluded_until: function excluded_until() {
                     return buildMessage(localizeKeepPlaceholders('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
@@ -11101,15 +11116,18 @@ var Header = function () {
                 unwelcome: function unwelcome() {
                     return hasStatus('unwelcome');
                 },
+                unsubmitted: function unsubmitted() {
+                    return hasVerification('unsubmitted');
+                },
                 withdrawal_locked: function withdrawal_locked() {
                     return hasStatus('withdrawal_locked');
                 }
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'unsubmitted', 'identity', 'document', 'unauthenticated'];
 
-            var check_statuses_mf = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'identity', 'document', 'unauthenticated', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
+            var check_statuses_mf = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'unsubmitted', 'identity', 'document', 'unauthenticated', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
@@ -11134,6 +11152,7 @@ var Header = function () {
             } else {
                 var el_account_status = createElement('span', { class: 'authenticated', 'data-balloon': localize('Account Authenticated'), 'data-balloon-pos': 'down' });
                 BinarySocket.wait('website_status', 'get_account_status', 'get_settings', 'balance').then(function () {
+                    authentication = State.getResponse('get_account_status.authentication') || {};
                     needs_verification = State.getResponse('get_account_status.authentication.needs_verification') || [];
                     get_account_status = State.getResponse('get_account_status') || {};
                     status = get_account_status.status;
