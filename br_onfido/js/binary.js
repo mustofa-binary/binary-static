@@ -10983,6 +10983,9 @@ var Header = function () {
                 var hash = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
                 return template(string, ['<a href="' + Url.urlFor(path) + hash + '">', '</a>']);
             };
+            var buildSpecificMessage = function buildSpecificMessage(string, additional) {
+                return template(string, [].concat(_toConsumableArray(additional)));
+            };
             var hasStatus = function hasStatus(string) {
                 return status.findIndex(function (s) {
                     return s === string;
@@ -11038,7 +11041,7 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity and address[_2].'), 'user/authenticate');
                 },
                 rejected: function rejected() {
-                    return buildMessage(localizeKeepPlaceholders('[_1]Your identity and address[_2] have not been verified. Please check your email for details.'), 'user/authenticate');
+                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]identity[_3] and [_2]address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poi\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
                 },
                 identity: function identity() {
                     return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity[_2].'), 'user/authenticate');
