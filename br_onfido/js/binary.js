@@ -10957,8 +10957,8 @@ var Header = function () {
 
     var displayAccountStatus = function displayAccountStatus() {
         BinarySocket.wait('authorize', 'landing_company').then(function () {
-            var get_account_status = void 0,
-                needs_verification = void 0,
+            var authentication = void 0,
+                get_account_status = void 0,
                 status = void 0;
             var is_svg = Client.get('landing_company_shortcode') === 'svg';
             var loginid = Client.get('loginid') || {};
@@ -10989,17 +10989,40 @@ var Header = function () {
                 }) < 0 ? Boolean(false) : Boolean(true);
             };
             var hasVerification = function hasVerification(string) {
-                var verification_length = needs_verification.length;
+                var _authentication = authentication,
+                    identity = _authentication.identity,
+                    document = _authentication.document,
+                    needs_verification = _authentication.needs_verification;
 
-                if (string === 'unauthenticated') {
-                    return verification_length === 2;
-                } else if (verification_length === 2) {
-                    return false;
+                var verification_length = needs_verification.length;
+                var result = false;
+
+                switch (string) {
+                    case 'unsubmitted':
+                        {
+                            result = verification_length === 2 && identity.status === 'none' && document.status === 'none';
+                            break;
+                        }
+                    case 'rejected':
+                        {
+                            result = verification_length === 2 && (identity.status !== 'none' || document.status !== 'none');
+                            break;
+                        }
+                    case 'identity':
+                        {
+                            result = verification_length && identity.status === 'none';
+                            break;
+                        }
+                    case 'document':
+                        {
+                            result = verification_length && document.status === 'none';
+                            break;
+                        }
+                    default:
+                        break;
                 }
 
-                return needs_verification.findIndex(function (s) {
-                    return s === string;
-                }) >= 0;
+                return result;
             };
 
             var has_no_tnc_limit = is_svg;
@@ -11011,20 +11034,23 @@ var Header = function () {
                 currency: function currency() {
                     return buildMessage(localizeKeepPlaceholders('Please set the [_1]currency[_2] of your account.'), 'user/set-currency');
                 },
-                document: function document() {
-                    return buildMessage(localizeKeepPlaceholders('[_1]Your address[_2] has not been verified. Please check your email for details. '), 'user/authenticate', '?authentication_tab=poa');
+                unsubmitted: function unsubmitted() {
+                    return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity and address[_2].'), 'user/authenticate');
                 },
-                unauthenticated: function unauthenticated() {
+                rejected: function rejected() {
                     return buildMessage(localizeKeepPlaceholders('[_1]Your identity and address[_2] have not been verified. Please check your email for details.'), 'user/authenticate');
+                },
+                identity: function identity() {
+                    return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity[_2].'), 'user/authenticate');
+                },
+                document: function document() {
+                    return buildMessage(localizeKeepPlaceholders('Please [_1]verify your address[_2].'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 excluded_until: function excluded_until() {
                     return buildMessage(localizeKeepPlaceholders('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
                 },
                 financial_limit: function financial_limit() {
                     return buildMessage(localizeKeepPlaceholders('Please set your [_1]30-day turnover limit[_2] to remove deposit limits.'), 'user/security/self_exclusionws');
-                },
-                identity: function identity() {
-                    return buildMessage(localizeKeepPlaceholders('[_1]Your identity[_2] has not been verified. Please check your email for details. '), 'user/authenticate');
                 },
                 mf_retail: function mf_retail() {
                     return buildMessage(localizeKeepPlaceholders('Binary Options Trading has been disabled on your account. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
@@ -11062,20 +11088,23 @@ var Header = function () {
                 currency: function currency() {
                     return !Client.get('currency');
                 },
+                unsubmitted: function unsubmitted() {
+                    return hasVerification('unsubmitted');
+                },
+                rejected: function rejected() {
+                    return hasVerification('rejected');
+                },
+                identity: function identity() {
+                    return hasVerification('identity');
+                },
                 document: function document() {
                     return hasVerification('document');
-                },
-                unauthenticated: function unauthenticated() {
-                    return hasVerification('unauthenticated');
                 },
                 excluded_until: function excluded_until() {
                     return Client.get('excluded_until');
                 },
                 financial_limit: function financial_limit() {
                     return hasStatus('max_turnover_limit_not_set');
-                },
-                identity: function identity() {
-                    return hasVerification('identity');
                 },
                 mf_retail: function mf_retail() {
                     return Client.get('landing_company_shortcode') === 'maltainvest' && !hasStatus('professional');
@@ -11107,9 +11136,9 @@ var Header = function () {
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail', 'identity', 'document', 'unauthenticated'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'unsubmitted', 'rejected', 'identity', 'document', 'mf_retail'];
 
-            var check_statuses_mf = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'identity', 'document', 'unauthenticated', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
+            var check_statuses_mf_mlt = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'unsubmitted', 'rejected', 'identity', 'document', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
@@ -11134,11 +11163,11 @@ var Header = function () {
             } else {
                 var el_account_status = createElement('span', { class: 'authenticated', 'data-balloon': localize('Account Authenticated'), 'data-balloon-pos': 'down' });
                 BinarySocket.wait('website_status', 'get_account_status', 'get_settings', 'balance').then(function () {
-                    needs_verification = State.getResponse('get_account_status.authentication.needs_verification') || [];
+                    authentication = State.getResponse('get_account_status.authentication') || {};
                     get_account_status = State.getResponse('get_account_status') || {};
                     status = get_account_status.status;
                     if (Client.get('landing_company_shortcode') === 'maltainvest' || Client.get('landing_company_shortcode') === 'malta' || Client.get('landing_company_shortcode') === 'iom') {
-                        checkStatus(check_statuses_mf);
+                        checkStatus(check_statuses_mf_mlt);
                     } else {
                         checkStatus(check_statuses_real);
                     }
