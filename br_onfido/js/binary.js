@@ -11048,22 +11048,22 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Please set the [_1]currency[_2] of your account.'), 'user/set-currency');
                 },
                 unsubmitted: function unsubmitted() {
-                    return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity and address[_2].'), 'user/authenticate');
+                    return buildMessage(localizeKeepPlaceholders('Please submit [_1]your proof of identity and proof of address[_2].'), 'user/authenticate');
                 },
                 rejected: function rejected() {
-                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]identity[_3] and [_2]address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
+                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
                 },
                 rejected_identity: function rejected_identity() {
-                    return buildMessage(localizeKeepPlaceholders('Your [_1]identity[_2] has not been verified. Please check your email for details.'), 'user/authenticate');
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_2] has not been verified. Please check your email for details.'), 'user/authenticate');
                 },
                 rejected_document: function rejected_document() {
-                    return buildMessage(localizeKeepPlaceholders('Your [_1]document[_2] has not been verified. Please check your email for details.'), 'user/authenticate', '?authentication_tab=poa');
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has not been verified. Please check your email for details.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 identity: function identity() {
-                    return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity[_2].'), 'user/authenticate');
+                    return buildMessage(localizeKeepPlaceholders('Please submit [_1]your proof of identity[_2].'), 'user/authenticate');
                 },
                 document: function document() {
-                    return buildMessage(localizeKeepPlaceholders('Please [_1]verify your address[_2].'), 'user/authenticate', '?authentication_tab=poa');
+                    return buildMessage(localizeKeepPlaceholders('Please submit [_1]your proof of address[_2].'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 excluded_until: function excluded_until() {
                     return buildMessage(localizeKeepPlaceholders('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
