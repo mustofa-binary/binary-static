@@ -11008,7 +11008,7 @@ var Header = function () {
                         }
                     case 'expired':
                         {
-                            result = verification_length === 2 && (identity.status === 'expired' || document.status === 'expired');
+                            result = verification_length === 2 && identity.status === 'expired' && document.status === 'expired';
                             break;
                         }
                     case 'expired_identity':
