@@ -27844,7 +27844,6 @@ var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/a
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
-var urlFor = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 
 var Settings = function () {
     var onLoad = function onLoad() {
@@ -27857,16 +27856,10 @@ var Settings = function () {
                 $('#change_password').setVisibility(1);
             }
 
-            if (authentication.needs_verification.includes('identity')) {
-                $('#authenticate a').attr('href', urlFor('user/authenticate') + '?authentication_tab=poi');
-            } else {
-                $('#authenticate a').attr('href', urlFor('user/authenticate') + '?authentication_tab=poa');
-            }
-
-            if (authentication.identity.status === 'verified' && authentication.document.status === 'verified') {
-                $('#authenticate').setVisibility(1);
-            } else if (!authentication.needs_verification.length) {
+            if (!authentication.needs_verification.length && authentication.identity.status === 'none' && authentication.document.status === 'none') {
                 $('#authenticate').setVisibility(0);
+            } else {
+                $('#authenticate').setVisibility(1);
             }
 
             // Professional Client menu should only be shown to maltainvest accounts.
