@@ -11006,9 +11006,24 @@ var Header = function () {
                             result = verification_length === 2 && identity.status === 'none' && document.status === 'none';
                             break;
                         }
+                    case 'expired':
+                        {
+                            result = verification_length === 2 && (identity.status === 'expired' || document.status === 'expired');
+                            break;
+                        }
+                    case 'expired_identity':
+                        {
+                            result = verification_length && identity.status === 'expired';
+                            break;
+                        }
+                    case 'expired_document':
+                        {
+                            result = verification_length && document.status === 'expired';
+                            break;
+                        }
                     case 'rejected':
                         {
-                            result = verification_length === 2 && (identity.status !== 'none' || document.status !== 'none');
+                            result = verification_length === 2 && (identity.status === 'none' || document.status !== 'none');
                             break;
                         }
                     case 'rejected_identity':
@@ -11049,6 +11064,15 @@ var Header = function () {
                 },
                 unsubmitted: function unsubmitted() {
                     return buildMessage(localizeKeepPlaceholders('Please submit your [_1]proof of identity and proof of address[_2].'), 'user/authenticate');
+                },
+                expired: function expired() {
+                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have passed their expiration date.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
+                },
+                expired_identity: function expired_identity() {
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_2] has passed their expiration date.'), 'user/authenticate');
+                },
+                expired_document: function expired_document() {
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has passed their expiration date.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 rejected: function rejected() {
                     return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
@@ -11110,6 +11134,15 @@ var Header = function () {
                 unsubmitted: function unsubmitted() {
                     return hasVerification('unsubmitted');
                 },
+                expired: function expired() {
+                    return hasVerification('expired');
+                },
+                expired_identity: function expired_identity() {
+                    return hasVerification('expired_identity');
+                },
+                expired_document: function expired_document() {
+                    return hasVerification('expired_document');
+                },
                 rejected: function rejected() {
                     return hasVerification('rejected');
                 },
@@ -11161,9 +11194,9 @@ var Header = function () {
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'unsubmitted', 'rejected', 'rejected_identity', 'rejected_document', 'identity', 'document', 'mf_retail'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'unsubmitted', 'expired', 'expired_identity', 'expired_document', 'rejected', 'rejected_identity', 'rejected_document', 'identity', 'document', 'mf_retail'];
 
-            var check_statuses_mf_mlt = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'unsubmitted', 'rejected', 'rejected_identity', 'rejected_document', 'identity', 'document', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
+            var check_statuses_mf_mlt = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'unsubmitted', 'expired', 'expired_identity', 'expired_document', 'rejected', 'rejected_identity', 'rejected_document', 'identity', 'document', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
@@ -26762,12 +26795,12 @@ var Authenticate = function () {
                             }
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 30;
+                                _context2.next = 32;
                                 break;
                             }
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 17 : _context2.t0 === 'pending' ? 19 : _context2.t0 === 'rejected' ? 21 : _context2.t0 === 'verified' ? 23 : _context2.t0 === 'suspected' ? 25 : 27;
+                            _context2.next = _context2.t0 === 'none' ? 17 : _context2.t0 === 'pending' ? 19 : _context2.t0 === 'rejected' ? 21 : _context2.t0 === 'verified' ? 23 : _context2.t0 === 'expired' ? 25 : _context2.t0 === 'suspected' ? 27 : 29;
                             break;
 
                         case 17:
@@ -26777,68 +26810,76 @@ var Authenticate = function () {
                             } else {
                                 initOnfido(onfido_token);
                             }
-                            return _context2.abrupt('break', 28);
+                            return _context2.abrupt('break', 30);
 
                         case 19:
                             $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 28);
+                            return _context2.abrupt('break', 30);
 
                         case 21:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 28);
+                            return _context2.abrupt('break', 30);
 
                         case 23:
                             $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 28);
+                            return _context2.abrupt('break', 30);
 
                         case 25:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 28);
+                            $('#expired_poi').setVisibility(1);
+                            return _context2.abrupt('break', 30);
 
                         case 27:
-                            return _context2.abrupt('break', 28);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 30);
 
-                        case 28:
-                            _context2.next = 31;
-                            break;
+                        case 29:
+                            return _context2.abrupt('break', 30);
 
                         case 30:
-                            initOnfido(onfido_token);
-
-                        case 31:
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 34 : _context2.t1 === 'pending' ? 37 : _context2.t1 === 'rejected' ? 39 : _context2.t1 === 'suspected' ? 41 : _context2.t1 === 'verified' ? 43 : 45;
+                            _context2.next = 33;
                             break;
 
-                        case 34:
+                        case 32:
+                            initOnfido(onfido_token);
+
+                        case 33:
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 36 : _context2.t1 === 'pending' ? 39 : _context2.t1 === 'rejected' ? 41 : _context2.t1 === 'suspected' ? 43 : _context2.t1 === 'verified' ? 45 : _context2.t1 === 'expired' ? 47 : 49;
+                            break;
+
+                        case 36:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 46);
-
-                        case 37:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 46);
+                            return _context2.abrupt('break', 50);
 
                         case 39:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 46);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 50);
 
                         case 41:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 46);
+                            return _context2.abrupt('break', 50);
 
                         case 43:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 46);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 50);
 
                         case 45:
-                            return _context2.abrupt('break', 46);
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 50);
 
-                        case 46:
+                        case 47:
+                            $('#expired_poa').setVisibility(1);
+                            return _context2.abrupt('break', 50);
+
+                        case 49:
+                            return _context2.abrupt('break', 50);
+
+                        case 50:
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 48:
+                        case 52:
                         case 'end':
                             return _context2.stop();
                     }
