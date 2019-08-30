@@ -26542,6 +26542,7 @@ var Authenticate = function () {
             removeButtonLoading();
             $button.setVisibility(0);
             $('.submit-status').setVisibility(0);
+            $('#not_authenticated').setVisibility(0);
             $('#pending_poa').setVisibility(1);
         }, 3000);
     };
@@ -26554,6 +26555,7 @@ var Authenticate = function () {
             removeButtonLoadingUns();
             $button_uns.setVisibility(0);
             $('.submit-status-uns').setVisibility(0);
+            $('#not_authenticated_uns').setVisibility(0);
             $('#upload_complete').setVisibility(1);
         }, 3000);
     };
@@ -26663,7 +26665,7 @@ var Authenticate = function () {
         }).then(function () {
             onfido.tearDown();
 
-            $('#upload_complete').setVisible(1);
+            $('#upload_complete').setVisibility(1);
         });
     };
 
@@ -26779,7 +26781,7 @@ var Authenticate = function () {
                             break;
 
                         case 30:
-                            initOnfido();
+                            initOnfido(onfido_token);
 
                         case 31:
                             _context2.t1 = document.status;
@@ -26833,6 +26835,10 @@ var Authenticate = function () {
     };
 
     var onUnload = function onUnload() {
+        if (onfido) {
+            onfido.tearDown();
+        }
+
         TabSelector.onUnload();
     };
 
