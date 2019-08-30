@@ -26677,9 +26677,6 @@ var Authenticate = function () {
     }();
 
     var handleComplete = function handleComplete() {
-        BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
-            Header.displayAccountStatus();
-        });
         BinarySocket.send({
             notification_event: 1,
             category: 'authentication',
@@ -26687,7 +26684,10 @@ var Authenticate = function () {
         }).then(function () {
             onfido.tearDown();
 
-            $('#upload_complete').setVisibility(1);
+            BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+                Header.displayAccountStatus();
+                $('#upload_complete').setVisibility(1);
+            });
         });
     };
 
