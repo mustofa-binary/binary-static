@@ -11011,6 +11011,16 @@ var Header = function () {
                             result = verification_length === 2 && (identity.status !== 'none' || document.status !== 'none');
                             break;
                         }
+                    case 'rejected_identity':
+                        {
+                            result = verification_length && (identity.status === 'rejected' || identity.status === 'suspected');
+                            break;
+                        }
+                    case 'rejected_document':
+                        {
+                            result = verification_length && (document.status === 'rejected' || document.status === 'suspected');
+                            break;
+                        }
                     case 'identity':
                         {
                             result = verification_length && identity.status === 'none';
@@ -11042,6 +11052,12 @@ var Header = function () {
                 },
                 rejected: function rejected() {
                     return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]identity[_3] and [_2]address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poi\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
+                },
+                rejected_identity: function rejected_identity() {
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]identity[_2] has not been verified. Please check your email for details.'), 'user/authenticate');
+                },
+                rejected_document: function rejected_document() {
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]document[_2] has not been verified. Please check your email for details.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 identity: function identity() {
                     return buildMessage(localizeKeepPlaceholders('Please [_1]verify your identity[_2].'), 'user/authenticate');
@@ -11097,6 +11113,12 @@ var Header = function () {
                 rejected: function rejected() {
                     return hasVerification('rejected');
                 },
+                rejected_identity: function rejected_identity() {
+                    return hasVerification('rejected_identity');
+                },
+                rejected_document: function rejected_document() {
+                    return hasVerification('rejected_document');
+                },
                 identity: function identity() {
                     return hasVerification('identity');
                 },
@@ -11139,9 +11161,9 @@ var Header = function () {
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'unsubmitted', 'rejected', 'identity', 'document', 'mf_retail'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'unsubmitted', 'rejected', 'rejected_identity', 'rejected_document', 'identity', 'document', 'mf_retail'];
 
-            var check_statuses_mf_mlt = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'unsubmitted', 'rejected', 'identity', 'document', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
+            var check_statuses_mf_mlt = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'unsubmitted', 'rejected', 'rejected_identity', 'rejected_document', 'identity', 'document', 'unwelcome', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'mf_retail'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
