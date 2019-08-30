@@ -11023,7 +11023,7 @@ var Header = function () {
                         }
                     case 'rejected':
                         {
-                            result = verification_length === 2 && (identity.status === 'none' || document.status !== 'none');
+                            result = verification_length === 2 && (identity.status !== 'none' || document.status !== 'none');
                             break;
                         }
                     case 'rejected_identity':
