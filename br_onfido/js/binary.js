@@ -26684,7 +26684,7 @@ var Authenticate = function () {
                     $('#upload_complete').setVisibility(1);
                     Header.displayAccountStatus();
                 });
-            }, 1000);
+            }, 2000);
         });
     };
 
@@ -32214,6 +32214,7 @@ var MetaTrader = function () {
     return {
         onLoad: onLoad,
         onUnload: onUnload,
+        isEligible: isEligible,
         metatraderMenuItemVisibility: metatraderMenuItemVisibility
     };
 }();
