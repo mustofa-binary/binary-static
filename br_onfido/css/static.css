@@ -1702,6 +1702,9 @@ body #not_authenticated_financial ul.checked > li {
 .authenticate-content #resolve_error {
   color: #c03; }
 
+.authenticate-content .mar-top-0 {
+  margin-top: 0; }
+
 #content.careers-content {
   margin-top: 0; }
   #content.careers-content .career .top-banner {

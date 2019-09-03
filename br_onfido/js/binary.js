@@ -10672,13 +10672,10 @@ module.exports = Footer;
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 var BinaryPjax = __webpack_require__(/*! ./binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var showHidePulser = __webpack_require__(/*! ../common/account_opening */ "./src/javascript/app/common/account_opening.js").showHidePulser;
-var MetaTrader = __webpack_require__(/*! ../pages/user/metatrader/metatrader */ "./src/javascript/app/pages/user/metatrader/metatrader.js");
 var getLandingCompanyValue = __webpack_require__(/*! ../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").getLandingCompanyValue;
 var GTM = __webpack_require__(/*! ../../_common/base/gtm */ "./src/javascript/_common/base/gtm.js");
 var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
@@ -10786,36 +10783,6 @@ var Header = function () {
             el_loginid.setAttribute('disabled', 'disabled');
             switchLoginid(el_loginid.getAttribute('data-value'));
         }
-    };
-
-    var metatraderMenuItemVisibility = function metatraderMenuItemVisibility() {
-        BinarySocket.wait('landing_company', 'get_account_status').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var is_eligible, mt_visibility;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.next = 2;
-                            return MetaTrader.isEligible();
-
-                        case 2:
-                            is_eligible = _context.sent;
-
-                            if (is_eligible) {
-                                mt_visibility = document.getElementsByClassName('mt_visibility');
-
-                                applyToAllElements(mt_visibility, function (el) {
-                                    el.setVisibility(1);
-                                });
-                            }
-
-                        case 4:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, undefined);
-        })));
     };
 
     var switchLoginid = function switchLoginid(loginid) {
@@ -10956,7 +10923,7 @@ var Header = function () {
     };
 
     var displayAccountStatus = function displayAccountStatus() {
-        BinarySocket.wait('authorize', 'landing_company').then(function () {
+        BinarySocket.wait('get_account_status', 'authorize', 'landing_company').then(function () {
             var authentication = void 0,
                 get_account_status = void 0,
                 status = void 0;
@@ -11240,7 +11207,6 @@ var Header = function () {
         onLoad: onLoad,
         populateAccountsList: populateAccountsList,
         upgradeMessageVisibility: upgradeMessageVisibility,
-        metatraderMenuItemVisibility: metatraderMenuItemVisibility,
         displayNotification: displayNotification,
         hideNotification: hideNotification,
         displayAccountStatus: displayAccountStatus,
@@ -11809,6 +11775,7 @@ var Clock = __webpack_require__(/*! ./clock */ "./src/javascript/app/base/clock.
 var Footer = __webpack_require__(/*! ./footer */ "./src/javascript/app/base/footer.js");
 var Header = __webpack_require__(/*! ./header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
+var MetaTrader = __webpack_require__(/*! ../pages/user/metatrader/metatrader */ "./src/javascript/app/pages/user/metatrader/metatrader.js");
 var Dialog = __webpack_require__(/*! ../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var createLanguageDropDown = __webpack_require__(/*! ../common/attach_dom/language_dropdown */ "./src/javascript/app/common/attach_dom/language_dropdown.js");
 var setCurrencies = __webpack_require__(/*! ../common/currency */ "./src/javascript/app/common/currency.js").setCurrencies;
@@ -11916,7 +11883,7 @@ var BinarySocketGeneral = function () {
             case 'landing_company':
                 Header.upgradeMessageVisibility();
                 if (!response.error) {
-                    Header.metatraderMenuItemVisibility();
+                    MetaTrader.metatraderMenuItemVisibility();
                 }
                 break;
             case 'get_self_exclusion':
@@ -26592,27 +26559,23 @@ var Authenticate = function () {
     var showSuccess = function showSuccess() {
         BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
             Header.displayAccountStatus();
-        });
-        setTimeout(function () {
             removeButtonLoading();
             $button.setVisibility(0);
             $('.submit-status').setVisibility(0);
             $('#not_authenticated').setVisibility(0);
             $('#pending_poa').setVisibility(1);
-        }, 3000);
+        });
     };
 
     var showSuccessUns = function showSuccessUns() {
         BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
             Header.displayAccountStatus();
-        });
-        setTimeout(function () {
             removeButtonLoadingUns();
             $button_uns.setVisibility(0);
             $('.submit-status-uns').setVisibility(0);
             $('#not_authenticated_uns').setVisibility(0);
             $('#upload_complete').setVisibility(1);
-        }, 3000);
+        });
     };
 
     var hideSuccess = function hideSuccess() {
@@ -26718,8 +26681,8 @@ var Authenticate = function () {
             onfido.tearDown();
 
             BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
-                Header.displayAccountStatus();
                 $('#upload_complete').setVisibility(1);
+                Header.displayAccountStatus();
             });
         });
     };
@@ -31307,6 +31270,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
+var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var Currency = __webpack_require__(/*! ../../../common/currency */ "./src/javascript/app/common/currency.js");
@@ -31516,7 +31480,10 @@ var MetaTraderConfig = function () {
                                 is_ok = false;
                             }
                             if (is_ok && !isAuthenticated()) {
-                                $new_account_financial_authenticate_msg.setVisibility(1);
+                                BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+                                    $new_account_financial_authenticate_msg.setVisibility(1);
+                                    Header.displayAccountStatus();
+                                });
                             }
 
                             if (is_ok) resolve();else resolveWithMessage();
@@ -31899,6 +31866,7 @@ var Validation = __webpack_require__(/*! ../../../common/form_validation */ "./s
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
 var isEmptyObject = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").isEmptyObject;
+var applyToAllElements = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").applyToAllElements;
 
 var MetaTrader = function () {
     var mt_companies = void 0;
@@ -32208,6 +32176,36 @@ var MetaTrader = function () {
         });
     };
 
+    var metatraderMenuItemVisibility = function metatraderMenuItemVisibility() {
+        BinarySocket.wait('landing_company', 'get_account_status').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var is_eligible, mt_visibility;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            _context2.next = 2;
+                            return isEligible();
+
+                        case 2:
+                            is_eligible = _context2.sent;
+
+                            if (is_eligible) {
+                                mt_visibility = document.getElementsByClassName('mt_visibility');
+
+                                applyToAllElements(mt_visibility, function (el) {
+                                    el.setVisibility(1);
+                                });
+                            }
+
+                        case 4:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, undefined);
+        })));
+    };
+
     var onUnload = function onUnload() {
         MetaTraderUI.refreshAction();
     };
@@ -32215,7 +32213,7 @@ var MetaTrader = function () {
     return {
         onLoad: onLoad,
         onUnload: onUnload,
-        isEligible: isEligible
+        metatraderMenuItemVisibility: metatraderMenuItemVisibility
     };
 }();
 
@@ -34208,6 +34206,7 @@ module.exports = updateBalance;
 
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
+var Header = __webpack_require__(/*! ../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 
@@ -34230,6 +34229,7 @@ var VideoFacility = function () {
                     }
                     $('.msg_authenticate').setVisibility(1);
                     $('#generated_token').text(Client.get('token').slice(-4)).parent().setVisibility(1);
+                    Header.displayAccountStatus();
                 } else {
                     BinaryPjax.loadPreviousUrl();
                 }
