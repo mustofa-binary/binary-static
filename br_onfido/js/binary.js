@@ -31471,10 +31471,7 @@ var MetaTraderConfig = function () {
                                 is_ok = false;
                             }
                             if (is_ok && !isAuthenticated()) {
-                                BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
-                                    $new_account_financial_authenticate_msg.setVisibility(1);
-                                    Header.displayAccountStatus();
-                                });
+                                $new_account_financial_authenticate_msg.setVisibility(1);
                             }
 
                             if (is_ok) resolve();else resolveWithMessage();
@@ -31560,6 +31557,10 @@ var MetaTraderConfig = function () {
             },
             onSuccess: function onSuccess(response) {
                 GTM.mt5NewAccount(response);
+
+                BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+                    Header.displayAccountStatus();
+                });
             }
         },
         new_account_mam: {
@@ -31572,6 +31573,10 @@ var MetaTraderConfig = function () {
             },
             onSuccess: function onSuccess(response) {
                 GTM.mt5NewAccount(response);
+
+                BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+                    Header.displayAccountStatus();
+                });
             }
         },
         password_change: {
