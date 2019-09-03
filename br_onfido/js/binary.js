@@ -25868,11 +25868,6 @@ var Authenticate = function () {
 
         $not_authenticated.setVisibility(1);
 
-        if (Client.isAccountOfType('financial')) {
-            $('#not_authenticated_financial').setVisibility(1);
-            link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
-        }
-
         $not_authenticated.find('.learn_more').setVisibility(1).find('a').attr('href', link);
 
         if (isIdentificationNoExpiry(Client.get('residence'))) {
@@ -25905,11 +25900,6 @@ var Authenticate = function () {
         var language_based_link = ['ID', 'RU', 'PT'].includes(language) ? '_' + language : '';
         var $not_authenticated_uns = $('#not_authenticated_uns');
         var link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/Authentication_Process' + language_based_link + '.pdf');
-
-        if (Client.isAccountOfType('financial')) {
-            $('#not_authenticated_financial').setVisibility(1);
-            link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
-        }
 
         $not_authenticated_uns.find('.learn_more').setVisibility(1).find('a').attr('href', link);
 
