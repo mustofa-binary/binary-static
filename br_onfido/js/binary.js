@@ -26679,11 +26679,12 @@ var Authenticate = function () {
             event: 'poi_documents_uploaded'
         }).then(function () {
             onfido.tearDown();
-
-            BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
-                $('#upload_complete').setVisibility(1);
-                Header.displayAccountStatus();
-            });
+            setTimeout(function () {
+                BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+                    $('#upload_complete').setVisibility(1);
+                    Header.displayAccountStatus();
+                });
+            }, 1000);
         });
     };
 
