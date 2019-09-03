@@ -26669,12 +26669,14 @@ var Authenticate = function () {
             event: 'poi_documents_uploaded'
         }).then(function () {
             onfido.tearDown();
+            $('#authentication_loading').setVisibility(1);
             setTimeout(function () {
                 BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
                     $('#upload_complete').setVisibility(1);
                     Header.displayAccountStatus();
+                    $('#authentication_loading').setVisibility(0);
                 });
-            }, 2000);
+            }, 4000);
         });
     };
 
