@@ -11480,8 +11480,6 @@ module.exports = NetworkMonitor;
 "use strict";
 
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/client.js");
@@ -11556,69 +11554,52 @@ var Page = function () {
         });
     };
 
-    var onLoad = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            if (State.get('is_loaded_by_pjax')) {
-                                Url.reset();
-                                updateLinksURL('#content');
-                            } else {
-                                init();
-                                if (!isLoginPages()) {
-                                    Language.setCookie(Language.urlLang());
+    var onLoad = function onLoad() {
+        if (State.get('is_loaded_by_pjax')) {
+            Url.reset();
+            updateLinksURL('#content');
+        } else {
+            init();
+            if (!isLoginPages()) {
+                Language.setCookie(Language.urlLang());
 
-                                    if (!ClientBase.get('is_virtual')) {
-                                        // TODO: uncomment below to enable interview popup dialog
-                                        // InterviewPopup.onLoad();
-                                    }
-                                }
-                                Header.onLoad();
-                                Footer.onLoad();
-                                Language.setCookie();
-                                Menu.makeMobileMenu();
-                                updateLinksURL('body');
-                                recordAffiliateExposure();
-                                endpointNotification();
-                            }
-                            Contents.onLoad();
-
-                            if (sessionStorage.getItem('showLoginPage')) {
-                                sessionStorage.removeItem('showLoginPage');
-                                Login.redirectToLogin();
-                            }
-                            if (Client.isLoggedIn()) {
-                                BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
-                                    RealityCheck.onLoad();
-                                    Menu.init();
-                                });
-                            } else {
-                                Menu.init();
-                                if (!LocalStore.get('date_first_contact')) {
-                                    BinarySocket.wait('time').then(function (response) {
-                                        LocalStore.set('date_first_contact', toISOFormat(moment(response.time * 1000).utc()));
-                                    });
-                                }
-                                if (!LocalStore.get('signup_device')) {
-                                    LocalStore.set('signup_device', isMobile() ? 'mobile' : 'desktop');
-                                }
-                            }
-                            TrafficSource.setData();
-
-                        case 5:
-                        case 'end':
-                            return _context.stop();
-                    }
+                if (!ClientBase.get('is_virtual')) {
+                    // TODO: uncomment below to enable interview popup dialog
+                    // InterviewPopup.onLoad();
                 }
-            }, _callee, undefined);
-        }));
+            }
+            Header.onLoad();
+            Footer.onLoad();
+            Language.setCookie();
+            Menu.makeMobileMenu();
+            updateLinksURL('body');
+            recordAffiliateExposure();
+            endpointNotification();
+        }
+        Contents.onLoad();
 
-        return function onLoad() {
-            return _ref.apply(this, arguments);
-        };
-    }();
+        if (sessionStorage.getItem('showLoginPage')) {
+            sessionStorage.removeItem('showLoginPage');
+            Login.redirectToLogin();
+        }
+        if (Client.isLoggedIn()) {
+            BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
+                RealityCheck.onLoad();
+                Menu.init();
+            });
+        } else {
+            Menu.init();
+            if (!LocalStore.get('date_first_contact')) {
+                BinarySocket.wait('time').then(function (response) {
+                    LocalStore.set('date_first_contact', toISOFormat(moment(response.time * 1000).utc()));
+                });
+            }
+            if (!LocalStore.get('signup_device')) {
+                LocalStore.set('signup_device', isMobile() ? 'mobile' : 'desktop');
+            }
+        }
+        TrafficSource.setData();
+    };
 
     var recordAffiliateExposure = function recordAffiliateExposure() {
         var token = Url.param('t');
@@ -26631,12 +26612,7 @@ var Authenticate = function () {
                                 onfido = Onfido.init({
                                     containerId: 'onfido',
                                     language: {
-                                        locale: getLanguage().toLowerCase() || 'en',
-                                        /*
-                                            TODO: will move to steps after this issue resolved
-                                            https://github.com/onfido/onfido-sdk-ui/issues/391
-                                        */
-                                        phrases: { welcome: { next_button: localize('Verify identity') } }
+                                        locale: getLanguage().toLowerCase() || 'en'
                                     },
                                     token: sdk_token,
                                     useModal: false,
