@@ -11033,13 +11033,13 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Please submit your [_1]proof of identity and proof of address[_2].'), 'user/authenticate');
                 },
                 expired: function expired() {
-                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have passed their expiration date.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
+                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have expired.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
                 },
                 expired_identity: function expired_identity() {
-                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_2] has passed expiration date.'), 'user/authenticate');
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_2] has expired.'), 'user/authenticate');
                 },
                 expired_document: function expired_document() {
-                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has passed expiration date.'), 'user/authenticate', '?authentication_tab=poa');
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has expired.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 rejected: function rejected() {
                     return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
