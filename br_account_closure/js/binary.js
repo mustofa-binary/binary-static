@@ -27466,7 +27466,7 @@ var AccountClosure = function () {
                     $('#closing_steps').setVisibility(1);
                 }
                 if (eligible_mt5) {
-                    $('#metatrader_redirect').setVisibility(1);
+                    $('.metatrader-link').setVisibility(1);
                 }
             }
 
