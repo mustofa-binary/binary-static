@@ -2136,11 +2136,18 @@ body #not_authenticated_financial ul.checked > li {
       .why-us-content .awards-section .horizontal-margin {
         margin: 15px 15px 20px; } }
 
-.account-closure {
+.account-closure-form {
   text-align: left;
   line-height: 40px; }
-  .account-closure span {
+  .account-closure-form span {
     padding-left: 15px; }
+
+.account-closure-subtitle {
+  margin-top: 0;
+  margin-bottom: 20px; }
+
+.account-closure .mar-bot-0 {
+  margin-bottom: 0; }
 
 .reason-textfield {
   border-color: #dedede;
