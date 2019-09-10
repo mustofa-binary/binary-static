@@ -27231,6 +27231,7 @@ module.exports = Settings;
 
 var getAllCurrencies = __webpack_require__(/*! ../../get_currency */ "./src/javascript/app/pages/user/get_currency.js").getAllCurrencies;
 var getCurrenciesOfOtherAccounts = __webpack_require__(/*! ../../get_currency */ "./src/javascript/app/pages/user/get_currency.js").getCurrenciesOfOtherAccounts;
+var Metatrader = __webpack_require__(/*! ../../metatrader/metatrader */ "./src/javascript/app/pages/user/metatrader/metatrader.js");
 var BinarySocket = __webpack_require__(/*! ../../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Client = __webpack_require__(/*! ../../../../base/client */ "./src/javascript/app/base/client.js");
 var getCurrencyFullName = __webpack_require__(/*! ../../../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyFullName;
@@ -27275,7 +27276,9 @@ var AccountClosure = function () {
         $closure_loading.setVisibility(1);
 
         var is_virtual = !hasAccountType('real');
+        var is_svg = Client.get('landing_company_shortcode') === 'svg';
         var has_trading_limit = hasAccountType('real');
+        var eligible_mt5 = Metatrader.isEligible();
         var is_fiat = hasOnlyCurrencyType('fiat');
         var is_crypto = hasOnlyCurrencyType('crypto');
         var is_both = hasCurrencyType('fiat') && hasCurrencyType('crypto');
@@ -27294,7 +27297,9 @@ var AccountClosure = function () {
             } else {
                 if (is_fiat) {
                     $fiat_1.setVisibility(1);
-                    $fiat_2.setVisibility(1);
+                    if (is_svg) {
+                        $fiat_2.setVisibility(1);
+                    }
 
                     var fiat_currency = '';
 
@@ -27330,7 +27335,10 @@ var AccountClosure = function () {
 
                 if (is_crypto) {
                     $crypto_1.setVisibility(1);
-                    $crypto_2.setVisibility(1);
+                    if (is_svg) {
+                        $crypto_2.setVisibility(1);
+                    }
+
                     var crypto_currencies = '';
                     var has_all_crypto = true;
 
@@ -27374,7 +27382,10 @@ var AccountClosure = function () {
 
                 if (is_both) {
                     $fiat_1.setVisibility(1);
-                    $crypto_2.setVisibility(1);
+                    if (is_svg) {
+                        $crypto_2.setVisibility(1);
+                    }
+
                     var _crypto_currencies = '';
                     var _has_all_crypto = true;
 
@@ -27454,6 +27465,9 @@ var AccountClosure = function () {
                     $trading_limit.setVisibility(1);
                     $('#closing_steps').setVisibility(1);
                 }
+                if (eligible_mt5) {
+                    $('#metatrader_redirect').setVisibility(1);
+                }
             }
 
             $('#current_email').text(current_email);
@@ -27477,10 +27491,25 @@ var AccountClosure = function () {
             submitForm();
         });
 
+        $txt_other_reason.setVisibility(0);
+
         $txt_other_reason.on('keyup', function () {
             var input = $txt_other_reason.val();
             if (input && validateReasonTextField(false)) {
                 $txt_other_reason.removeClass('error-field');
+                $error_msg.css('display', 'none');
+            }
+        });
+        $('#reason input[type=radio]').on('change', function (e) {
+            var value = e.target.value;
+
+
+            if (value === 'other') {
+                $txt_other_reason.setVisibility(1);
+            } else {
+                $txt_other_reason.setVisibility(0);
+                $txt_other_reason.removeClass('error-field');
+                $txt_other_reason.val('');
                 $error_msg.css('display', 'none');
             }
         });
@@ -27503,6 +27532,7 @@ var AccountClosure = function () {
                     $submit_loading.setVisibility(0);
                     $closure_container.setVisibility(0);
                     $success_msg.setVisibility(1);
+                    $.scrollTo(0, 500);
 
                     setTimeout(function () {
                         return window.location.href = Url.urlFor('home');
