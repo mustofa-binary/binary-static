@@ -27388,17 +27388,24 @@ var AccountClosure = function () {
 
                     var _crypto_currencies = '';
                     var _has_all_crypto = true;
+                    var crypto_numbers = 0;
 
                     if (isCryptocurrency(current_currency)) {
                         _crypto_currencies = Client.get('currency');
                         other_currencies.forEach(function (currency) {
                             if (isCryptocurrency(currency)) {
                                 _crypto_currencies += ', ' + currency;
+                                crypto_numbers++;
                             } else {
                                 $('#current_currency_fiat').text(currency);
                                 $('.current_currency').text(currency);
                             }
                         });
+                        if (crypto_numbers > 1) {
+                            _crypto_currencies += ' ' + localize('accounts');
+                        } else {
+                            _crypto_currencies += ' ' + localize('account');
+                        }
                         $('#current_currency_crypto').text(_crypto_currencies);
                     } else {
                         var _fiat_currency = '';
@@ -27406,6 +27413,7 @@ var AccountClosure = function () {
                         if (Client.get('is_virtual')) {
                             other_currencies.forEach(function (currency) {
                                 if (isCryptocurrency(currency)) {
+                                    crypto_numbers++;
                                     if (!_crypto_currencies) {
                                         _crypto_currencies += currency;
                                     } else {
@@ -27424,6 +27432,7 @@ var AccountClosure = function () {
                         } else {
                             other_currencies.forEach(function (currency) {
                                 if (isCryptocurrency(currency)) {
+                                    crypto_numbers++;
                                     if (!_crypto_currencies) {
                                         _crypto_currencies += currency;
                                     } else {
@@ -27433,6 +27442,12 @@ var AccountClosure = function () {
                             });
 
                             _fiat_currency = current_currency;
+                        }
+
+                        if (crypto_numbers > 1) {
+                            _crypto_currencies += ' ' + localize('accounts');
+                        } else {
+                            _crypto_currencies += ' ' + localize('account');
                         }
 
                         $('#current_currency_fiat').text(_fiat_currency);
