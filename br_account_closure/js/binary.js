@@ -27346,6 +27346,7 @@ var AccountClosure = function () {
 
                     if (!Client.get('is_virtual')) {
                         crypto_currencies = Client.get('currency');
+                        crypto_numbers++;
                     }
 
                     other_currencies.forEach(function (currency) {
@@ -27401,6 +27402,7 @@ var AccountClosure = function () {
 
                     if (isCryptocurrency(current_currency)) {
                         _crypto_currencies = Client.get('currency');
+                        _crypto_numbers++;
                         other_currencies.forEach(function (currency) {
                             if (isCryptocurrency(currency)) {
                                 _crypto_currencies += ', ' + currency;
