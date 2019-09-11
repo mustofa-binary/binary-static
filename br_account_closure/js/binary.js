@@ -27229,6 +27229,8 @@ module.exports = Settings;
 "use strict";
 
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var getAllCurrencies = __webpack_require__(/*! ../../get_currency */ "./src/javascript/app/pages/user/get_currency.js").getAllCurrencies;
 var getCurrenciesOfOtherAccounts = __webpack_require__(/*! ../../get_currency */ "./src/javascript/app/pages/user/get_currency.js").getCurrenciesOfOtherAccounts;
 var Metatrader = __webpack_require__(/*! ../../metatrader/metatrader */ "./src/javascript/app/pages/user/metatrader/metatrader.js");
@@ -27278,7 +27280,6 @@ var AccountClosure = function () {
         var is_virtual = !hasAccountType('real');
         var is_svg = Client.get('landing_company_shortcode') === 'svg';
         var has_trading_limit = hasAccountType('real');
-        var eligible_mt5 = Metatrader.isEligible();
         var is_fiat = hasOnlyCurrencyType('fiat');
         var is_crypto = hasOnlyCurrencyType('crypto');
         var is_both = hasCurrencyType('fiat') && hasCurrencyType('crypto');
@@ -27480,9 +27481,31 @@ var AccountClosure = function () {
                     $trading_limit.setVisibility(1);
                     $('#closing_steps').setVisibility(1);
                 }
-                if (eligible_mt5) {
-                    $('.metatrader-link').setVisibility(1);
-                }
+
+                BinarySocket.send({ statement: 1, limit: 1 });
+                BinarySocket.wait('landing_company', 'get_account_status', 'statement').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                    var is_eligible;
+                    return regeneratorRuntime.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    _context.next = 2;
+                                    return Metatrader.isEligible();
+
+                                case 2:
+                                    is_eligible = _context.sent;
+
+                                    if (is_eligible) {
+                                        $('.metatrader-link').setVisibility(1);
+                                    }
+
+                                case 4:
+                                case 'end':
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, undefined);
+                })));
             }
 
             $('#current_email').text(current_email);
