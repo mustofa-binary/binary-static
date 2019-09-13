@@ -26625,7 +26625,12 @@ var Authenticate = function () {
                                     token: sdk_token,
                                     useModal: false,
                                     onComplete: handleComplete,
-                                    steps: ['document', 'face']
+                                    steps: [{
+                                        type: 'document',
+                                        options: {
+                                            forceCrossDevice: true
+                                        }
+                                    }, 'face']
                                 });
                                 $('#authentication_loading').setVisibility(0);
                             } catch (err) {
@@ -27833,14 +27838,20 @@ var Settings = function () {
 
             var status = State.getResponse('get_account_status.status') || [];
             var authentication = State.getResponse('get_account_status.authentication') || {};
+            var identity = authentication.identity,
+                document = authentication.document,
+                needs_verification = authentication.needs_verification;
+
             if (!/social_signup/.test(status)) {
                 $('#change_password').setVisibility(1);
             }
 
-            if (!authentication.needs_verification.length && authentication.identity.status === 'none' && authentication.document.status === 'none') {
-                $('#authenticate').setVisibility(0);
-            } else {
-                $('#authenticate').setVisibility(1);
+            if (identity && document && needs_verification) {
+                if (!needs_verification.length && identity.status === 'none' && document.status === 'none') {
+                    $('#authenticate').setVisibility(0);
+                } else {
+                    $('#authenticate').setVisibility(1);
+                }
             }
 
             // Professional Client menu should only be shown to maltainvest accounts.
