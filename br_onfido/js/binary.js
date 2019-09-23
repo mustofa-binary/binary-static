@@ -10372,7 +10372,7 @@ var Client = function () {
     var doLogout = function doLogout(response) {
         if (response.logout !== 1) return;
         removeCookies('login', 'loginid', 'loginid_list', 'email', 'residence', 'settings'); // backward compatibility
-        removeCookies('reality_check', 'affiliate_token', 'affiliate_tracking', 'onfido_token', 'is_onfido_unsupported');
+        removeCookies('reality_check', 'affiliate_token', 'affiliate_tracking', 'onfido_token');
         // clear elev.io session storage
         sessionStorage.removeItem('_elevaddon-6app');
         sessionStorage.removeItem('_elevaddon-6create');
@@ -10964,6 +10964,9 @@ var Header = function () {
                     document = _authentication.document,
                     needs_verification = _authentication.needs_verification;
 
+                if (!identity || !document || !needs_verification) {
+                    return false;
+                }
                 var verification_length = needs_verification.length;
                 var result = false;
 
@@ -25807,6 +25810,11 @@ var TabSelector = __webpack_require__(/*! ../../../../_common/tab_selector */ ".
 var Url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 
+/*
+    To handle onfido unsupported country, we handle the functions separately,
+    the name of the functions will be original name + uns abbreviation of `unsupported`
+*/
+
 var Authenticate = function () {
     var is_any_upload_failed = false;
     var is_any_upload_failed_uns = false;
@@ -26638,7 +26646,9 @@ var Authenticate = function () {
         };
     }();
 
-    var handleComplete = function handleComplete() {
+    var handleComplete = function handleComplete(complete_response) {
+        // eslint-disable-next-line no-console
+        console.log(complete_response);
         BinarySocket.send({
             notification_event: 1,
             category: 'authentication',
@@ -27825,14 +27835,20 @@ var Settings = function () {
 
             var status = State.getResponse('get_account_status.status') || [];
             var authentication = State.getResponse('get_account_status.authentication') || {};
+            var identity = authentication.identity,
+                document = authentication.document,
+                needs_verification = authentication.needs_verification;
+
             if (!/social_signup/.test(status)) {
                 $('#change_password').setVisibility(1);
             }
 
-            if (!authentication.needs_verification.length && authentication.identity.status === 'none' && authentication.document.status === 'none') {
-                $('#authenticate').setVisibility(0);
-            } else {
-                $('#authenticate').setVisibility(1);
+            if (identity && document && needs_verification) {
+                if (!needs_verification.length && identity.status === 'none' && document.status === 'none') {
+                    $('#authenticate').setVisibility(0);
+                } else {
+                    $('#authenticate').setVisibility(1);
+                }
             }
 
             // Professional Client menu should only be shown to maltainvest accounts.
@@ -36340,6 +36356,17 @@ module.exports = WhyUs;
 /*!***********************!*\
   !*** jsdom (ignored) ***!
   \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 2:
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
