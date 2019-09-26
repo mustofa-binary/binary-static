@@ -26703,7 +26703,7 @@ var Authenticate = function () {
 
                                 var is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
 
-                                if (!is_not_required) {
+                                if (is_not_required) {
                                     $('#not_required_msg').setVisibility(1);
                                 }
                             });
