@@ -26696,7 +26696,7 @@ var Authenticate = function () {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            BinarySocket.wait({ 'get_account_status': 1 }).then(function (authentication_status) {
+                            BinarySocket.send({ 'get_account_status': 1 }).then(function (authentication_status) {
                                 var identity = authentication_status.identity,
                                     document = authentication_status.document,
                                     needs_verification = authentication_status.needs_verification;
