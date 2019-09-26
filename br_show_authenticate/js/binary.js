@@ -26719,7 +26719,7 @@ var Authenticate = function () {
 
                         case 10:
                             identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
-                            is_high_risk_client = needs_verification.length;
+                            is_high_risk_client = identity.status !== 'none' && document.status !== 'none' && needs_verification.length;
                             is_fully_authenticated = identity.status === 'verified' && document.status === 'verified';
 
 
