@@ -26696,10 +26696,11 @@ var Authenticate = function () {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            BinarySocket.send({ 'get_account_status': 1 }).then(function (authentication_status) {
-                                var identity = authentication_status.identity,
-                                    document = authentication_status.document,
-                                    needs_verification = authentication_status.needs_verification;
+                            BinarySocket.send({ 'get_account_status': 1 }).then(function (response) {
+                                var _response$get_account = response.get_account_status.authentication,
+                                    identity = _response$get_account.identity,
+                                    document = _response$get_account.document,
+                                    needs_verification = _response$get_account.needs_verification;
 
                                 var is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
 
