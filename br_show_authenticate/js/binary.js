@@ -26865,7 +26865,7 @@ var Authenticate = function () {
     }();
 
     var onLoad = function onLoad() {
-        if (checkIsRequired) {
+        if (checkIsRequired()) {
             initTab();
             initAuthentication();
         }
