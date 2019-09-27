@@ -26692,27 +26692,31 @@ var Authenticate = function () {
 
     var checkIsRequired = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var authentication_status, identity, document, needs_verification, is_not_required;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            BinarySocket.send({ 'get_account_status': 1 }).then(function (response) {
-                                var _response$get_account = response.get_account_status.authentication,
-                                    identity = _response$get_account.identity,
-                                    document = _response$get_account.document,
-                                    needs_verification = _response$get_account.needs_verification;
+                            _context2.next = 2;
+                            return getAuthenticationStatus();
 
-                                var is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
+                        case 2:
+                            authentication_status = _context2.sent;
+                            identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
+                            is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
 
-                                if (is_not_required) {
-                                    $('#not_required_msg').setVisibility(1);
-                                    return false;
-                                }
+                            if (!is_not_required) {
+                                _context2.next = 8;
+                                break;
+                            }
 
-                                return true;
-                            });
+                            $('#not_required_msg').setVisibility(1);
+                            return _context2.abrupt('return', false);
 
-                        case 1:
+                        case 8:
+                            return _context2.abrupt('return', true);
+
+                        case 9:
                         case 'end':
                             return _context2.stop();
                     }
