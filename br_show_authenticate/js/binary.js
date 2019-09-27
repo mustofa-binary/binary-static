@@ -26697,12 +26697,7 @@ var Authenticate = function () {
 
         var is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
 
-        if (is_not_required) {
-            $('#not_required_msg').setVisibility(1);
-            return false;
-        }
-
-        return true;
+        return !is_not_required;
     };
 
     var initAuthentication = function () {
@@ -26858,6 +26853,10 @@ var Authenticate = function () {
                             if (is_required) {
                                 initTab();
                                 initAuthentication();
+                            } else {
+                                $('#authentication_tab').setVisibility(0);
+                                $('#not_required_msg').setVisibility(1);
+                                $('#authentication_loading').setVisibility(0);
                             }
 
                         case 5:
