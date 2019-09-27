@@ -26690,9 +26690,24 @@ var Authenticate = function () {
         });
     };
 
-    var checkIsRequired = function () {
+    var checkIsRequired = function checkIsRequired(authentication_status) {
+        var identity = authentication_status.identity,
+            document = authentication_status.document,
+            needs_verification = authentication_status.needs_verification;
+
+        var is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
+
+        if (is_not_required) {
+            $('#not_required_msg').setVisibility(1);
+            return false;
+        }
+
+        return true;
+    };
+
+    var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, identity, document, needs_verification, is_not_required;
+            var authentication_status, onfido_token, identity, document, is_fully_authenticated;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26702,59 +26717,20 @@ var Authenticate = function () {
 
                         case 2:
                             authentication_status = _context2.sent;
-                            identity = authentication_status.identity, document = authentication_status.document, needs_verification = authentication_status.needs_verification;
-                            is_not_required = identity.status === 'none' && document.status === 'none' && !needs_verification.length;
-
-                            if (!is_not_required) {
-                                _context2.next = 8;
-                                break;
-                            }
-
-                            $('#not_required_msg').setVisibility(1);
-                            return _context2.abrupt('return', false);
-
-                        case 8:
-                            return _context2.abrupt('return', true);
-
-                        case 9:
-                        case 'end':
-                            return _context2.stop();
-                    }
-                }
-            }, _callee2, undefined);
-        }));
-
-        return function checkIsRequired() {
-            return _ref2.apply(this, arguments);
-        };
-    }();
-
-    var initAuthentication = function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-            var authentication_status, onfido_token, identity, document, is_fully_authenticated;
-            return regeneratorRuntime.wrap(function _callee3$(_context3) {
-                while (1) {
-                    switch (_context3.prev = _context3.next) {
-                        case 0:
-                            _context3.next = 2;
-                            return getAuthenticationStatus();
-
-                        case 2:
-                            authentication_status = _context3.sent;
-                            _context3.next = 5;
+                            _context2.next = 5;
                             return getOnfidoServiceToken();
 
                         case 5:
-                            onfido_token = _context3.sent;
+                            onfido_token = _context2.sent;
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context3.next = 10;
+                                _context2.next = 10;
                                 break;
                             }
 
                             $('#authentication_tab').setVisibility(0);
                             $('#error_occured').setVisibility(1);
-                            return _context3.abrupt('return');
+                            return _context2.abrupt('return');
 
                         case 10:
                             identity = authentication_status.identity, document = authentication_status.document;
@@ -26767,12 +26743,12 @@ var Authenticate = function () {
                             }
 
                             if (identity.further_resubmissions_allowed) {
-                                _context3.next = 32;
+                                _context2.next = 32;
                                 break;
                             }
 
-                            _context3.t0 = identity.status;
-                            _context3.next = _context3.t0 === 'none' ? 17 : _context3.t0 === 'pending' ? 19 : _context3.t0 === 'rejected' ? 21 : _context3.t0 === 'verified' ? 23 : _context3.t0 === 'expired' ? 25 : _context3.t0 === 'suspected' ? 27 : 29;
+                            _context2.t0 = identity.status;
+                            _context2.next = _context2.t0 === 'none' ? 17 : _context2.t0 === 'pending' ? 19 : _context2.t0 === 'rejected' ? 21 : _context2.t0 === 'verified' ? 23 : _context2.t0 === 'expired' ? 25 : _context2.t0 === 'suspected' ? 27 : 29;
                             break;
 
                         case 17:
@@ -26782,70 +26758,70 @@ var Authenticate = function () {
                             } else {
                                 initOnfido(onfido_token);
                             }
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 19:
                             $('#upload_complete').setVisibility(1);
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 21:
                             $('#unverified').setVisibility(1);
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 23:
                             $('#verified').setVisibility(1);
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 25:
                             $('#expired_poi').setVisibility(1);
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 27:
                             $('#unverified').setVisibility(1);
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 29:
-                            return _context3.abrupt('break', 30);
+                            return _context2.abrupt('break', 30);
 
                         case 30:
-                            _context3.next = 33;
+                            _context2.next = 33;
                             break;
 
                         case 32:
                             initOnfido(onfido_token);
 
                         case 33:
-                            _context3.t1 = document.status;
-                            _context3.next = _context3.t1 === 'none' ? 36 : _context3.t1 === 'pending' ? 39 : _context3.t1 === 'rejected' ? 41 : _context3.t1 === 'suspected' ? 43 : _context3.t1 === 'verified' ? 45 : _context3.t1 === 'expired' ? 47 : 49;
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 36 : _context2.t1 === 'pending' ? 39 : _context2.t1 === 'rejected' ? 41 : _context2.t1 === 'suspected' ? 43 : _context2.t1 === 'verified' ? 45 : _context2.t1 === 'expired' ? 47 : 49;
                             break;
 
                         case 36:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 39:
                             $('#pending_poa').setVisibility(1);
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 41:
                             $('#unverified_poa').setVisibility(1);
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 43:
                             $('#unverified_poa').setVisibility(1);
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 45:
                             $('#verified_poa').setVisibility(1);
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 47:
                             $('#expired_poa').setVisibility(1);
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 49:
-                            return _context3.abrupt('break', 50);
+                            return _context2.abrupt('break', 50);
 
                         case 50:
                             $('#authentication_loading').setVisibility(0);
@@ -26853,23 +26829,49 @@ var Authenticate = function () {
 
                         case 52:
                         case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, undefined);
+        }));
+
+        return function initAuthentication() {
+            return _ref2.apply(this, arguments);
+        };
+    }();
+
+    var onLoad = function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            var authentication_status, is_required;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return getAuthenticationStatus();
+
+                        case 2:
+                            authentication_status = _context3.sent;
+                            is_required = checkIsRequired(authentication_status);
+
+
+                            if (is_required) {
+                                initTab();
+                                initAuthentication();
+                            }
+
+                        case 5:
+                        case 'end':
                             return _context3.stop();
                     }
                 }
             }, _callee3, undefined);
         }));
 
-        return function initAuthentication() {
+        return function onLoad() {
             return _ref3.apply(this, arguments);
         };
     }();
-
-    var onLoad = function onLoad() {
-        if (checkIsRequired()) {
-            initTab();
-            initAuthentication();
-        }
-    };
 
     var onUnload = function onUnload() {
         if (onfido) {
