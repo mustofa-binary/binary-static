@@ -26690,7 +26690,7 @@ var Authenticate = function () {
         });
     };
 
-    var checkRequired = function () {
+    var checkIsRequired = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
@@ -26706,7 +26706,10 @@ var Authenticate = function () {
 
                                 if (is_not_required) {
                                     $('#not_required_msg').setVisibility(1);
+                                    return false;
                                 }
+
+                                return true;
                             });
 
                         case 1:
@@ -26717,7 +26720,7 @@ var Authenticate = function () {
             }, _callee2, undefined);
         }));
 
-        return function checkRequired() {
+        return function checkIsRequired() {
             return _ref2.apply(this, arguments);
         };
     }();
@@ -26858,9 +26861,10 @@ var Authenticate = function () {
     }();
 
     var onLoad = function onLoad() {
-        initTab();
-        initAuthentication();
-        checkRequired();
+        if (checkIsRequired) {
+            initTab();
+            initAuthentication();
+        }
     };
 
     var onUnload = function onUnload() {
