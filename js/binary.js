@@ -25798,11 +25798,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var DocumentUploader = __webpack_require__(/*! @binary-com/binary-document-uploader */ "./node_modules/@binary-com/binary-document-uploader/DocumentUploader.js");
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var Onfido = __webpack_require__(/*! onfido-sdk-ui */ "./node_modules/onfido-sdk-ui/lib/index.js");
-var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
-var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var isAuthenticationAllowed = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").isAuthenticationAllowed;
 var CompressImage = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").compressImg;
 var ConvertToBase64 = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").convertToBase64;
@@ -26858,16 +26856,7 @@ var Authenticate = function () {
                             if (!isAuthenticationAllowed() && !is_from_mt5) {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_loading').setVisibility(0);
-
-                                Dialog.alert({
-                                    id: 'authorize_svg_error',
-                                    localized_message: localize('You do not need to authenticate your account at this time.[_1]We will inform you when your account needs to be authenticated.', '<br />'),
-                                    localized_title: localize('No authentication required'),
-                                    ok_text: localize('Back to trading'),
-                                    onConfirm: function onConfirm() {
-                                        BinaryPjax.load(Url.urlFor('trading'));
-                                    }
-                                });
+                                $('#authentication_unneeded').setVisibility(0);
                             }
                             _context3.next = 4;
                             return getAuthenticationStatus();
