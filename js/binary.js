@@ -487,7 +487,8 @@ var ClientBase = function () {
     };
 
     var isAuthenticationAllowed = function isAuthenticationAllowed() {
-        return !/allow_document_upload/.test((State.getResponse('get_account_status') || {}).status);
+        return (/allow_document_upload/.test((State.getResponse('get_account_status') || {}).status)
+        );
     };
 
     // remove manager id or master distinction from group
