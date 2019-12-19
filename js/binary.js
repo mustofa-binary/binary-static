@@ -486,6 +486,10 @@ var ClientBase = function () {
         return isAccountOfType('financial') && !/crs_tin_information/.test((State.getResponse('get_account_status') || {}).status);
     };
 
+    var isAuthenticationAllowed = function isAuthenticationAllowed() {
+        return !/allow_document_upload/.test((State.getResponse('get_account_status') || {}).status);
+    };
+
     // remove manager id or master distinction from group
     // remove EUR or GBP distinction from group
     var getMT5AccountType = function getMT5AccountType(group) {
@@ -629,6 +633,7 @@ var ClientBase = function () {
         getAllLoginids: getAllLoginids,
         getAccountType: getAccountType,
         isAccountOfType: isAccountOfType,
+        isAuthenticationAllowed: isAuthenticationAllowed,
         getAccountOfType: getAccountOfType,
         hasAccountType: hasAccountType,
         hasCurrencyType: hasCurrencyType,
@@ -25795,6 +25800,7 @@ var Onfido = __webpack_require__(/*! onfido-sdk-ui */ "./node_modules/onfido-sdk
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
+var ClientBase = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
 var CompressImage = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").compressImg;
 var ConvertToBase64 = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").convertToBase64;
 var isImageType = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").isImageType;
@@ -26844,10 +26850,15 @@ var Authenticate = function () {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            _context3.next = 2;
+                            if (!ClientBase.isAuthenticationAllowed()) {
+                                $('#authentication_tab').setVisibility(0);
+                                $('#authentication_loading').setVisibility(0);
+                                $('#error_occured').setVisibility(1);
+                            }
+                            _context3.next = 3;
                             return getAuthenticationStatus();
 
-                        case 2:
+                        case 3:
                             authentication_status = _context3.sent;
                             is_required = checkIsRequired(authentication_status);
                             has_svg_account = Client.hasSvgAccount();
@@ -26869,7 +26880,7 @@ var Authenticate = function () {
                                 $('#authentication_loading').setVisibility(0);
                             }
 
-                        case 6:
+                        case 7:
                         case 'end':
                             return _context3.stop();
                     }
@@ -27868,6 +27879,8 @@ module.exports = ProfitTableUI;
 
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
+var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
+var ClientBase = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
 
@@ -27880,6 +27893,17 @@ var Settings = function () {
 
             if (!/social_signup/.test(status)) {
                 $('#change_password').setVisibility(1);
+            }
+
+            if (!ClientBase.isAuthenticationAllowed()) {
+                $('#authenticate a').attr('href', '#').on('click', function () {
+                    Dialog.alert({
+                        id: 'authorize_svg_error',
+                        localized_message: localize('You do not need to authenticate your account at this time.[_1]We will inform you when your account needs to be authenticated.', '<br />'),
+                        localized_title: localize('No authentication required'),
+                        ok_text: localize('Back to trading')
+                    });
+                });
             }
 
             // Professional Client menu should only be shown to maltainvest accounts.
