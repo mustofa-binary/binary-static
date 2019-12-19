@@ -26846,11 +26846,17 @@ var Authenticate = function () {
 
     var onLoad = function () {
         var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-            var is_from_mt5, authentication_status, is_required, has_svg_account, identity, document, is_not_fully_authenticated, is_not_high_risk;
+            var authentication_status, is_required, is_from_mt5, has_svg_account;
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
+                            _context3.next = 2;
+                            return getAuthenticationStatus();
+
+                        case 2:
+                            authentication_status = _context3.sent;
+                            is_required = checkIsRequired(authentication_status);
                             is_from_mt5 = Url.param('from_mt5');
 
                             if (!isAuthenticationAllowed() && !is_from_mt5) {
@@ -26858,23 +26864,14 @@ var Authenticate = function () {
                                 $('#authentication_loading').setVisibility(0);
                                 $('#authentication_unneeded').setVisibility(1);
                             }
-                            _context3.next = 4;
-                            return getAuthenticationStatus();
 
-                        case 4:
-                            authentication_status = _context3.sent;
-                            is_required = checkIsRequired(authentication_status);
                             has_svg_account = Client.hasSvgAccount();
 
                             if (is_required || has_svg_account) {
                                 initTab();
                                 initAuthentication();
 
-                                identity = authentication_status.identity, document = authentication_status.document;
-                                is_not_fully_authenticated = identity.status !== 'verified' && document.status !== 'verified';
-                                is_not_high_risk = !/high/.test(State.getResponse('get_account_status.risk_classification'));
-
-                                if (is_not_fully_authenticated && has_svg_account && is_not_high_risk && is_from_mt5) {
+                                if (is_from_mt5) {
                                     $('#authenticate_only_real_mt5_advanced').setVisibility(1);
                                 }
                             } else {
