@@ -487,7 +487,7 @@ var ClientBase = function () {
     };
 
     var isAuthenticationAllowed = function isAuthenticationAllowed() {
-        return (/allow_document_upload/.test((State.getResponse('get_account_status') || {}).status)
+        return (/allow_document_upload/.test(State.getResponse('get_account_status.status'))
         );
     };
 
@@ -25798,10 +25798,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var DocumentUploader = __webpack_require__(/*! @binary-com/binary-document-uploader */ "./node_modules/@binary-com/binary-document-uploader/DocumentUploader.js");
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var Onfido = __webpack_require__(/*! onfido-sdk-ui */ "./node_modules/onfido-sdk-ui/lib/index.js");
+var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
-var ClientBase = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
+var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
+var isAuthenticationAllowed = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").isAuthenticationAllowed;
 var CompressImage = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").compressImg;
 var ConvertToBase64 = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").convertToBase64;
 var isImageType = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").isImageType;
@@ -26846,20 +26848,31 @@ var Authenticate = function () {
 
     var onLoad = function () {
         var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-            var authentication_status, is_required, has_svg_account, identity, document, is_not_fully_authenticated, is_not_high_risk;
+            var is_from_mt5, authentication_status, is_required, has_svg_account, identity, document, is_not_fully_authenticated, is_not_high_risk;
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            if (!ClientBase.isAuthenticationAllowed()) {
+                            is_from_mt5 = Url.param('from_mt5');
+
+                            if (!isAuthenticationAllowed() && !is_from_mt5) {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_loading').setVisibility(0);
-                                $('#error_occured').setVisibility(1);
+
+                                Dialog.alert({
+                                    id: 'authorize_svg_error',
+                                    localized_message: localize('You do not need to authenticate your account at this time.[_1]We will inform you when your account needs to be authenticated.', '<br />'),
+                                    localized_title: localize('No authentication required'),
+                                    ok_text: localize('Back to trading'),
+                                    onConfirm: function onConfirm() {
+                                        BinaryPjax.load(Url.urlFor('trading'));
+                                    }
+                                });
                             }
-                            _context3.next = 3;
+                            _context3.next = 4;
                             return getAuthenticationStatus();
 
-                        case 3:
+                        case 4:
                             authentication_status = _context3.sent;
                             is_required = checkIsRequired(authentication_status);
                             has_svg_account = Client.hasSvgAccount();
@@ -26881,7 +26894,7 @@ var Authenticate = function () {
                                 $('#authentication_loading').setVisibility(0);
                             }
 
-                        case 7:
+                        case 8:
                         case 'end':
                             return _context3.stop();
                     }
@@ -27879,11 +27892,13 @@ module.exports = ProfitTableUI;
 
 
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
+var BinaryPjax = __webpack_require__(/*! ../../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Dialog = __webpack_require__(/*! ../../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
-var ClientBase = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
+var isAuthenticationAllowed = __webpack_require__(/*! ../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").isAuthenticationAllowed;
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
+var Url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
 
 var Settings = function () {
     var onLoad = function onLoad() {
@@ -27896,13 +27911,16 @@ var Settings = function () {
                 $('#change_password').setVisibility(1);
             }
 
-            if (!ClientBase.isAuthenticationAllowed()) {
+            if (!isAuthenticationAllowed()) {
                 $('#authenticate a').attr('href', '#').on('click', function () {
                     Dialog.alert({
                         id: 'authorize_svg_error',
                         localized_message: localize('You do not need to authenticate your account at this time.[_1]We will inform you when your account needs to be authenticated.', '<br />'),
                         localized_title: localize('No authentication required'),
-                        ok_text: localize('Back to trading')
+                        ok_text: localize('Back to trading'),
+                        onConfirm: function onConfirm() {
+                            BinaryPjax.load(Url.urlFor('trading'));
+                        }
                     });
                 });
             }
