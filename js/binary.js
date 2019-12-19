@@ -26856,7 +26856,7 @@ var Authenticate = function () {
                             if (!isAuthenticationAllowed() && !is_from_mt5) {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_loading').setVisibility(0);
-                                $('#authentication_unneeded').setVisibility(0);
+                                $('#authentication_unneeded').setVisibility(1);
                             }
                             _context3.next = 4;
                             return getAuthenticationStatus();
@@ -26874,7 +26874,7 @@ var Authenticate = function () {
                                 is_not_fully_authenticated = identity.status !== 'verified' && document.status !== 'verified';
                                 is_not_high_risk = !/high/.test(State.getResponse('get_account_status.risk_classification'));
 
-                                if (is_not_fully_authenticated && has_svg_account && is_not_high_risk) {
+                                if (is_not_fully_authenticated && has_svg_account && is_not_high_risk && is_from_mt5) {
                                     $('#authenticate_only_real_mt5_advanced').setVisibility(1);
                                 }
                             } else {
