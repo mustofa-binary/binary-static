@@ -393,7 +393,9 @@ var ClientBase = function () {
         });
     };
 
-    var hasOnlyCurrencyType = function hasOnlyCurrencyType(type) {
+    var hasOnlyCurrencyType = function hasOnlyCurrencyType() {
+        var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'fiat';
+
         var loginids = getAllLoginids();
         var real_loginid = new RegExp('^(MX|MF|MLT|CR|FOG)[0-9]+$', 'i');
         var only_real_loginids = loginids.filter(function (loginid) {
@@ -404,9 +406,14 @@ var ClientBase = function () {
                 return isCryptocurrency(get('currency', loginid));
             });
         }
+        if (type === 'unset') {
+            return only_real_loginids.every(function (loginid) {
+                return !get('currency', loginid);
+            });
+        }
 
         return only_real_loginids.every(function (loginid) {
-            return !isCryptocurrency(get('currency', loginid));
+            return get('currency', loginid) && !isCryptocurrency(get('currency', loginid));
         });
     };
 
@@ -28063,7 +28070,7 @@ var AccountClosure = function () {
         $submit_loading = void 0,
         $closure_container = void 0,
         $trading_limit = void 0,
-        $fiat_unset = void 0,
+        $real_unset = void 0,
         $fiat_1 = void 0,
         $fiat_2 = void 0,
         $crypto_1 = void 0,
@@ -28083,7 +28090,7 @@ var AccountClosure = function () {
         $virtual = $('.virtual');
         $crypto_1 = $('.crypto_1');
         $crypto_2 = $('.crypto_2');
-        $fiat_unset = $('.fiat_unset');
+        $real_unset = $('.real_unset');
         $fiat_1 = $('.fiat_1');
         $fiat_2 = $('.fiat_2');
         $form = $(form_selector);
@@ -28093,6 +28100,7 @@ var AccountClosure = function () {
         var is_virtual = !hasAccountType('real');
         var is_svg = Client.get('landing_company_shortcode') === 'svg';
         var has_trading_limit = hasAccountType('real');
+        var is_real_unset = hasOnlyCurrencyType('unset');
         var is_fiat = hasOnlyCurrencyType('fiat');
         var is_crypto = hasOnlyCurrencyType('crypto');
         var is_both = hasCurrencyType('fiat') && hasCurrencyType('crypto');
@@ -28109,6 +28117,20 @@ var AccountClosure = function () {
                     $virtual.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
                 });
             } else {
+                if (is_real_unset) {
+                    $real_unset.setVisibility(1);
+                    currencies.forEach(function (currency) {
+                        var is_allowed = true;
+                        other_currencies.forEach(function (other_currency) {
+                            if (currency === other_currency) {
+                                is_allowed = false;
+                            }
+                        });
+                        if (is_allowed) {
+                            $real_unset.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
+                        }
+                    });
+                }
                 if (is_fiat) {
                     $fiat_1.setVisibility(1);
                     if (is_svg) {
@@ -28116,21 +28138,17 @@ var AccountClosure = function () {
                     }
 
                     var fiat_currency = Client.get('currency');
-                    if (!fiat_currency) {
-                        $fiat_1.setVisibility(0);
-                        $fiat_unset.setVisibility(1);
-                    } else {
-                        if (Client.get('is_virtual')) {
-                            other_currencies.forEach(function (currency) {
-                                if (!isCryptocurrency(currency)) {
-                                    fiat_currency = currency;
-                                }
-                            });
-                        }
 
-                        $('#current_currency_fiat').text(fiat_currency);
-                        $('.current_currency').text(fiat_currency);
+                    if (Client.get('is_virtual')) {
+                        other_currencies.forEach(function (currency) {
+                            if (!isCryptocurrency(currency)) {
+                                fiat_currency = currency;
+                            }
+                        });
                     }
+
+                    $('#current_currency_fiat').text(fiat_currency);
+                    $('.current_currency').text(fiat_currency);
 
                     currencies.forEach(function (currency) {
                         var is_allowed = true;
