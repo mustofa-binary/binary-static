@@ -10716,6 +10716,7 @@ var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/clie
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var showHidePulser = __webpack_require__(/*! ../common/account_opening */ "./src/javascript/app/common/account_opening.js").showHidePulser;
 var getLandingCompanyValue = __webpack_require__(/*! ../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").getLandingCompanyValue;
+var isAuthenticationAllowed = __webpack_require__(/*! ../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").isAuthenticationAllowed;
 var GTM = __webpack_require__(/*! ../../_common/base/gtm */ "./src/javascript/_common/base/gtm.js");
 var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
 var SocketCache = __webpack_require__(/*! ../../_common/base/socket_cache */ "./src/javascript/_common/base/socket_cache.js");
@@ -11007,7 +11008,7 @@ var Header = function () {
                     document = _authentication.document,
                     needs_verification = _authentication.needs_verification;
 
-                if (!identity || !document || !needs_verification) {
+                if (!identity || !document || !needs_verification || !isAuthenticationAllowed()) {
                     return false;
                 }
                 var verification_length = needs_verification.length;
@@ -28117,8 +28118,13 @@ var AccountClosure = function () {
                     $virtual.find('ul').append('<li>' + getCurrencyFullName(currency) + '</li>');
                 });
             } else {
+                if (has_trading_limit) {
+                    $trading_limit.setVisibility(1);
+                    $('#closing_steps').setVisibility(1);
+                }
                 if (is_real_unset) {
                     $real_unset.setVisibility(1);
+                    $trading_limit.setVisibility(0);
                     currencies.forEach(function (currency) {
                         var is_allowed = true;
                         other_currencies.forEach(function (other_currency) {
@@ -28319,10 +28325,6 @@ var AccountClosure = function () {
                     if (_has_all_crypto) {
                         $crypto_2.setVisibility(0);
                     }
-                }
-                if (has_trading_limit) {
-                    $trading_limit.setVisibility(1);
-                    $('#closing_steps').setVisibility(1);
                 }
 
                 BinarySocket.send({ statement: 1, limit: 1 });
