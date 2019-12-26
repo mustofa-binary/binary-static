@@ -26704,9 +26704,18 @@ var Authenticate = function () {
                                             type: 'document',
                                             options: {
                                                 documentTypes: {
-                                                    passport: documents_supported.includes('Passport'),
-                                                    driving_licence: documents_supported.includes('Driving License'),
-                                                    national_identity_card: documents_supported.includes('National Identity Card')
+                                                    passport: documents_supported.some(function (doc) {
+                                                        return (/Passport/g.test(doc)
+                                                        );
+                                                    }),
+                                                    driving_licence: documents_supported.some(function (doc) {
+                                                        return (/Driving Licence/g.test(doc)
+                                                        );
+                                                    }),
+                                                    national_identity_card: documents_supported.some(function (doc) {
+                                                        return (/National Identity Card/g.test(doc)
+                                                        );
+                                                    })
                                                 }
                                             }
                                         }, 'face']
