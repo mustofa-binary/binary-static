@@ -26806,14 +26806,9 @@ var Authenticate = function () {
 
                         case 2:
                             authentication_status = _context2.sent;
-                            _context2.next = 5;
-                            return getOnfidoServiceToken();
-
-                        case 5:
-                            onfido_token = _context2.sent;
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 10;
+                                _context2.next = 7;
                                 break;
                             }
 
@@ -26821,11 +26816,16 @@ var Authenticate = function () {
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 10:
+                        case 7:
+                            _context2.next = 9;
+                            return getOnfidoServiceToken();
+
+                        case 9:
+                            onfido_token = _context2.sent;
                             identity = authentication_status.identity, document = authentication_status.document;
                             is_fully_authenticated = identity.status === 'verified' && document.status === 'verified';
 
-                            onfido_unsupported = !!identity.services.onfido.is_country_supported;
+                            onfido_unsupported = !identity.services.onfido.is_country_supported;
                             documents_supported = identity.services.onfido.documents_supported;
 
 
