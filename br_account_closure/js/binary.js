@@ -11615,7 +11615,7 @@ var Page = function () {
         }
         Contents.onLoad();
 
-        if (sessionStorage.getItem('showLoginPage')) {
+        if (sessionStorage.getItem('showLoginPage') && !sessionStorage.getItem('closingAccount')) {
             sessionStorage.removeItem('showLoginPage');
             Login.redirectToLogin();
         }
@@ -28417,6 +28417,7 @@ var AccountClosure = function () {
                     $success_msg.setVisibility(1);
                     $.scrollTo(0, 500);
 
+                    sessionStorage.setItem('closingAccount', 1);
                     setTimeout(function () {
                         return window.location.href = Url.urlFor('home');
                     }, 10000);
