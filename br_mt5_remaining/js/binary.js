@@ -8967,9 +8967,10 @@ var TabSelector = function () {
 
     var setMobileHeader = function setMobileHeader() {
         var el_mobile_tab = getElementById('tab_mobile_header');
+
         if (el_mobile_tab) {
             var active_tab = document.getElementsByClassName('a-active');
-            el_mobile_tab.innerHTML = active_tab[0].innerHTML;
+            if (active_tab) el_mobile_tab.innerHTML = active_tab[0].innerHTML;
         }
     };
 
@@ -16047,13 +16048,15 @@ var PaymentAgentWithdraw = function () {
         ddl_agents: '#ddlAgents',
         frm_msg: '#form-error',
         txt_agents: '#txtAgents',
-        txt_amount: '#txtAmount'
+        txt_amount: '#txtAmount',
+        txt_payment_ref: '#txtPaymentRef'
     };
 
     var $agent_error = void 0,
         $ddl_agents = void 0,
         $txt_agents = void 0,
         $txt_amount = void 0,
+        $txt_payment_ref = void 0,
         $views = void 0,
         agent_name = void 0,
         agent_website = void 0,
@@ -16122,12 +16125,13 @@ var PaymentAgentWithdraw = function () {
             $agent_error = $('.row-agent').find('.error-msg');
             $txt_agents = $(field_ids.txt_agents);
             $txt_amount = $(field_ids.txt_amount);
+            $txt_payment_ref = $(field_ids.txt_payment_ref);
 
             $form.find('.wrapper-row-agent').find('label').append($('<span />', { text: '*', class: 'required_field_asterisk' }));
             $form.find('label[for="txtAmount"]').text(localize('Amount in') + ' ' + currency);
             FormManager.init(form_id, [{ selector: field_ids.txt_amount, validations: ['req', ['number', { type: 'float', decimals: getDecimalPlaces(currency), min: min, max: max }], ['custom', { func: function func() {
                         return +Client.get('balance') >= +$txt_amount.val();
-                    }, message: localize('Insufficient balance.') }]], request_field: 'amount' }, { request_field: 'currency', value: currency }, { request_field: 'paymentagent_loginid', value: getPALoginID }, { request_field: 'paymentagent_withdraw', value: 1 }, { request_field: 'dry_run', value: 1 }], true);
+                    }, message: localize('Insufficient balance.') }]], request_field: 'amount' }, { selector: field_ids.txt_payment_ref, validations: [['length', { min: 0, max: 30 }], ['regular', { regex: /^[0-9A-Za-z .,'-]{0,30}$/, message: localize('Only letters, numbers, space, hyphen, period, comma, and apostrophe are allowed.') }]], request_field: 'description' }, { request_field: 'currency', value: currency }, { request_field: 'paymentagent_loginid', value: getPALoginID }, { request_field: 'paymentagent_withdraw', value: 1 }, { request_field: 'dry_run', value: 1 }], true);
 
             $ddl_agents.on('change', function () {
                 $agent_error.setVisibility(0);
@@ -16157,8 +16161,18 @@ var PaymentAgentWithdraw = function () {
                 validateAmount();
             });
 
+            $txt_payment_ref.on('change', function () {
+                validatePaymentRef();
+            });
+
             var validateAmount = function validateAmount() {
                 if ($txt_amount.val()) {
+                    Validation.validate(form_id);
+                }
+            };
+
+            var validatePaymentRef = function validatePaymentRef() {
+                if ($txt_payment_ref.val()) {
                     Validation.validate(form_id);
                 }
             };
@@ -16200,7 +16214,12 @@ var PaymentAgentWithdraw = function () {
                     $('#lblCurrency').text(request.currency);
                     $('#lblAmount').text(getNumberFormat(request.amount, request.currency));
 
-                    FormManager.init(view_ids.confirm, [{ request_field: 'paymentagent_loginid', value: request.paymentagent_loginid }, { request_field: 'amount', value: getNumberFormat(request.amount, request.currency) }, { request_field: 'currency', value: request.currency }, { request_field: 'paymentagent_withdraw', value: 1 }], true);
+                    if (request.description) {
+                        $('#lblPaymentRef').text(request.description);
+                        $('#lblPaymentRefContainer').setVisibility(1);
+                    }
+
+                    FormManager.init(view_ids.confirm, [{ request_field: 'amount', value: getNumberFormat(request.amount, request.currency) }, { request_field: 'currency', value: request.currency }, { request_field: 'description', value: request.description }, { request_field: 'paymentagent_loginid', value: request.paymentagent_loginid }, { request_field: 'paymentagent_withdraw', value: 1 }], true);
 
                     FormManager.handleSubmit({
                         form_selector: view_ids.confirm,
@@ -25919,7 +25938,6 @@ var Authenticate = function () {
     var is_any_upload_failed = false;
     var is_any_upload_failed_uns = false;
     var onfido_unsupported = false;
-    var from_mt5 = false;
     var file_checks = {};
     var file_checks_uns = {};
     var onfido = void 0,
@@ -26711,13 +26729,14 @@ var Authenticate = function () {
     };
 
     var initOnfido = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token) {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token, documents_supported) {
             return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
                         case 0:
                             if (!$('#onfido').is(':parent')) {
                                 $('#onfido').setVisibility(1);
+
                                 try {
                                     onfido = Onfido.init({
                                         containerId: 'onfido',
@@ -26727,7 +26746,25 @@ var Authenticate = function () {
                                         token: sdk_token,
                                         useModal: false,
                                         onComplete: handleComplete,
-                                        steps: ['document', 'face']
+                                        steps: [{
+                                            type: 'document',
+                                            options: {
+                                                documentTypes: {
+                                                    passport: documents_supported.some(function (doc) {
+                                                        return (/Passport/g.test(doc)
+                                                        );
+                                                    }),
+                                                    driving_licence: documents_supported.some(function (doc) {
+                                                        return (/Driving Licence/g.test(doc)
+                                                        );
+                                                    }),
+                                                    national_identity_card: documents_supported.some(function (doc) {
+                                                        return (/National Identity Card/g.test(doc)
+                                                        );
+                                                    })
+                                                }
+                                            }
+                                        }, 'face']
                                     });
                                     $('#authentication_loading').setVisibility(0);
                                 } catch (err) {
@@ -26744,7 +26781,7 @@ var Authenticate = function () {
             }, _callee, undefined);
         }));
 
-        return function initOnfido(_x) {
+        return function initOnfido(_x, _x2) {
             return _ref.apply(this, arguments);
         };
     }();
@@ -26776,12 +26813,8 @@ var Authenticate = function () {
                     service_token: 1,
                     service: 'onfido'
                 }).then(function (response) {
-                    if (response.error || !response.service_token) {
-                        if (response.error.code === 'UnsupportedCountry') {
-                            onfido_unsupported = true;
-                        }
+                    if (response.error) {
                         resolve();
-                        return;
                     }
                     var token = response.service_token.token;
                     var in_90_minutes = 1 / 16;
@@ -26809,7 +26842,7 @@ var Authenticate = function () {
 
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, onfido_token, identity, document, is_fully_authenticated;
+            var authentication_status, onfido_token, identity, document, is_fully_authenticated, documents_supported;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26819,14 +26852,9 @@ var Authenticate = function () {
 
                         case 2:
                             authentication_status = _context2.sent;
-                            _context2.next = 5;
-                            return getOnfidoServiceToken();
-
-                        case 5:
-                            onfido_token = _context2.sent;
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 10;
+                                _context2.next = 7;
                                 break;
                             }
 
@@ -26834,9 +26862,17 @@ var Authenticate = function () {
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 10:
+                        case 7:
+                            _context2.next = 9;
+                            return getOnfidoServiceToken();
+
+                        case 9:
+                            onfido_token = _context2.sent;
                             identity = authentication_status.identity, document = authentication_status.document;
                             is_fully_authenticated = identity.status === 'verified' && document.status === 'verified';
+
+                            onfido_unsupported = !identity.services.onfido.is_country_supported;
+                            documents_supported = identity.services.onfido.documents_supported;
 
 
                             if (is_fully_authenticated) {
@@ -26845,91 +26881,91 @@ var Authenticate = function () {
                             }
 
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 32;
+                                _context2.next = 34;
                                 break;
                             }
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 17 : _context2.t0 === 'pending' ? 19 : _context2.t0 === 'rejected' ? 21 : _context2.t0 === 'verified' ? 23 : _context2.t0 === 'expired' ? 25 : _context2.t0 === 'suspected' ? 27 : 29;
+                            _context2.next = _context2.t0 === 'none' ? 19 : _context2.t0 === 'pending' ? 21 : _context2.t0 === 'rejected' ? 23 : _context2.t0 === 'verified' ? 25 : _context2.t0 === 'expired' ? 27 : _context2.t0 === 'suspected' ? 29 : 31;
                             break;
 
-                        case 17:
+                        case 19:
                             if (onfido_unsupported) {
                                 $('#not_authenticated_uns').setVisibility(1);
                                 initUnsupported();
                             } else {
-                                initOnfido(onfido_token);
+                                initOnfido(onfido_token, documents_supported);
                             }
-                            return _context2.abrupt('break', 30);
-
-                        case 19:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 30);
+                            return _context2.abrupt('break', 32);
 
                         case 21:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 30);
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 32);
 
                         case 23:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 30);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 32);
 
                         case 25:
-                            $('#expired_poi').setVisibility(1);
-                            return _context2.abrupt('break', 30);
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 32);
 
                         case 27:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 30);
+                            $('#expired_poi').setVisibility(1);
+                            return _context2.abrupt('break', 32);
 
                         case 29:
-                            return _context2.abrupt('break', 30);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 32);
 
-                        case 30:
-                            _context2.next = 33;
-                            break;
+                        case 31:
+                            return _context2.abrupt('break', 32);
 
                         case 32:
-                            initOnfido(onfido_token);
-
-                        case 33:
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 36 : _context2.t1 === 'pending' ? 39 : _context2.t1 === 'rejected' ? 41 : _context2.t1 === 'suspected' ? 43 : _context2.t1 === 'verified' ? 45 : _context2.t1 === 'expired' ? 47 : 49;
+                            _context2.next = 35;
                             break;
 
-                        case 36:
+                        case 34:
+                            initOnfido(onfido_token, documents_supported);
+
+                        case 35:
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 38 : _context2.t1 === 'pending' ? 41 : _context2.t1 === 'rejected' ? 43 : _context2.t1 === 'suspected' ? 45 : _context2.t1 === 'verified' ? 47 : _context2.t1 === 'expired' ? 49 : 51;
+                            break;
+
+                        case 38:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 50);
-
-                        case 39:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            return _context2.abrupt('break', 52);
 
                         case 41:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 52);
 
                         case 43:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            return _context2.abrupt('break', 52);
 
                         case 45:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 52);
 
                         case 47:
-                            $('#expired_poa').setVisibility(1);
-                            return _context2.abrupt('break', 50);
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 52);
 
                         case 49:
-                            return _context2.abrupt('break', 50);
+                            $('#expired_poa').setVisibility(1);
+                            return _context2.abrupt('break', 52);
 
-                        case 50:
+                        case 51:
+                            return _context2.abrupt('break', 52);
+
+                        case 52:
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 52:
+                        case 54:
                         case 'end':
                             return _context2.stop();
                     }
@@ -26956,12 +26992,7 @@ var Authenticate = function () {
                             authentication_status = _context3.sent;
                             is_required = checkIsRequired(authentication_status);
 
-
-                            if (!from_mt5) {
-                                from_mt5 = Url.param('from_mt5');
-                            }
-
-                            if (!isAuthenticationAllowed() && !from_mt5) {
+                            if (!isAuthenticationAllowed()) {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_loading').setVisibility(0);
                                 $('#authentication_unneeded').setVisibility(1);
@@ -26972,17 +27003,14 @@ var Authenticate = function () {
                             if (is_required || has_svg_account) {
                                 initTab();
                                 initAuthentication();
-
-                                if (from_mt5) {
-                                    $('#authenticate_only_real_mt5_advanced').setVisibility(1);
-                                }
+                                $('#authenticate_only_real_mt5_advanced').setVisibility(1);
                             } else {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#not_required_msg').setVisibility(1);
                                 $('#authentication_loading').setVisibility(0);
                             }
 
-                        case 8:
+                        case 7:
                         case 'end':
                             return _context3.stop();
                     }
@@ -31962,6 +31990,7 @@ var MetaTraderConfig = function () {
                             }
                             if (is_ok && !isAuthenticated() && accounts_info[acc_type].mt5_account_type === 'advanced') {
                                 $message.find('.authenticate').setVisibility(1);
+                                setLabuanAdvancedIntention();
                                 is_ok = false;
                             }
 
@@ -31987,6 +32016,19 @@ var MetaTraderConfig = function () {
                 });
             }
         });
+    };
+
+    var setLabuanAdvancedIntention = function setLabuanAdvancedIntention() {
+        var req = {
+            mt5_new_account: 1,
+            account_type: 'financial',
+            email: Client.get('email'),
+            leverage: 100,
+            name: 'test real labuan advanced',
+            mainPassword: 'Test1234',
+            mt5_account_type: 'advanced'
+        };
+        BinarySocket.send(req);
     };
 
     var actions_info = {
@@ -32248,14 +32290,15 @@ var MetaTraderConfig = function () {
 
     var isAuthenticationPromptNeeded = function isAuthenticationPromptNeeded() {
         var authentication = State.getResponse('get_account_status.authentication');
-        var need_verification = authentication.needs_verification.length;
-        var identity = authentication.identity;
+        var identity = authentication.identity,
+            needs_verification = authentication.needs_verification;
 
-        var is_rejected_or_expired = identity.status === 'rejected' || identity.status === 'expired';
+        var is_need_verification = needs_verification.length;
+        var is_rejected_or_expired = /^(rejected|expired)$/.test(identity);
 
         if (is_rejected_or_expired) return false;
 
-        return need_verification.length;
+        return is_need_verification;
     };
 
     return {
@@ -32894,7 +32937,6 @@ var MetaTraderUI = function () {
             $acc_item.setVisibility(0);
         }
     };
-
     var displayAccountDescription = function displayAccountDescription(acc_type) {
         $container.find('#account_desc').html($templates.find('.account-desc .' + acc_type).clone());
     };
@@ -33314,11 +33356,7 @@ var MetaTraderUI = function () {
     };
 
     var showFinancialAuthentication = function showFinancialAuthentication(should_show) {
-        if (should_show) {
-            $('#financial_authenticate_msg').setVisibility(MetaTraderConfig.isAuthenticationPromptNeeded());
-        } else {
-            $('#financial_authenticate_msg').setVisibility(should_show);
-        }
+        $('#financial_authenticate_msg').setVisibility(should_show ? MetaTraderConfig.isAuthenticationPromptNeeded() : 0);
     };
 
     var setCounterpartyAndJurisdictionTooltip = function setCounterpartyAndJurisdictionTooltip($el, acc_type) {
