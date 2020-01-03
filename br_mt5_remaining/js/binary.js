@@ -32301,7 +32301,7 @@ var MetaTraderConfig = function () {
             needs_verification = authentication.needs_verification;
 
         var is_need_verification = needs_verification.length;
-        var is_rejected_or_expired = /^(rejected|expired)$/.test(identity);
+        var is_rejected_or_expired = /^(rejected|expired)$/.test(identity.status);
 
         if (is_rejected_or_expired) return false;
 
