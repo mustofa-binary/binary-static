@@ -9044,6 +9044,7 @@ var TabSelector = function () {
 
     var onUnload = function onUnload() {
         window.removeEventListener('resize', repositionSelector);
+        obj_tabs = {};
 
         applyToAllElements('.tm-li', function (element) {
             element.removeEventListener('click', slideSelectorOnMenuClick);
@@ -25937,6 +25938,7 @@ var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ ".
 var Authenticate = function () {
     var is_any_upload_failed = false;
     var is_any_upload_failed_uns = false;
+    var is_from_mt5 = false;
     var onfido_unsupported = false;
     var file_checks = {};
     var file_checks_uns = {};
@@ -26985,14 +26987,15 @@ var Authenticate = function () {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            _context3.next = 2;
+                            is_from_mt5 = Url.paramsHash().is_from_mt5;
+                            _context3.next = 3;
                             return getAuthenticationStatus();
 
-                        case 2:
+                        case 3:
                             authentication_status = _context3.sent;
                             is_required = checkIsRequired(authentication_status);
 
-                            if (!isAuthenticationAllowed()) {
+                            if (!isAuthenticationAllowed() && !is_from_mt5) {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_loading').setVisibility(0);
                                 $('#authentication_unneeded').setVisibility(1);
@@ -27003,14 +27006,16 @@ var Authenticate = function () {
                             if (is_required || has_svg_account) {
                                 initTab();
                                 initAuthentication();
-                                $('#authenticate_only_real_mt5_advanced').setVisibility(1);
+                                if (is_from_mt5) {
+                                    $('#authenticate_only_real_mt5_advanced').setVisibility(1);
+                                }
                             } else {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#not_required_msg').setVisibility(1);
                                 $('#authentication_loading').setVisibility(0);
                             }
 
-                        case 7:
+                        case 8:
                         case 'end':
                             return _context3.stop();
                     }
@@ -27029,6 +27034,7 @@ var Authenticate = function () {
         }
 
         TabSelector.onUnload();
+        is_from_mt5 = false;
     };
 
     return {
@@ -31990,7 +31996,7 @@ var MetaTraderConfig = function () {
                             }
                             if (is_ok && !isAuthenticated() && accounts_info[acc_type].mt5_account_type === 'advanced') {
                                 $message.find('.authenticate').setVisibility(1);
-                                setLabuanAdvancedIntention();
+                                // setLabuanAdvancedIntention();
                                 is_ok = false;
                             }
 
@@ -32018,18 +32024,19 @@ var MetaTraderConfig = function () {
         });
     };
 
-    var setLabuanAdvancedIntention = function setLabuanAdvancedIntention() {
-        var req = {
-            mt5_new_account: 1,
-            account_type: 'financial',
-            email: Client.get('email'),
-            leverage: 100,
-            name: 'test real labuan advanced',
-            mainPassword: 'Test1234',
-            mt5_account_type: 'advanced'
-        };
-        BinarySocket.send(req);
-    };
+    // TODO: add this line when dry_run API ready
+    // const setLabuanAdvancedIntention = () => {
+    //     const req = {
+    //         mt5_new_account : 1,
+    //         account_type    : 'financial',
+    //         email           : Client.get('email'),
+    //         leverage        : 100,
+    //         name            : 'test real labuan advanced',
+    //         mainPassword    : 'Test1234',
+    //         mt5_account_type: 'advanced',
+    //     };
+    //     BinarySocket.send(req);
+    // };
 
     var actions_info = {
         new_account: {
