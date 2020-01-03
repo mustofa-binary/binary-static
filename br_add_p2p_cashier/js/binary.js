@@ -15423,7 +15423,7 @@ var Cashier = function () {
                                 break;
                             }
 
-                            $('#dp2p_info').setVisibility(true);
+                            $('#dp2p_info').setVisibility(1);
                             return _context.abrupt('return');
 
                         case 6:
@@ -15438,7 +15438,7 @@ var Cashier = function () {
                                 break;
                             }
 
-                            $('#dp2p_info').setVisibility(true);
+                            $('#dp2p_info').setVisibility(1);
                             return _context.abrupt('return');
 
                         case 12:
@@ -15449,7 +15449,7 @@ var Cashier = function () {
                             has_sell = _context.sent;
 
                             if (has_sell) {
-                                $('#dp2p_info').setVisibility(true);
+                                $('#dp2p_info').setVisibility(1);
                             }
 
                         case 16:
