@@ -15407,7 +15407,7 @@ var Cashier = function () {
 
     var setP2PVisibility = function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var is_agent, has_buy, has_sell;
+            var is_agent, has_offer;
             return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -15428,31 +15428,16 @@ var Cashier = function () {
 
                         case 6:
                             _context.next = 8;
-                            return checkP2PHasOffer('buy');
+                            return checkP2PHasOffer();
 
                         case 8:
-                            has_buy = _context.sent;
+                            has_offer = _context.sent;
 
-                            if (!has_buy) {
-                                _context.next = 12;
-                                break;
-                            }
-
-                            $('#dp2p_info').setVisibility(1);
-                            return _context.abrupt('return');
-
-                        case 12:
-                            _context.next = 14;
-                            return checkP2PHasOffer('sell');
-
-                        case 14:
-                            has_sell = _context.sent;
-
-                            if (has_sell) {
+                            if (has_offer) {
                                 $('#dp2p_info').setVisibility(1);
                             }
 
-                        case 16:
+                        case 10:
                         case 'end':
                             return _context.stop();
                     }
@@ -15465,7 +15450,7 @@ var Cashier = function () {
         };
     }();
 
-    var checkP2PHasOffer = function checkP2PHasOffer(offer_type) {
+    var checkP2PHasOffer = function checkP2PHasOffer() {
         return new Promise(function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve) {
                 var offer_list_response;
@@ -15474,7 +15459,7 @@ var Cashier = function () {
                         switch (_context2.prev = _context2.next) {
                             case 0:
                                 _context2.next = 2;
-                                return BinarySocket.send({ p2p_offer_list: 1, type: offer_type });
+                                return BinarySocket.send({ p2p_offer_list: 1 });
 
                             case 2:
                                 offer_list_response = _context2.sent;
