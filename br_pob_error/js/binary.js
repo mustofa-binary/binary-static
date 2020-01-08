@@ -26821,7 +26821,8 @@ var Authenticate = function () {
                     service: 'onfido'
                 }).then(function (response) {
                     if (response.error) {
-                        resolve(response.error);
+                        resolve(response.error.code);
+                        return;
                     }
                     var token = response.service_token.token;
                     var in_90_minutes = 1 / 16;
@@ -26849,7 +26850,7 @@ var Authenticate = function () {
 
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, onfido_token, identity, document, is_fully_authenticated, documents_supported, missing_personal_details;
+            var authentication_status, onfido_token, is_onfido_pob_error, identity, document, is_fully_authenticated, documents_supported;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -26875,6 +26876,7 @@ var Authenticate = function () {
 
                         case 9:
                             onfido_token = _context2.sent;
+                            is_onfido_pob_error = onfido_token === 'MissingPersonalDetails';
                             identity = authentication_status.identity, document = authentication_status.document;
                             is_fully_authenticated = identity.status === 'verified' && document.status === 'verified';
 
@@ -26887,117 +26889,120 @@ var Authenticate = function () {
                                 $('#authentication_verified').setVisibility(1);
                             }
 
+                            if (!is_onfido_pob_error) {
+                                _context2.next = 20;
+                                break;
+                            }
+
+                            $('#personal_details_error').setVisibility(1);
+                            _context2.next = 48;
+                            break;
+
+                        case 20:
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 42;
+                                _context2.next = 47;
                                 break;
                             }
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 19 : _context2.t0 === 'pending' ? 29 : _context2.t0 === 'rejected' ? 31 : _context2.t0 === 'verified' ? 33 : _context2.t0 === 'expired' ? 35 : _context2.t0 === 'suspected' ? 37 : 39;
+                            _context2.next = _context2.t0 === 'none' ? 24 : _context2.t0 === 'pending' ? 34 : _context2.t0 === 'rejected' ? 36 : _context2.t0 === 'verified' ? 38 : _context2.t0 === 'expired' ? 40 : _context2.t0 === 'suspected' ? 42 : 44;
                             break;
 
-                        case 19:
+                        case 24:
                             if (!onfido_unsupported) {
-                                _context2.next = 24;
+                                _context2.next = 29;
                                 break;
                             }
 
                             $('#not_authenticated_uns').setVisibility(1);
                             initUnsupported();
-                            _context2.next = 28;
+                            _context2.next = 33;
                             break;
 
-                        case 24:
-                            if (!(onfido_token === 'MissingPersonalDetails')) {
-                                _context2.next = 27;
+                        case 29:
+                            if (!is_onfido_pob_error) {
+                                _context2.next = 32;
                                 break;
                             }
 
                             $('#personal_details_error').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                            return _context2.abrupt('break', 45);
 
-                        case 27:
+                        case 32:
 
                             initOnfido(onfido_token, documents_supported);
 
-                        case 28:
-                            return _context2.abrupt('break', 40);
-
-                        case 29:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 40);
-
-                        case 31:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 40);
-
                         case 33:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                            return _context2.abrupt('break', 45);
 
-                        case 35:
-                            $('#expired_poi').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                        case 34:
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 45);
 
-                        case 37:
+                        case 36:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 40);
+                            return _context2.abrupt('break', 45);
 
-                        case 39:
-                            return _context2.abrupt('break', 40);
+                        case 38:
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 45);
 
                         case 40:
-                            _context2.next = 44;
-                            break;
+                            $('#expired_poi').setVisibility(1);
+                            return _context2.abrupt('break', 45);
 
                         case 42:
-                            missing_personal_details = onfido_token === 'MissingPersonalDetails';
-
-
-                            if (missing_personal_details) {
-                                $('#personal_details_error').setVisibility(1);
-                            } else {
-                                initOnfido(onfido_token, documents_supported);
-                            }
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 45);
 
                         case 44:
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 47 : _context2.t1 === 'pending' ? 50 : _context2.t1 === 'rejected' ? 52 : _context2.t1 === 'suspected' ? 54 : _context2.t1 === 'verified' ? 56 : _context2.t1 === 'expired' ? 58 : 60;
+                            return _context2.abrupt('break', 45);
+
+                        case 45:
+                            _context2.next = 48;
                             break;
 
                         case 47:
+                            initOnfido(onfido_token, documents_supported);
+
+                        case 48:
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 51 : _context2.t1 === 'pending' ? 54 : _context2.t1 === 'rejected' ? 56 : _context2.t1 === 'suspected' ? 58 : _context2.t1 === 'verified' ? 60 : _context2.t1 === 'expired' ? 62 : 64;
+                            break;
+
+                        case 51:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 61);
-
-                        case 50:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 61);
-
-                        case 52:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 61);
+                            return _context2.abrupt('break', 65);
 
                         case 54:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 61);
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 65);
 
                         case 56:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 61);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 65);
 
                         case 58:
-                            $('#expired_poa').setVisibility(1);
-                            return _context2.abrupt('break', 61);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 65);
 
                         case 60:
-                            return _context2.abrupt('break', 61);
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 65);
 
-                        case 61:
+                        case 62:
+                            $('#expired_poa').setVisibility(1);
+                            return _context2.abrupt('break', 65);
+
+                        case 64:
+                            return _context2.abrupt('break', 65);
+
+                        case 65:
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 63:
+                        case 67:
                         case 'end':
                             return _context2.stop();
                     }
