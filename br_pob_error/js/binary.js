@@ -26888,9 +26888,10 @@ var Authenticate = function () {
                                     address_state: localize('State/Province'),
                                     email: localize('Email address'),
                                     phone: localize('Telephone'),
+                                    place_of_birth: localize('Place of birth'),
                                     residence: localize('Country of Residence')
                                 };
-                                missing_personal_fields = service_token_response.required_fields.map(function (field) {
+                                missing_personal_fields = Object.keys(service_token_response.error.details).map(function (field) {
                                     return personal_fields_errors[field] || field;
                                 });
                                 error_msgs = missing_personal_fields ? missing_personal_fields.join(', ') : '';
