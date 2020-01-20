@@ -26821,7 +26821,7 @@ var Authenticate = function () {
                     service: 'onfido'
                 }).then(function (response) {
                     if (response.error) {
-                        resolve(response.error.code);
+                        resolve({ error: response.error });
                         return;
                     }
                     var token = response.service_token.token;
@@ -26830,10 +26830,10 @@ var Authenticate = function () {
                         expires: in_90_minutes,
                         secure: true
                     });
-                    resolve(token);
+                    resolve({ token: token });
                 });
             } else {
-                resolve(onfido_cookie);
+                resolve({ token: onfido_cookie });
             }
         });
     };
@@ -26850,19 +26850,20 @@ var Authenticate = function () {
 
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var authentication_status, onfido_token, is_onfido_pob_error, identity, document, is_fully_authenticated, documents_supported;
+            var has_personal_details_error, authentication_status, service_token_response, personal_fields_errors, missing_personal_fields, error_msgs, identity, document, is_fully_authenticated, documents_supported;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            _context2.next = 2;
+                            has_personal_details_error = false;
+                            _context2.next = 3;
                             return getAuthenticationStatus();
 
-                        case 2:
+                        case 3:
                             authentication_status = _context2.sent;
 
                             if (!(!authentication_status || authentication_status.error)) {
-                                _context2.next = 7;
+                                _context2.next = 8;
                                 break;
                             }
 
@@ -26870,13 +26871,34 @@ var Authenticate = function () {
                             $('#error_occured').setVisibility(1);
                             return _context2.abrupt('return');
 
-                        case 7:
-                            _context2.next = 9;
+                        case 8:
+                            _context2.next = 10;
                             return getOnfidoServiceToken();
 
-                        case 9:
-                            onfido_token = _context2.sent;
-                            is_onfido_pob_error = onfido_token === 'MissingPersonalDetails';
+                        case 10:
+                            service_token_response = _context2.sent;
+
+
+                            if (service_token_response.error && service_token_response.error.code === 'MissingPersonalDetails') {
+                                has_personal_details_error = true;
+                                personal_fields_errors = {
+                                    address_city: localize('Town/City'),
+                                    address_line_1: localize('First line of home address'),
+                                    address_postcode: localize('Postal Code/ZIP'),
+                                    address_state: localize('State/Province'),
+                                    email: localize('Email address'),
+                                    phone: localize('Telephone'),
+                                    residence: localize('Country of Residence')
+                                };
+                                missing_personal_fields = service_token_response.required_fields.map(function (field) {
+                                    return personal_fields_errors[field] || field;
+                                });
+                                error_msgs = missing_personal_fields ? missing_personal_fields.join(', ') : '';
+
+
+                                $('#missing_personal_fields').html(error_msgs);
+                            }
+
                             identity = authentication_status.identity, document = authentication_status.document;
                             is_fully_authenticated = identity.status === 'verified' && document.status === 'verified';
 
@@ -26889,120 +26911,102 @@ var Authenticate = function () {
                                 $('#authentication_verified').setVisibility(1);
                             }
 
-                            if (!is_onfido_pob_error) {
-                                _context2.next = 20;
+                            if (!has_personal_details_error) {
+                                _context2.next = 21;
                                 break;
                             }
 
                             $('#personal_details_error').setVisibility(1);
-                            _context2.next = 48;
+                            _context2.next = 41;
                             break;
 
-                        case 20:
+                        case 21:
                             if (identity.further_resubmissions_allowed) {
-                                _context2.next = 47;
+                                _context2.next = 40;
                                 break;
                             }
 
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 24 : _context2.t0 === 'pending' ? 34 : _context2.t0 === 'rejected' ? 36 : _context2.t0 === 'verified' ? 38 : _context2.t0 === 'expired' ? 40 : _context2.t0 === 'suspected' ? 42 : 44;
+                            _context2.next = _context2.t0 === 'none' ? 25 : _context2.t0 === 'pending' ? 27 : _context2.t0 === 'rejected' ? 29 : _context2.t0 === 'verified' ? 31 : _context2.t0 === 'expired' ? 33 : _context2.t0 === 'suspected' ? 35 : 37;
                             break;
 
-                        case 24:
-                            if (!onfido_unsupported) {
-                                _context2.next = 29;
-                                break;
+                        case 25:
+                            if (onfido_unsupported) {
+                                $('#not_authenticated_uns').setVisibility(1);
+                                initUnsupported();
+                            } else {
+                                initOnfido(service_token_response.token, documents_supported);
                             }
+                            return _context2.abrupt('break', 38);
 
-                            $('#not_authenticated_uns').setVisibility(1);
-                            initUnsupported();
-                            _context2.next = 33;
-                            break;
+                        case 27:
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 38);
 
                         case 29:
-                            if (!is_onfido_pob_error) {
-                                _context2.next = 32;
-                                break;
-                            }
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 38);
 
-                            $('#personal_details_error').setVisibility(1);
-                            return _context2.abrupt('break', 45);
-
-                        case 32:
-
-                            initOnfido(onfido_token, documents_supported);
+                        case 31:
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 38);
 
                         case 33:
-                            return _context2.abrupt('break', 45);
+                            $('#expired_poi').setVisibility(1);
+                            return _context2.abrupt('break', 38);
 
-                        case 34:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 45);
-
-                        case 36:
+                        case 35:
                             $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            return _context2.abrupt('break', 38);
+
+                        case 37:
+                            return _context2.abrupt('break', 38);
 
                         case 38:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            _context2.next = 41;
+                            break;
 
                         case 40:
-                            $('#expired_poi').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            initOnfido(service_token_response.token, documents_supported);
 
-                        case 42:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                        case 41:
+                            _context2.t1 = document.status;
+                            _context2.next = _context2.t1 === 'none' ? 44 : _context2.t1 === 'pending' ? 47 : _context2.t1 === 'rejected' ? 49 : _context2.t1 === 'suspected' ? 51 : _context2.t1 === 'verified' ? 53 : _context2.t1 === 'expired' ? 55 : 57;
+                            break;
 
                         case 44:
-                            return _context2.abrupt('break', 45);
-
-                        case 45:
-                            _context2.next = 48;
-                            break;
-
-                        case 47:
-                            initOnfido(onfido_token, documents_supported);
-
-                        case 48:
-                            _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 51 : _context2.t1 === 'pending' ? 54 : _context2.t1 === 'rejected' ? 56 : _context2.t1 === 'suspected' ? 58 : _context2.t1 === 'verified' ? 60 : _context2.t1 === 'expired' ? 62 : 64;
-                            break;
-
-                        case 51:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 65);
+                            return _context2.abrupt('break', 58);
 
-                        case 54:
+                        case 47:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
+                            return _context2.abrupt('break', 58);
 
-                        case 56:
+                        case 49:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
+                            return _context2.abrupt('break', 58);
+
+                        case 51:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 58);
+
+                        case 53:
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 58);
+
+                        case 55:
+                            $('#expired_poa').setVisibility(1);
+                            return _context2.abrupt('break', 58);
+
+                        case 57:
+                            return _context2.abrupt('break', 58);
 
                         case 58:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
-
-                        case 60:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
-
-                        case 62:
-                            $('#expired_poa').setVisibility(1);
-                            return _context2.abrupt('break', 65);
-
-                        case 64:
-                            return _context2.abrupt('break', 65);
-
-                        case 65:
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 67:
+                        case 60:
                         case 'end':
                             return _context2.stop();
                     }
