@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"vendors~highstock":"vendors~highstock","vendors~webtrader-charts":"vendors~webtrader-charts"}[chunkId]||chunkId) + ".min.js"
+/******/ 		return __webpack_require__.p + "" + ({"vendors~dp2p":"vendors~dp2p","vendors~highstock":"vendors~highstock","vendors~webtrader-charts":"vendors~webtrader-charts"}[chunkId]||chunkId) + ".min.js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -15867,55 +15867,59 @@ var DP2P = function () {
     var onLoad = function onLoad() {
         var is_svg = Client.get('landing_company_shortcode') === 'svg';
         if (is_svg) {
-            __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.t.bind(null, /*! @deriv/p2p */ "./node_modules/@deriv/p2p/lib/index.js", 7)).then(function (module) {
-                var el_dp2p_container = document.getElementById('binary-dp2p');
-                var shadowed_el_dp2p = el_dp2p_container.attachShadow({ mode: 'closed' });
-
-                var el_main_css = document.createElement('style');
-                // These are styles that are to be injected into the Shadow DOM, so they are in JS and not stylesheets
-                // They are to be applied to the `:host` selector
-                el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem:10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #ffffff;\n                    --text-profit-success: #2e8836;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n\n                .link {\n                    color: #E88024 !important;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .link {\n                    color: var(--brand-red-coral);\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n                ';
-                el_main_css.rel = 'stylesheet';
-
-                var p2pSubscribe = function p2pSubscribe(request, cb) {
-                    // Request object first key will be the msg_type
-                    var msg_type = Object.keys(request)[0];
-
-                    SubscriptionManager.subscribe(msg_type, request, cb);
-                    return {
-                        unsubscribe: function unsubscribe() {
-                            return SubscriptionManager.forget(msg_type);
-                        }
-                    };
-                };
-
-                var websocket_api = {
-                    send: BinarySocket.send,
-                    wait: BinarySocket.wait,
-                    p2pSubscribe: p2pSubscribe
-                };
-
-                var dp2p_props = {
-                    className: 'theme--light',
-                    client: {
-                        currency: Client.get('currency'),
-                        is_virtual: Client.get('is_virtual'),
-                        local_currency_config: Client.get('local_currency_config'),
-                        residence: Client.get('residence')
-                    },
-                    lang: getLanguage(),
-                    websocket_api: websocket_api
-                };
-
-                ReactDOM.render(
-                // eslint-disable-next-line no-console
-                React.createElement(module.default, dp2p_props), shadowed_el_dp2p);
-
-                shadowed_el_dp2p.prepend(el_main_css);
-            });
+            __webpack_require__.e(/*! require.ensure | dp2p */ "vendors~dp2p").then((function (require) {
+                return renderP2P(__webpack_require__(/*! @deriv/p2p */ "./node_modules/@deriv/p2p/lib/index.js"));
+            }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         } else {
             document.getElementById('message_cashier_unavailable').setVisibility(1);
         }
+    };
+
+    var renderP2P = function renderP2P(module) {
+        var el_dp2p_container = document.getElementById('binary-dp2p');
+        var shadowed_el_dp2p = el_dp2p_container.attachShadow({ mode: 'closed' });
+
+        var el_main_css = document.createElement('style');
+        // These are styles that are to be injected into the Shadow DOM, so they are in JS and not stylesheets
+        // They are to be applied to the `:host` selector
+        el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem:10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #ffffff;\n                    --text-profit-success: #2e8836;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n\n                .link {\n                    color: #E88024 !important;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .link {\n                    color: var(--brand-red-coral);\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n                ';
+        el_main_css.rel = 'stylesheet';
+
+        var p2pSubscribe = function p2pSubscribe(request, cb) {
+            // Request object first key will be the msg_type
+            var msg_type = Object.keys(request)[0];
+
+            SubscriptionManager.subscribe(msg_type, request, cb);
+            return {
+                unsubscribe: function unsubscribe() {
+                    return SubscriptionManager.forget(msg_type);
+                }
+            };
+        };
+
+        var websocket_api = {
+            send: BinarySocket.send,
+            wait: BinarySocket.wait,
+            p2pSubscribe: p2pSubscribe
+        };
+
+        var dp2p_props = {
+            className: 'theme--light',
+            client: {
+                currency: Client.get('currency'),
+                is_virtual: Client.get('is_virtual'),
+                local_currency_config: Client.get('local_currency_config'),
+                residence: Client.get('residence')
+            },
+            lang: getLanguage(),
+            websocket_api: websocket_api
+        };
+
+        ReactDOM.render(
+        // eslint-disable-next-line no-console
+        React.createElement(module, dp2p_props), shadowed_el_dp2p);
+
+        shadowed_el_dp2p.prepend(el_main_css);
     };
 
     var onUnload = function onUnload() {
