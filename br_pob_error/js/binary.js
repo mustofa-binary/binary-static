@@ -26892,7 +26892,7 @@ var Authenticate = function () {
                                     residence: localize('Country of Residence')
                                 };
                                 missing_personal_fields = Object.keys(service_token_response.error.details).map(function (field) {
-                                    return personal_fields_errors[field] || field;
+                                    return personal_fields_errors[field].toLowerCase() || field;
                                 });
                                 error_msgs = missing_personal_fields ? missing_personal_fields.join(', ') : '';
 
