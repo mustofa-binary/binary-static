@@ -15858,6 +15858,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var ServerTime = __webpack_require__(/*! ../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
 var getLanguage = __webpack_require__(/*! ../../../_common/language */ "./src/javascript/_common/language.js").get;
 var urlForStatic = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlForStatic;
 var SubscriptionManager = __webpack_require__(/*! ../../../_common/base/subscription_manager */ "./src/javascript/_common/base/subscription_manager.js").default;
@@ -15882,7 +15883,7 @@ var DP2P = function () {
         var el_main_css = document.createElement('style');
         // These are styles that are to be injected into the Shadow DOM, so they are in JS and not stylesheets
         // They are to be applied to the `:host` selector
-        el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem:10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #ffffff;\n                    --text-profit-success: #2e8836;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n\n                .link {\n                    color: #E88024 !important;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .link {\n                    color: var(--brand-red-coral);\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n                ';
+        el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem:10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #ffffff;\n                    --text-profit-success: #2e8836;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n\n                .link {\n                    color: #E88024 !important;\n                }\n\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .link {\n                    color: var(--brand-red-coral);\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n                .deriv-p2p {\n                    height: 80vh;\n                }\n                ';
         el_main_css.rel = 'stylesheet';
 
         var p2pSubscribe = function p2pSubscribe(request, cb) {
@@ -15912,6 +15913,7 @@ var DP2P = function () {
                 residence: Client.get('residence')
             },
             lang: getLanguage(),
+            server_time: ServerTime,
             websocket_api: websocket_api
         };
 
