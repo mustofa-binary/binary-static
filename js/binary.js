@@ -15583,11 +15583,9 @@ var Cashier = function () {
                 } else if (currency) {
                     var is_p2p_allowed_currency = currency === 'USD';
                     var is_show_dp2p = /show_dp2p/.test(window.location.hash);
-                    // TODO: remove this check when mobile app is ready
-                    var is_mobile = window.innerWidth <= 1023;
 
                     showCurrentCurrency(currency, State.getResponse('statement'), State.getResponse('mt5_login_list'));
-                    if (is_p2p_allowed_currency && is_show_dp2p && is_mobile) {
+                    if (is_p2p_allowed_currency && is_show_dp2p) {
                         setP2PVisibility();
                     }
                 }
