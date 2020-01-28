@@ -15582,9 +15582,10 @@ var Cashier = function () {
                     displayTopUpButton();
                 } else if (currency) {
                     var is_p2p_allowed_currency = currency === 'USD';
+                    var is_show_dp2p = /show_dp2p/.test(window.location.hash);
 
                     showCurrentCurrency(currency, State.getResponse('statement'), State.getResponse('mt5_login_list'));
-                    if (is_p2p_allowed_currency) {
+                    if (is_p2p_allowed_currency && is_show_dp2p) {
                         setP2PVisibility();
                     }
                 }
@@ -15943,10 +15944,12 @@ module.exports = DepositWithdraw;
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var ServerTime = __webpack_require__(/*! ../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
 var getLanguage = __webpack_require__(/*! ../../../_common/language */ "./src/javascript/_common/language.js").get;
+var urlFor = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 var urlForStatic = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlForStatic;
 var SubscriptionManager = __webpack_require__(/*! ../../../_common/base/subscription_manager */ "./src/javascript/_common/base/subscription_manager.js").default;
 
@@ -15955,12 +15958,18 @@ var DP2P = function () {
 
     var onLoad = function onLoad() {
         var is_svg = Client.get('landing_company_shortcode') === 'svg';
-        if (is_svg) {
-            __webpack_require__.e(/*! require.ensure | dp2p */ "vendors~dp2p").then((function (require) {
-                return renderP2P(__webpack_require__(/*! @deriv/p2p */ "./node_modules/@deriv/p2p/lib/index.js"));
-            }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+        var is_show_dp2p = /show_dp2p/.test(window.location.hash);
+
+        if (is_show_dp2p) {
+            if (is_svg) {
+                __webpack_require__.e(/*! require.ensure | dp2p */ "vendors~dp2p").then((function (require) {
+                    return renderP2P(__webpack_require__(/*! @deriv/p2p */ "./node_modules/@deriv/p2p/lib/index.js"));
+                }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+            } else {
+                document.getElementById('message_cashier_unavailable').setVisibility(1);
+            }
         } else {
-            document.getElementById('message_cashier_unavailable').setVisibility(1);
+            BinaryPjax.load(urlFor('cashier'));
         }
     };
 
