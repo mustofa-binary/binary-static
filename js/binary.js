@@ -15916,9 +15916,9 @@ var DP2P = function () {
                 currency: Client.get('currency'),
                 is_virtual: Client.get('is_virtual'),
                 local_currency_config: Client.get('local_currency_config'),
-                residence: Client.get('residence'),
-                custom_object: { domain: 'binary.com' }
+                residence: Client.get('residence')
             },
+            custom_strings: { domain: 'binary.com' },
             lang: getLanguage(),
             server_time: ServerTime,
             websocket_api: websocket_api
