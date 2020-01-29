@@ -15371,8 +15371,6 @@ module.exports = AccountTransfer;
 "use strict";
 
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 var getCurrencies = __webpack_require__(/*! ../user/get_currency */ "./src/javascript/app/pages/user/get_currency.js").getCurrencies;
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
@@ -15415,81 +15413,6 @@ var Cashier = function () {
             !isCryptocurrency(Client.get('currency')) // only show to fiat currencies
             );
         });
-    };
-
-    var setP2PVisibility = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var is_agent, has_offer;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.next = 2;
-                            return BinarySocket.send({ p2p_agent_info: 1 });
-
-                        case 2:
-                            is_agent = !_context.sent.error;
-
-                            if (!is_agent) {
-                                _context.next = 6;
-                                break;
-                            }
-
-                            $('#dp2p_info').setVisibility(1);
-                            return _context.abrupt('return');
-
-                        case 6:
-                            _context.next = 8;
-                            return checkP2PHasOffer();
-
-                        case 8:
-                            has_offer = _context.sent;
-
-                            if (has_offer) {
-                                $('#dp2p_info').setVisibility(1);
-                            }
-
-                        case 10:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, undefined);
-        }));
-
-        return function setP2PVisibility() {
-            return _ref.apply(this, arguments);
-        };
-    }();
-
-    var checkP2PHasOffer = function checkP2PHasOffer() {
-        return new Promise(function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve) {
-                var offer_list_response;
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                _context2.next = 2;
-                                return BinarySocket.send({ p2p_offer_list: 1 });
-
-                            case 2:
-                                offer_list_response = _context2.sent;
-
-                                resolve(getPropertyValue(offer_list_response, ['p2p_offer_list', 'list']).length);
-
-                            case 4:
-                            case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, undefined);
-            }));
-
-            return function (_x) {
-                return _ref2.apply(this, arguments);
-            };
-        }());
     };
 
     var displayTopUpButton = function displayTopUpButton() {
@@ -15581,13 +15504,7 @@ var Cashier = function () {
                 if (Client.get('is_virtual')) {
                     displayTopUpButton();
                 } else if (currency) {
-                    var is_p2p_allowed_currency = currency === 'USD';
-                    var is_show_dp2p = /show_dp2p/.test(window.location.hash);
-
                     showCurrentCurrency(currency, State.getResponse('statement'), State.getResponse('mt5_login_list'));
-                    if (is_p2p_allowed_currency && is_show_dp2p) {
-                        setP2PVisibility();
-                    }
                 }
 
                 if (residence) {
@@ -15944,12 +15861,10 @@ module.exports = DepositWithdraw;
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var ServerTime = __webpack_require__(/*! ../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
 var getLanguage = __webpack_require__(/*! ../../../_common/language */ "./src/javascript/_common/language.js").get;
-var urlFor = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 var urlForStatic = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlForStatic;
 var SubscriptionManager = __webpack_require__(/*! ../../../_common/base/subscription_manager */ "./src/javascript/_common/base/subscription_manager.js").default;
 
@@ -15958,18 +15873,12 @@ var DP2P = function () {
 
     var onLoad = function onLoad() {
         var is_svg = Client.get('landing_company_shortcode') === 'svg';
-        var is_show_dp2p = /show_dp2p/.test(window.location.hash);
-
-        if (is_show_dp2p) {
-            if (is_svg) {
-                __webpack_require__.e(/*! require.ensure | dp2p */ "vendors~dp2p").then((function (require) {
-                    return renderP2P(__webpack_require__(/*! @deriv/p2p */ "./node_modules/@deriv/p2p/lib/index.js"));
-                }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
-            } else {
-                document.getElementById('message_cashier_unavailable').setVisibility(1);
-            }
+        if (is_svg) {
+            __webpack_require__.e(/*! require.ensure | dp2p */ "vendors~dp2p").then((function (require) {
+                return renderP2P(__webpack_require__(/*! @deriv/p2p */ "./node_modules/@deriv/p2p/lib/index.js"));
+            }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         } else {
-            BinaryPjax.load(urlFor('cashier'));
+            document.getElementById('message_cashier_unavailable').setVisibility(1);
         }
     };
 
@@ -16007,7 +15916,8 @@ var DP2P = function () {
                 currency: Client.get('currency'),
                 is_virtual: Client.get('is_virtual'),
                 local_currency_config: Client.get('local_currency_config'),
-                residence: Client.get('residence')
+                residence: Client.get('residence'),
+                custom_object: { domain: 'binary.com' }
             },
             lang: getLanguage(),
             server_time: ServerTime,
