@@ -15984,7 +15984,7 @@ var DP2P = function () {
         var el_main_css = document.createElement('style');
         // These are styles that are to be injected into the Shadow DOM, so they are in JS and not stylesheets
         // They are to be applied to the `:host` selector
-        el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem: 10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #f2f2f2;\n                    --text-general: #333333;\n                    --text-profit-success: #2e8836;\n                    --text-loss-danger: #ff444f;\n                }\n\n                /* overrides components */\n                .dc-list__item--selected .dc-list__item-text {\n                    color: var(--text-colored-background);\n                }\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n                .dc-field-error {\n                    color: var(--text-loss-danger);\n                }\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n                .dc-table__header {\n                    border: none;\n                    background: var(--general-section-1);\n                }\n                .dc-table__row {\n                    padding: 0 calc(2.4*var(--hem));\n                    border-bottom: 3px solid var(--general-section-1);\n                }\n                .dc-table__cell {\n                    border-bottom: none;\n                }\n                .dc-tabs {\n                    --tab-width: 150px !important;\n                }\n                .dc-tabs__list {\n                    width: fit-content;\n                }\n                .link {\n                    color: #e88024 !important;\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n\n                /* override layouts */\n                .deriv-p2p {\n                    height: 800px;\n                }\n                .footer-actions {\n                    bottom: calc(18*var(--hem));\n                    flex-direction: row-reverse;\n                }\n                .footer-actions--bordered {\n                    bottom: 0 !important;\n                }\n\n                /* overrides orders */\n                .orders {\n                    padding: calc(2.4*var(--hem)) 0;\n                }\n                .orders__table-row {\n                    padding-left: 0;\n                }\n\n                /* overrides order-details */\n                .order-details__wrapper--inner {\n                    height: calc(36*var(--hem));\n                    overflow-y: scroll;\n                }\n\n                /* overrides buy-sell */\n                .buy-sell {\n                    margin: 0;\n                    padding: calc(1.6*var(--hem)) 0\n                }\n                .buy-sell__header {\n                    padding: 0;\n                    border: 1px solid var(--brand-red-coral);\n                    border-radius: 5px;\n                    margin: calc(0.8*var(--hem)) 0 calc(1.6*var(--hem));\n                }\n                .buy-sell__dialog {\n                    z-index: 2;\n                }\n\n                /* overrides my-ads */\n                .p2p-my-ads__form-error {\n                    color: var(--text-loss-danger);\n                }\n                ';
+        el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem: 10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #f2f2f2;\n                    --text-general: #333333;\n                    --text-profit-success: #2e8836;\n                    --text-loss-danger: #ff444f;\n                }\n\n                /* overrides components */\n                .dc-list__item--selected .dc-list__item-text {\n                    color: var(--text-colored-background);\n                }\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n                .dc-field-error {\n                    color: var(--text-loss-danger);\n                }\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n                .dc-table__header {\n                    border: none;\n                    background: var(--general-section-1);\n                }\n                .dc-table__row {\n                    padding: 0 calc(2.4*var(--hem));\n                    border-bottom: 3px solid var(--general-section-1);\n                }\n                .dc-table__cell {\n                    border-bottom: none;\n                }\n                .dc-tabs {\n                    --tab-width: 150px !important;\n                }\n                .dc-tabs__list {\n                    width: fit-content;\n                    width: -moz-fit-content;\n                }\n                .link {\n                    color: #e88024 !important;\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n\n                /* override layouts */\n                .deriv-p2p {\n                    height: 800px;\n                }\n                .footer-actions {\n                    bottom: calc(18*var(--hem));\n                    flex-direction: row-reverse;\n                }\n                .footer-actions--bordered {\n                    bottom: 0 !important;\n                }\n\n                /* overrides orders */\n                .orders {\n                    padding: calc(2.4*var(--hem)) 0;\n                }\n                .orders__table-row {\n                    padding-left: 0;\n                }\n\n                /* overrides order-details */\n                .order-details__wrapper--inner {\n                    height: calc(36*var(--hem));\n                    overflow-y: scroll;\n                }\n\n                /* overrides buy-sell */\n                .buy-sell {\n                    margin: 0;\n                    padding: calc(1.6*var(--hem)) 0\n                }\n                .buy-sell__header {\n                    padding: 0;\n                    border: 1px solid var(--brand-red-coral);\n                    border-radius: 5px;\n                    margin: calc(0.8*var(--hem)) 0 calc(1.6*var(--hem));\n                }\n                .buy-sell__dialog {\n                    z-index: 2;\n                }\n\n                /* overrides my-ads */\n                .p2p-my-ads__form-error {\n                    color: var(--text-loss-danger);\n                }\n                ';
         el_main_css.rel = 'stylesheet';
 
         var p2pSubscribe = function p2pSubscribe(request, cb) {
@@ -16013,6 +16013,7 @@ var DP2P = function () {
                 local_currency_config: Client.get('local_currency_config'),
                 residence: Client.get('residence')
             },
+            custom_strings: { email_domain: 'binary.com' },
             lang: getLanguage(),
             server_time: ServerTime,
             websocket_api: websocket_api
@@ -32096,7 +32097,7 @@ var MetaTraderConfig = function () {
     // or 1 of donor currency if both accounts have the same currency
     var getMinMT5TransferValue = function getMinMT5TransferValue(currency) {
         var client_currency = Client.get('currency');
-        var mt5_currency = MetaTraderConfig.getCurrency(Client.get('mt5_account'));
+        var mt5_currency = getCurrency(Client.get('mt5_account'));
         if (client_currency === mt5_currency) return 1;
         return (+State.getResponse('exchange_rates.rates.' + currency) || 1).toFixed(Currency.getDecimalPlaces(currency));
     };
@@ -32279,7 +32280,7 @@ var MetaTraderConfig = function () {
         password_change: {
             title: localize('Change Password'),
             success_msg: function success_msg(response) {
-                return localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, response.echo_req.login]);
+                return localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, getDisplayLogin(response.echo_req.login)]);
             },
             prerequisites: function prerequisites() {
                 return new Promise(function (resolve) {
@@ -32318,8 +32319,8 @@ var MetaTraderConfig = function () {
         },
         deposit: {
             title: localize('Deposit'),
-            success_msg: function success_msg(response) {
-                return localize('[_1] deposit from [_2] to account number [_3] is done. Transaction ID: [_4]', [Currency.formatMoney(State.getResponse('authorize.currency'), response.echo_req.amount), response.echo_req.from_binary, response.echo_req.to_mt5, response.binary_transaction_id]);
+            success_msg: function success_msg(response, acc_type) {
+                return localize('[_1] deposit from [_2] to account number [_3] is done. Transaction ID: [_4]', [Currency.formatMoney(State.getResponse('authorize.currency'), response.echo_req.amount), response.echo_req.from_binary, accounts_info[acc_type].info.display_login, response.binary_transaction_id]);
             },
             prerequisites: function prerequisites() {
                 return new Promise(function (resolve) {
@@ -32345,7 +32346,7 @@ var MetaTraderConfig = function () {
         withdrawal: {
             title: localize('Withdraw'),
             success_msg: function success_msg(response, acc_type) {
-                return localize('[_1] withdrawal from account number [_2] to [_3] is done. Transaction ID: [_4]', [Currency.formatMoney(getCurrency(acc_type), response.echo_req.amount), response.echo_req.from_mt5, response.echo_req.to_binary, response.binary_transaction_id]);
+                return localize('[_1] withdrawal from account number [_2] to [_3] is done. Transaction ID: [_4]', [Currency.formatMoney(getCurrency(acc_type), response.echo_req.amount), accounts_info[acc_type].info.display_login, response.echo_req.to_binary, response.binary_transaction_id]);
             },
             prerequisites: function prerequisites(acc_type) {
                 return new Promise(function (resolve) {
@@ -32465,6 +32466,12 @@ var MetaTraderConfig = function () {
         return accounts_info[acc_type].info.currency;
     };
 
+    // if you have acc_type, use accounts_info[acc_type].info.display_login
+    // otherwise, use this function to format login into display login
+    var getDisplayLogin = function getDisplayLogin(login) {
+        return login.replace(/^MT[DR]?/i, '');
+    };
+
     var isAuthenticated = function isAuthenticated() {
         return State.getResponse('get_account_status').status.indexOf('authenticated') !== -1;
     };
@@ -32491,6 +32498,7 @@ var MetaTraderConfig = function () {
         needsRealMessage: needsRealMessage,
         hasAccount: hasAccount,
         getCurrency: getCurrency,
+        getDisplayLogin: getDisplayLogin,
         isAuthenticated: isAuthenticated,
         isAuthenticationPromptNeeded: isAuthenticationPromptNeeded,
         configMtCompanies: configMtCompanies.get,
@@ -32748,6 +32756,7 @@ var MetaTrader = function () {
             });
             if (info) {
                 accounts_info[acc_type].info = info;
+                accounts_info[acc_type].info.display_login = MetaTraderConfig.getDisplayLogin(info.login);
                 MetaTraderUI.updateAccount(acc_type);
             }
         }
@@ -32867,7 +32876,10 @@ var MetaTrader = function () {
         // Update account info
         mt5_login_list.forEach(function (obj) {
             var acc_type = Client.getMT5AccountType(obj.group);
-            accounts_info[acc_type].info = { login: obj.login };
+            accounts_info[acc_type].info = {
+                display_login: MetaTraderConfig.getDisplayLogin(obj.login),
+                login: obj.login
+            };
             setAccountDetails(obj.login, acc_type, response);
         });
 
@@ -32885,10 +32897,9 @@ var MetaTrader = function () {
     var sendTopupDemo = function sendTopupDemo() {
         MetaTraderUI.setTopupLoading(true);
         var acc_type = Client.get('mt5_account');
-        var login = accounts_info[acc_type].info.login;
         var req = {
             mt5_deposit: 1,
-            to_mt5: login
+            to_mt5: accounts_info[acc_type].info.login
         };
 
         BinarySocket.send(req).then(function (response) {
@@ -32896,7 +32907,7 @@ var MetaTrader = function () {
                 MetaTraderUI.displayPageError(response.error.message);
                 MetaTraderUI.setTopupLoading(false);
             } else {
-                MetaTraderUI.displayMainMessage(localize('[_1] has been credited into your MT5 Demo Account: [_2].', [MetaTraderConfig.getCurrency(acc_type) + ' 10,000.00', login.toString()]));
+                MetaTraderUI.displayMainMessage(localize('[_1] has been credited into your MT5 Demo Account: [_2].', [MetaTraderConfig.getCurrency(acc_type) + ' 10,000.00', accounts_info[acc_type].info.display_login]));
                 BinarySocket.send({ mt5_login_list: 1 }).then(function (res) {
                     allAccountsResponseHandler(res);
                     MetaTraderUI.setTopupLoading(false);
@@ -33083,8 +33094,8 @@ var MetaTraderUI = function () {
     var setMTAccountText = function setMTAccountText() {
         var acc_type = $mt5_account.attr('value');
         if (acc_type) {
-            var login = getPropertyValue(accounts_info[acc_type], ['info', 'login']);
-            var title = '' + accounts_info[acc_type].title + (login ? ' (' + login + ')' : '');
+            var display_login = getPropertyValue(accounts_info[acc_type], ['info', 'display_login']);
+            var title = '' + accounts_info[acc_type].title + (display_login ? ' (' + display_login + ')' : '');
             if (!new RegExp(title).test($mt5_account.text())) {
                 $mt5_account.html(title);
             }
@@ -33096,7 +33107,7 @@ var MetaTraderUI = function () {
         $acc_item.find('.mt-type').text(accounts_info[acc_type].title.replace(/(demo|real)\s/i, ''));
         if (accounts_info[acc_type].info) {
             setMTAccountText();
-            $acc_item.find('.mt-login').text('(' + accounts_info[acc_type].info.login + ')');
+            $acc_item.find('.mt-login').text('(' + accounts_info[acc_type].info.display_login + ')');
             $acc_item.setVisibility(1);
             if (/demo/.test(accounts_info[acc_type].account_type)) {
                 $list.find('#acc_group_demo').setVisibility(1);
@@ -33138,17 +33149,17 @@ var MetaTraderUI = function () {
                     balance: function balance() {
                         return isNaN(info) ? '' : Currency.formatMoney(MetaTraderConfig.getCurrency(acc_type), +info);
                     },
+                    display_login: function display_login() {
+                        return info + ' (' + (/demo/.test(accounts_info[acc_type].account_type) ? localize('Demo Account') : localize('Real-Money Account')) + ')';
+                    },
                     leverage: function leverage() {
                         return '1:' + info;
-                    },
-                    login: function login() {
-                        return info + ' (' + (/demo/.test(accounts_info[acc_type].account_type) ? localize('Demo Account') : localize('Real-Money Account')) + ')';
                     }
                 };
                 $(this).html(typeof mapping[key] === 'function' ? mapping[key]() : info);
             });
 
-            setCounterpartyAndJurisdictionTooltip($('.acc-info div[data="login"]'), acc_type);
+            setCounterpartyAndJurisdictionTooltip($('.acc-info div[data="display_login"]'), acc_type);
 
             // $container.find('.act_cashier').setVisibility(!types_info[acc_type].is_demo);
             if (current_action_ui !== 'new_account') {
@@ -33207,7 +33218,7 @@ var MetaTraderUI = function () {
             $action.find('#frm_action').html(_$form).setVisibility(1).end().setVisibility(1);
 
             if (action === 'manage_password') {
-                _$form.find('button[type="submit"]').append(accounts_info[acc_type].info.login ? ' ' + localize('for account [_1]', accounts_info[acc_type].info.login) : '');
+                _$form.find('button[type="submit"]').append(accounts_info[acc_type].info.display_login ? ' ' + localize('for account [_1]', accounts_info[acc_type].info.display_login) : '');
                 if (!token) {
                     _$form.find('#frm_verify_password_reset').setVisibility(1);
                 } else if (!Validation.validEmailToken(token)) {
@@ -33245,7 +33256,7 @@ var MetaTraderUI = function () {
             setDemoTopupStatus();
             _$form.find('.binary-account').text('' + localize('[_1] Account [_2]', ['Binary', Client.get('loginid')]));
             _$form.find('.binary-balance').html('' + Currency.formatMoney(client_currency, Client.get('balance')));
-            _$form.find('.mt5-account').text('' + localize('[_1] Account [_2]', [accounts_info[acc_type].title, accounts_info[acc_type].info.login]));
+            _$form.find('.mt5-account').text('' + localize('[_1] Account [_2]', [accounts_info[acc_type].title, accounts_info[acc_type].info.display_login]));
             _$form.find('.mt5-balance').html('' + Currency.formatMoney(mt_currency, accounts_info[acc_type].info.balance));
             _$form.find('label[for="txt_amount_deposit"]').append(' ' + client_currency);
             _$form.find('label[for="txt_amount_withdrawal"]').append(' ' + mt_currency);
@@ -33522,7 +33533,7 @@ var MetaTraderUI = function () {
                 // go back to verify reset password form
                 loadAction('manage_password');
                 if (!response.error) {
-                    displayMainMessage(localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, response.echo_req.login]));
+                    displayMainMessage(localize('The [_1] password of account number [_2] has been changed.', [response.echo_req.password_type, MetaTraderConfig.getDisplayLogin(response.echo_req.login)]));
                 } else if (has_invalid_token) {
                     _$form.find('#frm_verify_password_reset #token_error').setVisibility(1);
                 }
