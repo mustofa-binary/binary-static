@@ -43,24 +43,6 @@ const Cashier = (() => {
         });
     };
 
-    const setP2PVisibility = async () => {
-        const is_agent = !(await BinarySocket.send({ p2p_agent_info: 1 })).error;
-        if (is_agent) {
-            $('#dp2p_info').setVisibility(1);
-            return;
-        }
-
-        const has_offer = await checkP2PHasOffer();
-        if (has_offer) {
-            $('#dp2p_info').setVisibility(1);
-        }
-    };
-
-    const checkP2PHasOffer = () => new Promise(async (resolve) => {
-        const offer_list_response = await BinarySocket.send({ p2p_offer_list: 1 });
-        resolve(getPropertyValue(offer_list_response, ['p2p_offer_list', 'list']).length);
-    });
-
     const displayTopUpButton = () => {
         BinarySocket.wait('balance').then((response) => {
             const el_virtual_topup_info = getElementById('virtual_topup_info');
@@ -164,14 +146,15 @@ const Cashier = (() => {
                 } else if (currency) {
                     const is_p2p_allowed_currency = currency === 'USD';
                     const is_show_dp2p = /show_dp2p/.test(window.location.hash);
+                    const is_p2p_visible = localStorage.getItem('is_p2p_visible');
 
                     showCurrentCurrency(
                         currency,
                         State.getResponse('statement'),
                         State.getResponse('mt5_login_list')
                     );
-                    if (is_p2p_allowed_currency && is_show_dp2p) {
-                        setP2PVisibility();
+                    if (is_p2p_allowed_currency && is_show_dp2p && is_p2p_visible) {
+                        $('#dp2p_info').setVisibility(1);
                     }
                 }
 
