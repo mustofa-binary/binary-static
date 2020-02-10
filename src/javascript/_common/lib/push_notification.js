@@ -2,7 +2,7 @@ const Pushwoosh              = require('web-push-notifications').Pushwoosh;
 const getLanguage            = require('../language').get;
 const urlForCurrentDomain    = require('../url').urlForCurrentDomain;
 const Client                 = require('../../app/base/client');
-const getCurrentBinaryDomain = require('../../config').getCurrentBinaryDomain;
+// const getCurrentBinaryDomain = require('../../config').getCurrentBinaryDomain;
 
 const BinaryPushwoosh = (() => {
     const pw = new Pushwoosh();
@@ -10,7 +10,7 @@ const BinaryPushwoosh = (() => {
     let initialised = false;
 
     const init = () => {
-        if (!getCurrentBinaryDomain()) return;
+        // if (!getCurrentBinaryDomain()) return;
 
         if (!initialised) {
             console.log('initi')

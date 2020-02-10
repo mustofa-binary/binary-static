@@ -90,16 +90,32 @@ const DP2P = (() => {
     const handleUpdatedOrder = (updated_order) => {
         const is_buyer = updated_order.type === 'buy';
         const is_buyer_confirmed = updated_order.status === 'buyer-confirmed';
+        const is_completed = updated_order.status === 'completed';
         const is_pending = updated_order.status === 'pending';
+        const is_cancelled = updated_order.status === 'cancelled';
+        const is_timed_out = updated_order.status === 'timed-out';
         const is_agent_buyer = is_p2p_agent && is_buyer;
         const is_agent_seller = is_p2p_agent && !is_buyer;
         const is_client_buyer = !is_p2p_agent && is_buyer;
         const is_client_seller = !is_p2p_agent && !is_buyer;
 
+        if (is_pending && (is_p2p_agent)) {
+            pushNotification('New order');
+        }
         if (is_buyer_confirmed && (is_agent_buyer || is_client_seller)) {
-            pushNotification('someone has paid your ad, please help to release your money');
-        } else if (is_pending && (is_agent_seller || is_client_buyer)) {
-            pushNotification('You need to pay the order that you just made');
+            pushNotification('buyer has paid');
+        }
+        if (is_completed &&  (is_client_buyer || is_agent_seller)) {
+            pushNotification('seller has released');
+        }
+        if (is_cancelled && (is_agent_buyer || is_client_seller)) {
+            pushNotification('Buyer has cancelled the order');
+        }
+        if (is_timed_out && (is_agent_buyer || is_client_seller)) {
+            pushNotification(`Order ${updated_order.order_id} is cancelled. The buyer did not make a payment for this order.`);
+        }
+        if (is_timed_out && (is_client_buyer || is_agent_seller)) {
+            pushNotification(`Order ${updated_order.order_id} is cancelled. We did not receive your response for this order. If you’ve made a payment, please contact the seller.`);
         }
     };
 
