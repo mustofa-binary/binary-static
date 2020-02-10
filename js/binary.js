@@ -8056,7 +8056,7 @@ var Pushwoosh = __webpack_require__(/*! web-push-notifications */ "./node_module
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var urlForCurrentDomain = __webpack_require__(/*! ../url */ "./src/javascript/_common/url.js").urlForCurrentDomain;
 var Client = __webpack_require__(/*! ../../app/base/client */ "./src/javascript/app/base/client.js");
-var getCurrentBinaryDomain = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").getCurrentBinaryDomain;
+// const getCurrentBinaryDomain = require('../../config').getCurrentBinaryDomain;
 
 var BinaryPushwoosh = function () {
     var pw = new Pushwoosh();
@@ -8064,7 +8064,7 @@ var BinaryPushwoosh = function () {
     var initialised = false;
 
     var init = function init() {
-        if (!getCurrentBinaryDomain()) return;
+        // if (!getCurrentBinaryDomain()) return;
 
         if (!initialised) {
             console.log('initi');
@@ -16056,11 +16056,35 @@ var DP2P = function () {
                     // otherwise, update the correct order
                     updated_orders[idx_order_to_update] = order_response.p2p_order_info;
                 }
+
+                handleUpdatedOrder(order_response.p2p_order_info);
+
                 // trigger re-rendering by setting orders again
                 p2p_order_list = updated_orders;
                 handleNotifications(updated_orders);
             }
         }
+    };
+
+    var handleUpdatedOrder = function handleUpdatedOrder(updated_order) {
+        var is_buyer = updated_order.type === 'buy';
+        var is_buyer_confirmed = updated_order.status === 'buyer-confirmed';
+        var is_pending = updated_order.status === 'pending';
+        var is_agent_buyer = is_p2p_agent && is_buyer;
+        var is_agent_seller = is_p2p_agent && !is_buyer;
+        var is_client_buyer = !is_p2p_agent && is_buyer;
+        var is_client_seller = !is_p2p_agent && !is_buyer;
+
+        if (is_buyer_confirmed && (is_agent_buyer || is_client_seller)) {
+            pushNotification('someone has paid your ad, please help to release your money');
+        } else if (is_pending && (is_agent_seller || is_client_buyer)) {
+            pushNotification('You need to pay the order that you just made');
+        }
+    };
+
+    var pushNotification = function pushNotification(message) {
+        // eslint-disable-next-line no-console
+        console.log(message);
     };
 
     var handleNotifications = function handleNotifications(orders) {
