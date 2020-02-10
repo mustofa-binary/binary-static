@@ -13,6 +13,7 @@ const BinaryPushwoosh = (() => {
         if (!getCurrentBinaryDomain()) return;
 
         if (!initialised) {
+            console.log('initi')
             pw.push(['init', {
                 logLevel                : 'error', // or info or debug
                 applicationCode         : 'D04E6-FA474',
@@ -20,13 +21,18 @@ const BinaryPushwoosh = (() => {
                 defaultNotificationTitle: 'Binary.com',
                 defaultNotificationImage: urlForCurrentDomain('https://style.binary.com/images/logo/logomark.png'),
             }]);
+            console.log('come here')
             initialised = true;
             sendTags();
         }
     };
 
     const sendTags = () => {
+        console.log('hii')
+        console.log(pw)
         pw.push((api) => {
+            console.log('dkfjsfd')
+            console.log(api)
             api.getTags().then((result) => {
                 if (!result.result['Login ID'] || !result.result['Site Language'] || !result.result['Residence']) {
                     // send login id and site language
@@ -45,6 +51,7 @@ const BinaryPushwoosh = (() => {
 
     return {
         init,
+        sendTags,
     };
 })();
 

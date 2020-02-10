@@ -5,6 +5,7 @@ const Client              = require('../../base/client');
 const BinarySocket        = require('../../base/socket');
 const ServerTime          = require('../../../_common/base/server_time');
 const getLanguage         = require('../../../_common/language').get;
+const PushNotification    = require('../../../_common/lib/push_notification');
 const urlFor              = require('../../../_common/url').urlFor;
 const urlForStatic        = require('../../../_common/url').urlForStatic;
 const getPropertyValue    = require('../../../_common/utility').getPropertyValue;
@@ -43,14 +44,14 @@ const DP2P = (() => {
 
     const init = async () => {
         await BinarySocket.wait('authorize');
-        const is_p2p_visible = localStorage.getItem('is_p2p_visible');
 
-        if (!is_p2p_visible && !Client.get('is_virtual')) {
+        if (!Client.get('is_virtual')) {
             const agent_error = getPropertyValue(await BinarySocket.send({ p2p_agent_info: 1 }), ['error', 'code']);
             if (agent_error === 'PermissionDenied') return;
             
             is_p2p_agent = !agent_error;
             localStorage.setItem('is_p2p_visible', 1);
+            PushNotification.init();
             p2pSubscribe({ p2p_order_list: 1, subscribe: 1 }, setP2pOrderList);
         }
 
@@ -76,11 +77,35 @@ const DP2P = (() => {
                     // otherwise, update the correct order
                     updated_orders[idx_order_to_update] = order_response.p2p_order_info;
                 }
+
+                handleUpdatedOrder(order_response.p2p_order_info);
+
                 // trigger re-rendering by setting orders again
                 p2p_order_list = updated_orders;
                 handleNotifications(updated_orders);
             }
         }
+    };
+
+    const handleUpdatedOrder = (updated_order) => {
+        const is_buyer = updated_order.type === 'buy';
+        const is_buyer_confirmed = updated_order.status === 'buyer-confirmed';
+        const is_pending = updated_order.status === 'pending';
+        const is_agent_buyer = is_p2p_agent && is_buyer;
+        const is_agent_seller = is_p2p_agent && !is_buyer;
+        const is_client_buyer = !is_p2p_agent && is_buyer;
+        const is_client_seller = !is_p2p_agent && !is_buyer;
+
+        if (is_buyer_confirmed && (is_agent_buyer || is_client_seller)) {
+            pushNotification('someone has paid your ad, please help to release your money');
+        } else if (is_pending && (is_agent_seller || is_client_buyer)) {
+            pushNotification('You need to pay the order that you just made');
+        }
+    };
+
+    const pushNotification = (message) => {
+        // eslint-disable-next-line no-console
+        console.log(message);
     };
 
     const handleNotifications = (orders) => {
@@ -259,6 +284,7 @@ const DP2P = (() => {
 
     const onUnload = () => {
         ReactDOM.unmountComponentAtNode(shadowed_el_dp2p);
+        localStorage.removeItem('is_p2p_visible');
     };
 
     return {
