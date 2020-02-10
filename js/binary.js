@@ -2012,7 +2012,10 @@ var SocketCache = function () {
         var key = makeKey(request, msg_type);
         var response_obj = getPropertyValue(data_obj, key) || {};
 
-        if (moment().isBefore(response_obj.expires)) {
+        if (!response_obj.expires && !key) {
+            // Do nothing if there is nothing to validate/invalidate
+            return undefined;
+        } else if (moment().isBefore(response_obj.expires)) {
             response = response_obj.value;
         } else {
             // remove if expired
@@ -2352,6 +2355,7 @@ exports.default = SubscriptionManager;
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var urlForStatic = __webpack_require__(/*! ./url */ "./src/javascript/_common/url.js").urlForStatic;
 var getStaticHash = __webpack_require__(/*! ./utility */ "./src/javascript/_common/utility.js").getStaticHash;
+var LocalStore = __webpack_require__(/*! ../_common/storage */ "./src/javascript/_common/storage.js").LocalStore;
 
 // only reload if it's more than 10 minutes since the last reload
 var shouldForceReload = function shouldForceReload(last_reload) {
@@ -2360,9 +2364,9 @@ var shouldForceReload = function shouldForceReload(last_reload) {
 
 // calling this method is handled by GTM tags
 var checkNewRelease = function checkNewRelease() {
-    var last_reload = localStorage.getItem('new_release_reload_time');
+    var last_reload = LocalStore.get('new_release_reload_time');
     if (!shouldForceReload(last_reload)) return false;
-    localStorage.setItem('new_release_reload_time', moment().valueOf());
+    LocalStore.set('new_release_reload_time', moment().valueOf());
 
     var current_hash = getStaticHash();
     var xhttp = new XMLHttpRequest();
@@ -8063,6 +8067,7 @@ var BinaryPushwoosh = function () {
         if (!getCurrentBinaryDomain()) return;
 
         if (!initialised) {
+            console.log('initi');
             pw.push(['init', {
                 logLevel: 'error', // or info or debug
                 applicationCode: 'D04E6-FA474',
@@ -8070,13 +8075,18 @@ var BinaryPushwoosh = function () {
                 defaultNotificationTitle: 'Binary.com',
                 defaultNotificationImage: urlForCurrentDomain('https://style.binary.com/images/logo/logomark.png')
             }]);
+            console.log('come here');
             initialised = true;
             sendTags();
         }
     };
 
     var sendTags = function sendTags() {
+        console.log('hii');
+        console.log(pw);
         pw.push(function (api) {
+            console.log('dkfjsfd');
+            console.log(api);
             api.getTags().then(function (result) {
                 if (!result.result['Login ID'] || !result.result['Site Language'] || !result.result['Residence']) {
                     // send login id and site language
@@ -8094,7 +8104,8 @@ var BinaryPushwoosh = function () {
     };
 
     return {
-        init: init
+        init: init,
+        sendTags: sendTags
     };
 }();
 
@@ -8578,9 +8589,58 @@ var getObject = function getObject(key) {
     return JSON.parse(this.getItem(key) || '{}');
 };
 
+/**
+ * Removing all but user details
+ */
+var keepUserAndClean = function keepUserAndClean() {
+    var client_accounts = localStorage.getItem('client.accounts');
+    var active_loginid = localStorage.getItem('active_loginid');
+    localStorage.clear();
+    localStorage.setItem('client.accounts', client_accounts);
+    localStorage.setItem('active_loginid', active_loginid);
+};
+
+var getTotalStorageUsage = function getTotalStorageUsage(storage) {
+    return Object.keys(storage).reduce(function (acc, cur) {
+        return acc + localStorage[cur].length;
+    }, 0);
+};
+
+var handlesQuotaExceededErrorException = function handlesQuotaExceededErrorException() {
+    if (!window.trackJs) return;
+    // Check if the browser supports Storage Quota API
+    if (navigator.storage && typeof navigator.storage.estimate === 'function') {
+        navigator.storage.estimate().then(function (estimate) {
+            window.trackJs.addMetadata('storage_usage', estimate.usage);
+            window.trackJs.addMetadata('storage_quota', estimate.quota);
+            window.trackJs.addMetadata('has_localstorage', isStorageSupported(window.localStorage));
+            window.trackJs.addMetadata('has_sessionstorage', isStorageSupported(window.sessionStorage));
+
+            keepUserAndClean();
+        });
+    } else {
+        // IE & Safari
+        window.trackJs.addMetadata('has_localstorage', isStorageSupported(window.localStorage));
+        window.trackJs.addMetadata('has_sessionstorage', isStorageSupported(window.sessionStorage));
+        window.trackJs.addMetadata('storage_usage', (isStorageSupported(window.localStorage) ? getTotalStorageUsage(window.localStorage) : 0) * 2);
+        window.trackJs.addMetadata('storage_quota', 'unknown');
+        keepUserAndClean();
+    }
+};
+
 var setObject = function setObject(key, value) {
-    if (value && value instanceof Object) {
-        this.setItem(key, JSON.stringify(value));
+    try {
+        if (value && value instanceof Object) {
+            this.setItem(key, JSON.stringify(value));
+        }
+    } catch (e) {
+        var quota_exceeded_error = e.name === ('QuotaExceededError' || 'QUOTA_EXCEEDED_ERR' || 'NS_ERROR_DOM_QUOTA_REACHED' || 'W3CException_DOM_QUOTA_EXCEEDED_ERR');
+
+        if (quota_exceeded_error) {
+            handlesQuotaExceededErrorException();
+        }
+
+        throw e; // re-throw the error unchanged
     }
 };
 
@@ -9704,6 +9764,7 @@ var NetworkMonitor = __webpack_require__(/*! ./network_monitor */ "./src/javascr
 var Page = __webpack_require__(/*! ./page */ "./src/javascript/app/base/page.js");
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var ContentVisibility = __webpack_require__(/*! ../common/content_visibility */ "./src/javascript/app/common/content_visibility.js");
+var P2P = __webpack_require__(/*! ../pages/cashier/dp2p */ "./src/javascript/app/pages/cashier/dp2p.js");
 var GTM = __webpack_require__(/*! ../../_common/base/gtm */ "./src/javascript/_common/base/gtm.js");
 var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
 var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
@@ -9737,6 +9798,7 @@ var BinaryLoader = function () {
 
         Client.init();
         NetworkMonitor.init();
+        P2P.init();
 
         container = getElementById('content-holder');
         container.addEventListener('binarypjax:before', beforeContentChange);
@@ -10425,6 +10487,7 @@ var Client = function () {
         if (response.logout !== 1) return;
         removeCookies('login', 'loginid', 'loginid_list', 'email', 'residence', 'settings'); // backward compatibility
         removeCookies('reality_check', 'affiliate_token', 'affiliate_tracking', 'onfido_token');
+        localStorage.removeItem('is_p2p_visible');
         // clear elev.io session storage
         sessionStorage.removeItem('_elevaddon-6app');
         sessionStorage.removeItem('_elevaddon-6create');
@@ -15374,8 +15437,6 @@ module.exports = AccountTransfer;
 "use strict";
 
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 var getCurrencies = __webpack_require__(/*! ../user/get_currency */ "./src/javascript/app/pages/user/get_currency.js").getCurrencies;
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
@@ -15418,81 +15479,6 @@ var Cashier = function () {
             !isCryptocurrency(Client.get('currency')) // only show to fiat currencies
             );
         });
-    };
-
-    var setP2PVisibility = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var is_agent, has_offer;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            _context.next = 2;
-                            return BinarySocket.send({ p2p_agent_info: 1 });
-
-                        case 2:
-                            is_agent = !_context.sent.error;
-
-                            if (!is_agent) {
-                                _context.next = 6;
-                                break;
-                            }
-
-                            $('#dp2p_info').setVisibility(1);
-                            return _context.abrupt('return');
-
-                        case 6:
-                            _context.next = 8;
-                            return checkP2PHasOffer();
-
-                        case 8:
-                            has_offer = _context.sent;
-
-                            if (has_offer) {
-                                $('#dp2p_info').setVisibility(1);
-                            }
-
-                        case 10:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, undefined);
-        }));
-
-        return function setP2PVisibility() {
-            return _ref.apply(this, arguments);
-        };
-    }();
-
-    var checkP2PHasOffer = function checkP2PHasOffer() {
-        return new Promise(function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve) {
-                var offer_list_response;
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                _context2.next = 2;
-                                return BinarySocket.send({ p2p_offer_list: 1 });
-
-                            case 2:
-                                offer_list_response = _context2.sent;
-
-                                resolve(getPropertyValue(offer_list_response, ['p2p_offer_list', 'list']).length);
-
-                            case 4:
-                            case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, undefined);
-            }));
-
-            return function (_x) {
-                return _ref2.apply(this, arguments);
-            };
-        }());
     };
 
     var displayTopUpButton = function displayTopUpButton() {
@@ -15586,10 +15572,11 @@ var Cashier = function () {
                 } else if (currency) {
                     var is_p2p_allowed_currency = currency === 'USD';
                     var is_show_dp2p = /show_dp2p/.test(window.location.hash);
+                    var is_p2p_visible = localStorage.getItem('is_p2p_visible');
 
                     showCurrentCurrency(currency, State.getResponse('statement'), State.getResponse('mt5_login_list'));
-                    if (is_p2p_allowed_currency && is_show_dp2p) {
-                        setP2PVisibility();
+                    if (is_p2p_allowed_currency && is_show_dp2p && is_p2p_visible) {
+                        $('#dp2p_info').setVisibility(1);
                     }
                 }
 
@@ -15945,6 +15932,10 @@ module.exports = DepositWithdraw;
 "use strict";
 
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
@@ -15952,12 +15943,17 @@ var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var ServerTime = __webpack_require__(/*! ../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
 var getLanguage = __webpack_require__(/*! ../../../_common/language */ "./src/javascript/_common/language.js").get;
+var PushNotification = __webpack_require__(/*! ../../../_common/lib/push_notification */ "./src/javascript/_common/lib/push_notification.js");
 var urlFor = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 var urlForStatic = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlForStatic;
+var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 var SubscriptionManager = __webpack_require__(/*! ../../../_common/base/subscription_manager */ "./src/javascript/_common/base/subscription_manager.js").default;
 
 var DP2P = function () {
     var shadowed_el_dp2p = void 0;
+    var p2p_notification_count = 0;
+    var is_p2p_agent = false;
+    var p2p_order_list = [];
 
     var onLoad = function onLoad() {
         var is_svg = Client.get('landing_company_shortcode') === 'svg';
@@ -15976,6 +15972,117 @@ var DP2P = function () {
         }
     };
 
+    var p2pSubscribe = function p2pSubscribe(request, cb) {
+        // Request object first key will be the msg_type
+        var msg_type = Object.keys(request)[0];
+
+        SubscriptionManager.subscribe(msg_type, request, cb);
+        return {
+            unsubscribe: function unsubscribe() {
+                return SubscriptionManager.forget(msg_type);
+            }
+        };
+    };
+
+    var init = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var agent_error;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return BinarySocket.wait('authorize');
+
+                        case 2:
+                            if (Client.get('is_virtual')) {
+                                _context.next = 15;
+                                break;
+                            }
+
+                            _context.t0 = getPropertyValue;
+                            _context.next = 6;
+                            return BinarySocket.send({ p2p_agent_info: 1 });
+
+                        case 6:
+                            _context.t1 = _context.sent;
+                            _context.t2 = ['error', 'code'];
+                            agent_error = (0, _context.t0)(_context.t1, _context.t2);
+
+                            if (!(agent_error === 'PermissionDenied')) {
+                                _context.next = 11;
+                                break;
+                            }
+
+                            return _context.abrupt('return');
+
+                        case 11:
+
+                            is_p2p_agent = !agent_error;
+                            localStorage.setItem('is_p2p_visible', 1);
+                            PushNotification.init();
+                            p2pSubscribe({ p2p_order_list: 1, subscribe: 1 }, setP2pOrderList);
+
+                        case 15:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, undefined);
+        }));
+
+        return function init() {
+            return _ref.apply(this, arguments);
+        };
+    }();
+
+    var setP2pOrderList = function setP2pOrderList(order_response) {
+        // check if there is any error
+        if (!order_response.error) {
+            if (order_response.p2p_order_list) {
+                // it's an array of orders from p2p_order_list
+                p2p_order_list = order_response.p2p_order_list.list;
+                handleNotifications(p2p_order_list);
+            } else {
+                // it's a single order from p2p_order_info
+                var idx_order_to_update = p2p_order_list.findIndex(function (order) {
+                    return order.order_id === order_response.p2p_order_info.order_id;
+                });
+                var updated_orders = [].concat(_toConsumableArray(p2p_order_list));
+                // if it's a new order, add it to the top of the list
+                if (idx_order_to_update < 0) {
+                    updated_orders.unshift(order_response.p2p_order_info);
+                } else {
+                    // otherwise, update the correct order
+                    updated_orders[idx_order_to_update] = order_response.p2p_order_info;
+                }
+                // trigger re-rendering by setting orders again
+                p2p_order_list = updated_orders;
+                handleNotifications(updated_orders);
+            }
+        }
+    };
+
+    var handleNotifications = function handleNotifications(orders) {
+        var notification_count = 0;
+
+        orders.forEach(function (order) {
+            var is_buyer = order.type === 'buy';
+            var is_buyer_confirmed = order.status === 'buyer-confirmed';
+            var is_pending = order.status === 'pending';
+            var is_agent_buyer = is_p2p_agent && is_buyer;
+            var is_agent_seller = is_p2p_agent && !is_buyer;
+            var is_client_buyer = !is_p2p_agent && is_buyer;
+            var is_client_seller = !is_p2p_agent && !is_buyer;
+
+            if (is_buyer_confirmed && (is_agent_buyer || is_client_seller) || is_pending && (is_agent_seller || is_client_buyer)) {
+                notification_count++;
+            }
+        });
+
+        p2p_notification_count = notification_count;
+    };
+
     var renderP2P = function renderP2P(module) {
         var el_loading = document.getElementById('loading_p2p');
         var el_dp2p_container = document.getElementById('binary_dp2p');
@@ -15986,18 +16093,6 @@ var DP2P = function () {
         // They are to be applied to the `:host` selector
         el_main_css.innerHTML = '\n                @import url(' + urlForStatic('css/p2p.min.css') + ');\n                :host {\n                    --hem: 10px;\n                }\n                :host .theme--light {\n                    --button-primary-default: #2e8836;\n                    --button-primary-hover: #14602b;\n                    --brand-red-coral: #2a3052;\n                    --state-active: #2a3052;\n                    --general-section-1: #f2f2f2;\n                    --text-general: #333333;\n                    --text-profit-success: #2e8836;\n                    --text-loss-danger: #ff444f;\n                }\n\n                /* overrides components */\n                .dc-list__item--selected .dc-list__item-text {\n                    color: var(--text-colored-background);\n                }\n                .dc-button-menu__wrapper\n                .dc-button-menu__button:not(.dc-button-menu__button--active) {\n                    background-color: #f2f2f2 !important;\n                }\n                .dc-field-error {\n                    color: var(--text-loss-danger);\n                }\n                .dc-input__field {\n                    box-sizing:border-box;\n                }\n                .dc-button-menu__wrapper\n                .dc-button-menu__button--active\n                .btn__text {\n                    color: #ffffff;\n                }\n                .dc-table__header {\n                    border: none;\n                    background: var(--general-section-1);\n                }\n                .dc-table__row {\n                    padding: 0 calc(2.4*var(--hem));\n                    border-bottom: 3px solid var(--general-section-1);\n                }\n                .dc-table__cell {\n                    border-bottom: none;\n                }\n                .dc-tabs {\n                    --tab-width: 150px !important;\n                }\n                .dc-tabs__list {\n                    width: fit-content;\n                    width: -moz-fit-content;\n                }\n                .link {\n                    color: #e88024 !important;\n                    font-weight: bold;\n                    text-decoration: none;\n                }\n                .link:hover {\n                    text-decoration: underline;\n                    cursor: pointer;\n                }\n\n                /* override layouts */\n                .deriv-p2p {\n                    height: 800px;\n                }\n                .footer-actions {\n                    bottom: calc(18*var(--hem));\n                    flex-direction: row-reverse;\n                }\n                .footer-actions--bordered {\n                    bottom: 0 !important;\n                }\n\n                /* overrides orders */\n                .orders {\n                    padding: calc(2.4*var(--hem)) 0;\n                }\n                .orders__table-row {\n                    padding-left: 0;\n                }\n\n                /* overrides order-details */\n                .order-details__wrapper--inner {\n                    height: calc(36*var(--hem));\n                    overflow-y: scroll;\n                }\n\n                /* overrides buy-sell */\n                .buy-sell {\n                    margin: 0;\n                    padding: calc(1.6*var(--hem)) 0\n                }\n                .buy-sell__header {\n                    padding: 0;\n                    border: 1px solid var(--brand-red-coral);\n                    border-radius: 5px;\n                    margin: calc(0.8*var(--hem)) 0 calc(1.6*var(--hem));\n                }\n                .buy-sell__dialog {\n                    z-index: 2;\n                }\n\n                /* overrides my-ads */\n                .p2p-my-ads__form-error {\n                    color: var(--text-loss-danger);\n                }\n                ';
         el_main_css.rel = 'stylesheet';
-
-        var p2pSubscribe = function p2pSubscribe(request, cb) {
-            // Request object first key will be the msg_type
-            var msg_type = Object.keys(request)[0];
-
-            SubscriptionManager.subscribe(msg_type, request, cb);
-            return {
-                unsubscribe: function unsubscribe() {
-                    return SubscriptionManager.forget(msg_type);
-                }
-            };
-        };
 
         var websocket_api = {
             send: BinarySocket.send,
@@ -16015,6 +16110,8 @@ var DP2P = function () {
             },
             custom_strings: { email_domain: 'binary.com' },
             lang: getLanguage(),
+            notification_count: p2p_notification_count,
+            p2p_order_list: p2p_order_list,
             server_time: ServerTime,
             websocket_api: websocket_api
         };
@@ -16028,9 +16125,11 @@ var DP2P = function () {
 
     var onUnload = function onUnload() {
         ReactDOM.unmountComponentAtNode(shadowed_el_dp2p);
+        localStorage.removeItem('is_p2p_visible');
     };
 
     return {
+        init: init,
         onLoad: onLoad,
         onUnload: onUnload
     };
@@ -26077,7 +26176,6 @@ var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ ".
 var Authenticate = function () {
     var is_any_upload_failed = false;
     var is_any_upload_failed_uns = false;
-    var is_from_mt5 = false;
     var onfido_unsupported = false;
     var file_checks = {};
     var file_checks_uns = {};
@@ -27157,20 +27255,19 @@ var Authenticate = function () {
 
     var onLoad = function () {
         var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-            var authentication_status, is_required, has_svg_account;
+            var authentication_status, is_required, has_svg_account, identity, document, is_not_fully_authenticated, is_not_high_risk;
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            is_from_mt5 = Url.paramsHash().is_from_mt5;
-                            _context3.next = 3;
+                            _context3.next = 2;
                             return getAuthenticationStatus();
 
-                        case 3:
+                        case 2:
                             authentication_status = _context3.sent;
                             is_required = checkIsRequired(authentication_status);
 
-                            if (!isAuthenticationAllowed() && !is_from_mt5) {
+                            if (!isAuthenticationAllowed()) {
                                 $('#authentication_tab').setVisibility(0);
                                 $('#authentication_loading').setVisibility(0);
                                 $('#authentication_unneeded').setVisibility(1);
@@ -27181,7 +27278,12 @@ var Authenticate = function () {
                             if (is_required || has_svg_account) {
                                 initTab();
                                 initAuthentication();
-                                if (is_from_mt5) {
+
+                                identity = authentication_status.identity, document = authentication_status.document;
+                                is_not_fully_authenticated = identity.status !== 'verified' && document.status !== 'verified';
+                                is_not_high_risk = !/high/.test(State.getResponse('get_account_status.risk_classification'));
+
+                                if (is_not_fully_authenticated && has_svg_account && is_not_high_risk) {
                                     $('#authenticate_only_real_mt5_advanced').setVisibility(1);
                                 }
                             } else {
@@ -27190,7 +27292,7 @@ var Authenticate = function () {
                                 $('#authentication_loading').setVisibility(0);
                             }
 
-                        case 8:
+                        case 7:
                         case 'end':
                             return _context3.stop();
                     }
@@ -27209,7 +27311,6 @@ var Authenticate = function () {
         }
 
         TabSelector.onUnload();
-        is_from_mt5 = false;
     };
 
     return {
@@ -32171,7 +32272,7 @@ var MetaTraderConfig = function () {
                             }
                             if (is_ok && !isAuthenticated() && accounts_info[acc_type].mt5_account_type === 'advanced') {
                                 $message.find('.authenticate').setVisibility(1);
-                                // setLabuanAdvancedIntention();
+                                setLabuanAdvancedIntention();
                                 is_ok = false;
                             }
 
@@ -32199,19 +32300,24 @@ var MetaTraderConfig = function () {
         });
     };
 
-    // TODO: add this line when dry_run API ready
-    // const setLabuanAdvancedIntention = () => {
-    //     const req = {
-    //         mt5_new_account : 1,
-    //         account_type    : 'financial',
-    //         email           : Client.get('email'),
-    //         leverage        : 100,
-    //         name            : 'test real labuan advanced',
-    //         mainPassword    : 'Test1234',
-    //         mt5_account_type: 'advanced',
-    //     };
-    //     BinarySocket.send(req);
-    // };
+    var setLabuanAdvancedIntention = function setLabuanAdvancedIntention() {
+        var req = {
+            account_type: 'financial',
+            dry_run: 1,
+            email: Client.get('email'),
+            leverage: 100,
+            mainPassword: 'Test1234',
+            mt5_account_type: 'advanced',
+            mt5_new_account: 1,
+            name: 'test real labuan advanced'
+        };
+        BinarySocket.send(req).then(function (response) {
+            if (response.error) {
+                // update account status authentication info
+                BinarySocket.send({ get_account_status: 1 }, { forced: true });
+            }
+        });
+    };
 
     var actions_info = {
         new_account: {
