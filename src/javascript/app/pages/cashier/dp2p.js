@@ -7,10 +7,14 @@ const ServerTime          = require('../../../_common/base/server_time');
 const getLanguage         = require('../../../_common/language').get;
 const urlFor              = require('../../../_common/url').urlFor;
 const urlForStatic        = require('../../../_common/url').urlForStatic;
+const getPropertyValue    = require('../../../_common/utility').getPropertyValue;
 const SubscriptionManager = require('../../../_common/base/subscription_manager').default;
 
 const DP2P = (() => {
     let shadowed_el_dp2p;
+    let p2p_notification_count = 0;
+    let is_p2p_agent = false;
+    let p2p_order_list = [];
 
     const onLoad = () => {
         const is_svg = Client.get('landing_company_shortcode') === 'svg';
@@ -24,6 +28,80 @@ const DP2P = (() => {
             }
         } else {
             BinaryPjax.load(urlFor('cashier'));
+        }
+    };
+
+    const p2pSubscribe = (request, cb) => {
+        // Request object first key will be the msg_type
+        const msg_type = Object.keys(request)[0];
+
+        SubscriptionManager.subscribe(msg_type, request, cb);
+        return {
+            unsubscribe: () => SubscriptionManager.forget(msg_type),
+        };
+    };
+
+    const handleNotifications = (orders) => {
+        let notification_count = 0;
+
+        orders.forEach(order => {
+            const is_buyer = order.type === 'buy';
+            const is_buyer_confirmed = order.status === 'buyer-confirmed';
+            const is_pending = order.status === 'pending';
+            const is_agent_buyer = is_p2p_agent && is_buyer;
+            const is_agent_seller = is_p2p_agent && !is_buyer;
+            const is_client_buyer = !is_p2p_agent && is_buyer;
+            const is_client_seller = !is_p2p_agent && !is_buyer;
+
+            if (
+                (is_buyer_confirmed && (is_agent_buyer || is_client_seller)) ||
+                (is_pending && (is_agent_seller || is_client_buyer))
+            ) {
+                notification_count++;
+            }
+        });
+
+        p2p_notification_count = notification_count;
+    };
+
+    const setP2pOrderList = (order_response) => {
+        // check if there is any error
+        if (!order_response.error) {
+            if (order_response.p2p_order_list) {
+                // it's an array of orders from p2p_order_list
+                p2p_order_list = order_response.p2p_order_list.list;
+                handleNotifications(p2p_order_list);
+            } else {
+                // it's a single order from p2p_order_info
+                const idx_order_to_update = p2p_order_list.findIndex(
+                    order => order.order_id === order_response.p2p_order_info.order_id
+                );
+                const updated_orders = [...p2p_order_list];
+                // if it's a new order, add it to the top of the list
+                if (idx_order_to_update < 0) {
+                    updated_orders.unshift(order_response.p2p_order_info);
+                } else {
+                    // otherwise, update the correct order
+                    updated_orders[idx_order_to_update] = order_response.p2p_order_info;
+                }
+
+                // trigger re-rendering by setting orders again
+                p2p_order_list = updated_orders;
+                handleNotifications(updated_orders);
+            }
+        }
+    };
+
+    const init = async () => {
+        await BinarySocket.wait('authorize');
+
+        if (!Client.get('is_virtual')) {
+            const agent_error = getPropertyValue(await BinarySocket.send({ p2p_agent_info: 1 }), ['error', 'code']);
+            if (agent_error === 'PermissionDenied') return;
+
+            is_p2p_agent = !agent_error;
+            localStorage.setItem('is_p2p_visible', 1);
+            p2pSubscribe({ p2p_order_list: 1, subscribe: 1 }, setP2pOrderList);
         }
 
     };
@@ -147,16 +225,6 @@ const DP2P = (() => {
                 `;
         el_main_css.rel = 'stylesheet';
 
-        const p2pSubscribe = (request, cb) => {
-            // Request object first key will be the msg_type
-            const msg_type = Object.keys(request)[0];
-
-            SubscriptionManager.subscribe(msg_type, request, cb);
-            return {
-                unsubscribe: () => SubscriptionManager.forget(msg_type),
-            };
-        };
-
         const websocket_api = {
             send: BinarySocket.send,
             wait: BinarySocket.wait,
@@ -171,9 +239,11 @@ const DP2P = (() => {
                 local_currency_config: Client.get('local_currency_config'),
                 residence            : Client.get('residence'),
             },
-            custom_strings: { email_domain: 'binary.com' },
-            lang          : getLanguage(),
-            server_time   : ServerTime,
+            custom_strings    : { email_domain: 'binary.com' },
+            lang              : getLanguage(),
+            notification_count: p2p_notification_count,
+            p2p_order_list,
+            server_time       : ServerTime,
             websocket_api,
         };
 
@@ -189,9 +259,11 @@ const DP2P = (() => {
 
     const onUnload = () => {
         ReactDOM.unmountComponentAtNode(shadowed_el_dp2p);
+        localStorage.removeItem('is_p2p_visible');
     };
 
     return {
+        init,
         onLoad,
         onUnload,
     };

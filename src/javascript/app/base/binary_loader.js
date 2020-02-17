@@ -6,6 +6,7 @@ const NetworkMonitor      = require('./network_monitor');
 const Page                = require('./page');
 const BinarySocket        = require('./socket');
 const ContentVisibility   = require('../common/content_visibility');
+const P2P                 = require('../pages/cashier/dp2p');
 const GTM                 = require('../../_common/base/gtm');
 const Login               = require('../../_common/base/login');
 const getElementById      = require('../../_common/common_functions').getElementById;
@@ -40,6 +41,7 @@ const BinaryLoader = (() => {
 
         Client.init();
         NetworkMonitor.init();
+        P2P.init();
 
         container = getElementById('content-holder');
         container.addEventListener('binarypjax:before', beforeContentChange);
