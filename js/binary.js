@@ -8056,7 +8056,7 @@ var Pushwoosh = __webpack_require__(/*! web-push-notifications */ "./node_module
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var urlForCurrentDomain = __webpack_require__(/*! ../url */ "./src/javascript/_common/url.js").urlForCurrentDomain;
 var Client = __webpack_require__(/*! ../../app/base/client */ "./src/javascript/app/base/client.js");
-// const getCurrentBinaryDomain = require('../../config').getCurrentBinaryDomain;
+var getCurrentBinaryDomain = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").getCurrentBinaryDomain;
 
 var BinaryPushwoosh = function () {
     var pw = new Pushwoosh();
@@ -8064,10 +8064,9 @@ var BinaryPushwoosh = function () {
     var initialised = false;
 
     var init = function init() {
-        // if (!getCurrentBinaryDomain()) return;
+        if (!getCurrentBinaryDomain()) return;
 
         if (!initialised) {
-            console.log('initi');
             pw.push(['init', {
                 logLevel: 'error', // or info or debug
                 applicationCode: 'D04E6-FA474',
@@ -8075,18 +8074,13 @@ var BinaryPushwoosh = function () {
                 defaultNotificationTitle: 'Binary.com',
                 defaultNotificationImage: urlForCurrentDomain('https://style.binary.com/images/logo/logomark.png')
             }]);
-            console.log('come here');
             initialised = true;
             sendTags();
         }
     };
 
     var sendTags = function sendTags() {
-        console.log('hii');
-        console.log(pw);
         pw.push(function (api) {
-            console.log('dkfjsfd');
-            console.log(api);
             api.getTags().then(function (result) {
                 if (!result.result['Login ID'] || !result.result['Site Language'] || !result.result['Residence']) {
                     // send login id and site language
@@ -8104,8 +8098,7 @@ var BinaryPushwoosh = function () {
     };
 
     return {
-        init: init,
-        sendTags: sendTags
+        init: init
     };
 }();
 
@@ -15560,13 +15553,45 @@ var Cashier = function () {
         });
     };
 
+    var setBtnDisable = function setBtnDisable(selector) {
+        return $(selector).addClass('button-disabled').click(false);
+    };
+
+    var applyStateLockLogic = function applyStateLockLogic(status, deposit, withdraw) {
+        // statuses to check with their corresponding selectors
+        var statuses_to_check = [{ lock: 'cashier_locked', selectors: [deposit, withdraw] }, { lock: 'withdrawal_locked', selectors: [withdraw] }, { lock: 'no_withdrawal_or_trading', selectors: [withdraw] }, { lock: 'unwelcome', selectors: [deposit] }];
+
+        statuses_to_check.forEach(function (item) {
+            if (status.includes(item.lock)) {
+                item.selectors.forEach(function (selector) {
+                    return setBtnDisable(selector);
+                });
+            }
+        });
+    };
+
+    var checkStatusIsLocked = function checkStatusIsLocked(_ref) {
+        var status = _ref.status;
+
+        applyStateLockLogic(status, '.deposit_btn_cashier', '.withdraw_btn_cashier');
+    };
+
+    var checkLockStatusPA = function checkLockStatusPA() {
+        BinarySocket.wait('get_account_status').then(function () {
+            var _State$getResponse = State.getResponse('get_account_status'),
+                status = _State$getResponse.status;
+
+            applyStateLockLogic(status, '.deposit', '.withdraw');
+        });
+    };
+
     var onLoad = function onLoad() {
         if (Client.isLoggedIn()) {
             BinarySocket.send({ statement: 1, limit: 1 });
-            BinarySocket.wait('authorize', 'mt5_login_list', 'statement').then(function () {
+            BinarySocket.wait('authorize', 'mt5_login_list', 'statement', 'get_account_status').then(function () {
+                checkStatusIsLocked(State.getResponse('get_account_status'));
                 var residence = Client.get('residence');
                 var currency = Client.get('currency');
-
                 if (Client.get('is_virtual')) {
                     displayTopUpButton();
                 } else if (currency) {
@@ -15612,6 +15637,7 @@ var Cashier = function () {
         PaymentMethods: {
             onLoad: function onLoad() {
                 showContent();
+                checkLockStatusPA();
                 setCryptoMinimumWithdrawal();
             }
         }
@@ -15932,9 +15958,9 @@ module.exports = DepositWithdraw;
 "use strict";
 
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -15943,7 +15969,6 @@ var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var ServerTime = __webpack_require__(/*! ../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
 var getLanguage = __webpack_require__(/*! ../../../_common/language */ "./src/javascript/_common/language.js").get;
-var PushNotification = __webpack_require__(/*! ../../../_common/lib/push_notification */ "./src/javascript/_common/lib/push_notification.js");
 var urlFor = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 var urlForStatic = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlForStatic;
 var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
@@ -15984,6 +16009,54 @@ var DP2P = function () {
         };
     };
 
+    var handleNotifications = function handleNotifications(orders) {
+        var notification_count = 0;
+
+        orders.forEach(function (order) {
+            var is_buyer = order.type === 'buy';
+            var is_buyer_confirmed = order.status === 'buyer-confirmed';
+            var is_pending = order.status === 'pending';
+            var is_agent_buyer = is_p2p_agent && is_buyer;
+            var is_agent_seller = is_p2p_agent && !is_buyer;
+            var is_client_buyer = !is_p2p_agent && is_buyer;
+            var is_client_seller = !is_p2p_agent && !is_buyer;
+
+            if (is_buyer_confirmed && (is_agent_buyer || is_client_seller) || is_pending && (is_agent_seller || is_client_buyer)) {
+                notification_count++;
+            }
+        });
+
+        p2p_notification_count = notification_count;
+    };
+
+    var setP2pOrderList = function setP2pOrderList(order_response) {
+        // check if there is any error
+        if (!order_response.error) {
+            if (order_response.p2p_order_list) {
+                // it's an array of orders from p2p_order_list
+                p2p_order_list = order_response.p2p_order_list.list;
+                handleNotifications(p2p_order_list);
+            } else {
+                // it's a single order from p2p_order_info
+                var idx_order_to_update = p2p_order_list.findIndex(function (order) {
+                    return order.order_id === order_response.p2p_order_info.order_id;
+                });
+                var updated_orders = [].concat(_toConsumableArray(p2p_order_list));
+                // if it's a new order, add it to the top of the list
+                if (idx_order_to_update < 0) {
+                    updated_orders.unshift(order_response.p2p_order_info);
+                } else {
+                    // otherwise, update the correct order
+                    updated_orders[idx_order_to_update] = order_response.p2p_order_info;
+                }
+
+                // trigger re-rendering by setting orders again
+                p2p_order_list = updated_orders;
+                handleNotifications(updated_orders);
+            }
+        }
+    };
+
     var init = function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
             var agent_error;
@@ -15996,7 +16069,7 @@ var DP2P = function () {
 
                         case 2:
                             if (Client.get('is_virtual')) {
-                                _context.next = 15;
+                                _context.next = 14;
                                 break;
                             }
 
@@ -16020,10 +16093,9 @@ var DP2P = function () {
 
                             is_p2p_agent = !agent_error;
                             localStorage.setItem('is_p2p_visible', 1);
-                            PushNotification.init();
                             p2pSubscribe({ p2p_order_list: 1, subscribe: 1 }, setP2pOrderList);
 
-                        case 15:
+                        case 14:
                         case 'end':
                             return _context.stop();
                     }
@@ -16035,77 +16107,6 @@ var DP2P = function () {
             return _ref.apply(this, arguments);
         };
     }();
-
-    var setP2pOrderList = function setP2pOrderList(order_response) {
-        // check if there is any error
-        if (!order_response.error) {
-            if (order_response.p2p_order_list) {
-                // it's an array of orders from p2p_order_list
-                p2p_order_list = order_response.p2p_order_list.list;
-                handleNotifications(p2p_order_list);
-            } else {
-                // it's a single order from p2p_order_info
-                var idx_order_to_update = p2p_order_list.findIndex(function (order) {
-                    return order.order_id === order_response.p2p_order_info.order_id;
-                });
-                var updated_orders = [].concat(_toConsumableArray(p2p_order_list));
-                // if it's a new order, add it to the top of the list
-                if (idx_order_to_update < 0) {
-                    updated_orders.unshift(order_response.p2p_order_info);
-                } else {
-                    // otherwise, update the correct order
-                    updated_orders[idx_order_to_update] = order_response.p2p_order_info;
-                }
-
-                handleUpdatedOrder(order_response.p2p_order_info);
-
-                // trigger re-rendering by setting orders again
-                p2p_order_list = updated_orders;
-                handleNotifications(updated_orders);
-            }
-        }
-    };
-
-    var handleUpdatedOrder = function handleUpdatedOrder(updated_order) {
-        var is_buyer = updated_order.type === 'buy';
-        var is_buyer_confirmed = updated_order.status === 'buyer-confirmed';
-        var is_pending = updated_order.status === 'pending';
-        var is_agent_buyer = is_p2p_agent && is_buyer;
-        var is_agent_seller = is_p2p_agent && !is_buyer;
-        var is_client_buyer = !is_p2p_agent && is_buyer;
-        var is_client_seller = !is_p2p_agent && !is_buyer;
-
-        if (is_buyer_confirmed && (is_agent_buyer || is_client_seller)) {
-            pushNotification('someone has paid your ad, please help to release your money');
-        } else if (is_pending && (is_agent_seller || is_client_buyer)) {
-            pushNotification('You need to pay the order that you just made');
-        }
-    };
-
-    var pushNotification = function pushNotification(message) {
-        // eslint-disable-next-line no-console
-        console.log(message);
-    };
-
-    var handleNotifications = function handleNotifications(orders) {
-        var notification_count = 0;
-
-        orders.forEach(function (order) {
-            var is_buyer = order.type === 'buy';
-            var is_buyer_confirmed = order.status === 'buyer-confirmed';
-            var is_pending = order.status === 'pending';
-            var is_agent_buyer = is_p2p_agent && is_buyer;
-            var is_agent_seller = is_p2p_agent && !is_buyer;
-            var is_client_buyer = !is_p2p_agent && is_buyer;
-            var is_client_seller = !is_p2p_agent && !is_buyer;
-
-            if (is_buyer_confirmed && (is_agent_buyer || is_client_seller) || is_pending && (is_agent_seller || is_client_buyer)) {
-                notification_count++;
-            }
-        });
-
-        p2p_notification_count = notification_count;
-    };
 
     var renderP2P = function renderP2P(module) {
         var el_loading = document.getElementById('loading_p2p');
@@ -27307,7 +27308,7 @@ var Authenticate = function () {
                                 is_not_fully_authenticated = identity.status !== 'verified' && document.status !== 'verified';
                                 is_not_high_risk = !/high/.test(State.getResponse('get_account_status.risk_classification'));
 
-                                if (is_not_fully_authenticated && has_svg_account && is_not_high_risk) {
+                                if (is_not_fully_authenticated && has_svg_account && is_not_high_risk && !isAuthenticationAllowed()) {
                                     $('#authenticate_only_real_mt5_advanced').setVisibility(1);
                                 }
                             } else {
@@ -32692,12 +32693,12 @@ var MetaTrader = function () {
                     switch (_context2.prev = _context2.next) {
                         case 0:
                             if (!isEligible()) {
-                                _context2.next = 17;
+                                _context2.next = 16;
                                 break;
                             }
 
                             if (!Client.get('is_virtual')) {
-                                _context2.next = 13;
+                                _context2.next = 12;
                                 break;
                             }
 
@@ -32716,11 +32717,10 @@ var MetaTrader = function () {
                             MetaTraderUI.displayPageError(_context2.t0.message);
 
                         case 10:
-                            getAllAccountsInfo();
-                            _context2.next = 15;
+                            _context2.next = 14;
                             break;
 
-                        case 13:
+                        case 12:
                             BinarySocket.send({ get_limits: 1 }).then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                                 return regeneratorRuntime.wrap(function _callee$(_context) {
                                     while (1) {
@@ -32741,9 +32741,6 @@ var MetaTrader = function () {
                                                 MetaTraderUI.displayPageError(_context.t0.message);
 
                                             case 8:
-                                                getAllAccountsInfo();
-
-                                            case 9:
                                             case 'end':
                                                 return _context.stop();
                                         }
@@ -32752,14 +32749,14 @@ var MetaTrader = function () {
                             })));
                             getExchangeRates();
 
-                        case 15:
-                            _context2.next = 18;
+                        case 14:
+                            _context2.next = 17;
                             break;
 
-                        case 17:
+                        case 16:
                             MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
 
-                        case 18:
+                        case 17:
                         case 'end':
                             return _context2.stop();
                     }
@@ -32808,6 +32805,7 @@ var MetaTrader = function () {
                     reject(response.error);
                     return;
                 }
+
                 var vanuatu_standard_demo_account = response.mt5_login_list.find(function (account) {
                     return Client.getMT5AccountType(account.group) === 'demo_vanuatu_standard';
                 });
@@ -32841,6 +32839,7 @@ var MetaTrader = function () {
                     });
                 });
                 resolve();
+                getAllAccountsInfo(response);
             });
         });
     };
@@ -32861,12 +32860,10 @@ var MetaTrader = function () {
         };
     };
 
-    var getAllAccountsInfo = function getAllAccountsInfo() {
+    var getAllAccountsInfo = function getAllAccountsInfo(response) {
         MetaTraderUI.init(submit, sendTopupDemo);
-        BinarySocket.send({ mt5_login_list: 1 }).then(function (response) {
-            show_new_account_popup = Client.canChangeCurrency(State.getResponse('statement'), response.mt5_login_list || [], false);
-            allAccountsResponseHandler(response);
-        });
+        show_new_account_popup = Client.canChangeCurrency(State.getResponse('statement'), response.mt5_login_list || [], false);
+        allAccountsResponseHandler(response);
     };
 
     var getDefaultAccount = function getDefaultAccount() {
