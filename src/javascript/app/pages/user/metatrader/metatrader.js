@@ -280,12 +280,14 @@ const MetaTrader = (() => {
 
         // Update account info
         mt5_login_list.forEach((obj) => {
-            const acc_type = Client.getMT5AccountType(obj.group);
-            accounts_info[acc_type].info = {
-                display_login: MetaTraderConfig.getDisplayLogin(obj.login),
-                login        : obj.login,
-            };
-            setAccountDetails(obj.login, acc_type, response);
+            if (/^(MTR|MTD)\d+/g.test(obj.login)) {
+                const acc_type = Client.getMT5AccountType(obj.group);
+                accounts_info[acc_type].info = {
+                    display_login: MetaTraderConfig.getDisplayLogin(obj.login),
+                    login        : obj.login,
+                };
+                setAccountDetails(obj.login, acc_type, response);
+            }
         });
 
         const current_acc_type = getDefaultAccount();
