@@ -18,14 +18,31 @@ const DP2P = (() => {
 
         if (is_show_dp2p) {
             if (is_svg) {
-                require.ensure([], (require) => renderP2P(require('@deriv/p2p')), 'dp2p');
+                init();
             } else {
                 document.getElementById('message_cashier_unavailable').setVisibility(1);
             }
         } else {
             BinaryPjax.load(urlFor('cashier'));
         }
+    };
+    const p2pSubscribe = (request, cb) => {
+        // Request object first key will be the msg_type
+        const msg_type = Object.keys(request)[0];
 
+        SubscriptionManager.subscribe(msg_type, request, cb);
+        return {
+            unsubscribe: () => SubscriptionManager.forget(msg_type),
+        };
+    };
+
+    const initRender = () => {
+
+        require.ensure([], (require) => renderP2P(require('@deriv/p2p')), 'dp2p');
+    };
+
+    const init = async () => {
+        p2pSubscribe({ p2p_order_list: 1, subscribe: 1 }, initRender);
     };
 
     const renderP2P = (module) => {
@@ -146,16 +163,6 @@ const DP2P = (() => {
                 }
                 `;
         el_main_css.rel = 'stylesheet';
-
-        const p2pSubscribe = (request, cb) => {
-            // Request object first key will be the msg_type
-            const msg_type = Object.keys(request)[0];
-
-            SubscriptionManager.subscribe(msg_type, request, cb);
-            return {
-                unsubscribe: () => SubscriptionManager.forget(msg_type),
-            };
-        };
 
         const websocket_api = {
             send: BinarySocket.send,
