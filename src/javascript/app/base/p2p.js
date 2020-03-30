@@ -31,7 +31,7 @@ const P2p = (() => {
         if (!order_response.error) {
             if (order_response.p2p_order_list) {
                 // it's an array of orders from p2p_order_list
-                p2p_order_list.push(...getPropertyValue(order_response, ['p2p_order_list', 'list']))
+                p2p_order_list.push(...getPropertyValue(order_response, ['p2p_order_list', 'list']));
                 handleNotifications(p2p_order_list);
             } else {
                 // it's a single order from p2p_order_info
