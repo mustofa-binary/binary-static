@@ -1,5 +1,6 @@
 const getCurrencies    = require('../user/get_currency').getCurrencies;
 const Client           = require('../../base/client');
+const P2p           = require('../../base/p2p');
 const BinarySocket     = require('../../base/socket');
 const isCryptocurrency = require('../../common/currency').isCryptocurrency;
 const elementInnerHtml = require('../../../_common/common_functions').elementInnerHtml;
@@ -218,15 +219,12 @@ const Cashier = (() => {
                 if (Client.get('is_virtual')) {
                     displayTopUpButton();
                 } else if (currency) {
-                    const is_p2p_allowed_currency = currency === 'USD';
-                    const is_show_dp2p = /show_dp2p/.test(window.location.hash);
-
                     showCurrentCurrency(
                         currency,
                         State.getResponse('statement'),
                         State.getResponse('mt5_login_list')
                     );
-                    if (is_p2p_allowed_currency && is_show_dp2p) {
+                    if (P2p.clientAllowedP2p()) {
                         setP2PVisibility();
                     }
                 }

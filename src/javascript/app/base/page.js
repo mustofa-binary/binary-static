@@ -5,6 +5,7 @@ const Contents         = require('./contents');
 const Header           = require('./header');
 const Footer           = require('./footer');
 const Menu             = require('./menu');
+const P2p              = require('./p2p');
 const BinarySocket     = require('./socket');
 const TrafficSource    = require('../common/traffic_source');
 const RealityCheck     = require('../pages/user/reality_check/reality_check');
@@ -37,6 +38,7 @@ const Page = (() => {
         PushNotification.init();
         onDocumentReady();
         Crowdin.init();
+        P2p.init();
     };
 
     const onDocumentReady = () => {

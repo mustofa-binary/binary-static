@@ -1,11 +1,10 @@
 const React               = require('react');
 const ReactDOM            = require('react-dom');
-const BinaryPjax          = require('../../base/binary_pjax');
 const Client              = require('../../base/client');
+const P2p                 = require('../../base/p2p');
 const BinarySocket        = require('../../base/socket');
 const ServerTime          = require('../../../_common/base/server_time');
 const getLanguage         = require('../../../_common/language').get;
-const urlFor              = require('../../../_common/url').urlFor;
 const urlForStatic        = require('../../../_common/url').urlForStatic;
 const SubscriptionManager = require('../../../_common/base/subscription_manager').default;
 
@@ -13,17 +12,10 @@ const DP2P = (() => {
     let shadowed_el_dp2p;
 
     const onLoad = () => {
-        const is_svg = Client.get('landing_company_shortcode') === 'svg';
-        const is_show_dp2p = /show_dp2p/.test(window.location.hash);
-
-        if (is_show_dp2p) {
-            if (is_svg) {
-                init();
-            } else {
-                document.getElementById('message_cashier_unavailable').setVisibility(1);
-            }
+        if (P2p.clientAllowedP2p()) {
+            require.ensure([], (require) => renderP2P(require('@deriv/p2p')), 'dp2p');
         } else {
-            BinaryPjax.load(urlFor('cashier'));
+            document.getElementById('message_cashier_unavailable').setVisibility(1);
         }
     };
     const p2pSubscribe = (request, cb) => {
@@ -34,15 +26,6 @@ const DP2P = (() => {
         return {
             unsubscribe: () => SubscriptionManager.forget(msg_type),
         };
-    };
-
-    const initRender = () => {
-
-        require.ensure([], (require) => renderP2P(require('@deriv/p2p')), 'dp2p');
-    };
-
-    const init = async () => {
-        p2pSubscribe({ p2p_order_list: 1, subscribe: 1 }, initRender);
     };
 
     const renderP2P = (module) => {
@@ -178,9 +161,11 @@ const DP2P = (() => {
                 local_currency_config: Client.get('local_currency_config'),
                 residence            : Client.get('residence'),
             },
-            custom_strings: { email_domain: 'binary.com' },
-            lang          : getLanguage(),
-            server_time   : ServerTime,
+            custom_strings    : { email_domain: 'binary.com' },
+            lang              : getLanguage(),
+            notification_count: P2p.p2p_notification_count,
+            p2p_order_list    : P2p.p2p_order_list,
+            server_time       : ServerTime,
             websocket_api,
         };
 
