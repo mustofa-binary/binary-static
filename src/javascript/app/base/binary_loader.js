@@ -41,7 +41,6 @@ const BinaryLoader = (() => {
 
         Client.init();
         P2p.init();
-        console.log("hiii")
         NetworkMonitor.init();
 
         container = getElementById('content-holder');

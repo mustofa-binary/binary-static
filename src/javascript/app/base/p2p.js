@@ -22,7 +22,7 @@ const P2p = (() => {
                 notification_count++;
             }
         });
-        // console.log(notification_count)
+
         p2p_notification_count.push(notification_count);
     };
 
@@ -66,7 +66,6 @@ const P2p = (() => {
         if (clientAllowedP2p()) {
             await BinarySocket.wait('authorize');
             SubscriptionManager.subscribe('p2p_order_list', { p2p_order_list: 1, subscribe: 1 }, handleP2pOrderList);
-            console.log(p2p_notification_count[0])
         }
         
     };

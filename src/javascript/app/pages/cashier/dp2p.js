@@ -153,7 +153,6 @@ const DP2P = (() => {
             wait: BinarySocket.wait,
             p2pSubscribe,
         };
-        console.log(P2p.p2p_order_list)
 
         const dp2p_props = {
             className: 'theme--light',
