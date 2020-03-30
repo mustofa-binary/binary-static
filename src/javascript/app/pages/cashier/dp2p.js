@@ -11,8 +11,9 @@ const SubscriptionManager = require('../../../_common/base/subscription_manager'
 const DP2P = (() => {
     let shadowed_el_dp2p;
 
-    const onLoad = () => {
+    const onLoad = async () => {
         if (P2p.clientAllowedP2p()) {
+            await BinarySocket.wait('p2p_order_list');
             require.ensure([], (require) => renderP2P(require('@deriv/p2p')), 'dp2p');
         } else {
             document.getElementById('message_cashier_unavailable').setVisibility(1);
@@ -152,6 +153,7 @@ const DP2P = (() => {
             wait: BinarySocket.wait,
             p2pSubscribe,
         };
+        console.log(P2p.p2p_order_list)
 
         const dp2p_props = {
             className: 'theme--light',
@@ -163,7 +165,7 @@ const DP2P = (() => {
             },
             custom_strings    : { email_domain: 'binary.com' },
             lang              : getLanguage(),
-            notification_count: P2p.p2p_notification_count,
+            notification_count: P2p.p2p_notification_count[0],
             p2p_order_list    : P2p.p2p_order_list,
             server_time       : ServerTime,
             websocket_api,

@@ -4,6 +4,7 @@ const Client              = require('./client');
 const Header              = require('./header');
 const NetworkMonitor      = require('./network_monitor');
 const Page                = require('./page');
+const P2p                 = require('./p2p');
 const BinarySocket        = require('./socket');
 const ContentVisibility   = require('../common/content_visibility');
 const GTM                 = require('../../_common/base/gtm');
@@ -39,6 +40,8 @@ const BinaryLoader = (() => {
         Page.showNotificationOutdatedBrowser();
 
         Client.init();
+        P2p.init();
+        console.log("hiii")
         NetworkMonitor.init();
 
         container = getElementById('content-holder');

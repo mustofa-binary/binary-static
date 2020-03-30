@@ -43,7 +43,7 @@ const SubscriptionManager = (() => {
         }
 
         let sub_id = Object.keys(subscriptions).find(id => isDeepEqual(request_obj, subscriptions[id].request));
-
+        console.log('test1')
         if (!sub_id) {
             sub_id = ++subscription_id;
 
@@ -53,10 +53,12 @@ const SubscriptionManager = (() => {
                 stream_id  : '',             // stream_id will be updated after receiving the response
                 subscribers: [fncCallback],
             };
-
+            console.log('test2')
+            console.log(request_obj)
             BinarySocket.send(request_obj, {
                 callback: (response) => dispatch(response, sub_id),
             });
+            console.log('test3')
         } else if (!hasCallbackFunction(sub_id, fncCallback)) {
             // there is already an active subscription for the very same request which fncCallback is not subscribed to it yet
             subscriptions[sub_id].subscribers.push(fncCallback);
