@@ -48,7 +48,7 @@ const P2p = (() => {
                 }
                 // trigger re-rendering by setting orders again
                 p2p_order_list.push(...updated_orders);
-                this.handleNotifications(updated_orders);
+                handleNotifications(updated_orders);
             }
         }
     };
