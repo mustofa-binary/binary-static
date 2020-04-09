@@ -2147,7 +2147,7 @@ body #not_authenticated_financial ul.checked > li {
               justify-content: center;
       margin-top: auto; }
   .why-us-content .awards-section .horizontal-margin {
-    margin: 0 15px; }
+    margin: 0 15px 15px; }
     @media screen and (max-width: 931px) {
       .why-us-content .awards-section .horizontal-margin {
         margin: 15px 15px 20px; } }
