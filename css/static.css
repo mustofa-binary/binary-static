@@ -375,6 +375,12 @@
 #mt_download .alternative-download-description {
   margin: 0; }
 
+@media screen and (max-width: 480px) {
+  #mt_download #btn_trade_with_demo {
+    margin-left: 0;
+    margin-top: 10px;
+    display: block; } }
+
 /* GET-STARTED PAGES RULES */
 .get-started a:hover {
   text-decoration: none; }
@@ -1510,22 +1516,35 @@ body #not_authenticated_financial ul.checked > li {
 #set_currency #frm_set_currency .section-divider {
   max-width: 500px; }
 
-.set-currency-content .currency_list > div {
+#set_currency .currency_list > div {
   padding: 15px;
   background-image: url("../images/pages/set_currency/tick-normal.svg");
   background-repeat: no-repeat;
   background-position: center bottom;
   line-height: 30px; }
-  .set-currency-content .currency_list > div:hover {
+  #set_currency .currency_list > div:hover {
     cursor: pointer; }
-  .set-currency-content .currency_list > div.selected {
+  #set_currency .currency_list > div.selected {
     background-image: url("../images/pages/set_currency/tick-selected.svg"); }
-  .set-currency-content .currency_list > div .currency-name {
+  #set_currency .currency_list > div .currency-name {
     line-height: 22px;
     padding: 4px 0; }
 
-.set-currency-content .list-style-inside {
+#set_currency .list-style-inside {
   list-style-position: inside; }
+
+.lightbox #set_currency {
+  padding: 25px;
+  width: 40em; }
+  .lightbox #set_currency #set_currency_text {
+    margin-top: 0; }
+  .lightbox #set_currency #fiat_currencies + div, .lightbox #set_currency #crypto_currencies + div {
+    max-width: 30em; }
+  .lightbox #set_currency .section-divider {
+    margin-top: 0;
+    margin-bottom: 0; }
+  .lightbox #set_currency #submit_section {
+    margin-top: 20px; }
 
 .platforms-content h2 {
   line-height: 36px; }
@@ -1993,29 +2012,6 @@ body #not_authenticated_financial ul.checked > li {
         @media (max-width: 480px) {
           .two_factor_auth .steps.steps-vertical .step .content #qrcode {
             padding: 10px 0; } }
-
-.two_factor_auth .two-fa-status {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 50px; }
-  .two_factor_auth .two-fa-status-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    padding: 10px 30px 10px 15px;
-    background: #f2f2f2; }
-  .two_factor_auth .two-fa-status-icon {
-    max-width: 55px;
-    max-height: 55px;
-    padding-right: 15px; }
 
 #signup_form input {
   width: 100%;
