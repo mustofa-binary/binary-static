@@ -11034,7 +11034,7 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has expired.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 rejected: function rejected() {
-                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
+                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
                 },
                 rejected_identity: function rejected_identity() {
                     return buildMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_2] has not been verified.'), 'user/authenticate');
@@ -26986,43 +26986,57 @@ var Authenticate = function () {
                             initOnfido(service_token_response.token, documents_supported);
 
                         case 42:
+                            if (document.further_resubmissions_allowed) {
+                                _context2.next = 62;
+                                break;
+                            }
+
                             _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 45 : _context2.t1 === 'pending' ? 48 : _context2.t1 === 'rejected' ? 50 : _context2.t1 === 'suspected' ? 52 : _context2.t1 === 'verified' ? 54 : _context2.t1 === 'expired' ? 56 : 58;
+                            _context2.next = _context2.t1 === 'none' ? 46 : _context2.t1 === 'pending' ? 49 : _context2.t1 === 'rejected' ? 51 : _context2.t1 === 'suspected' ? 53 : _context2.t1 === 'verified' ? 55 : _context2.t1 === 'expired' ? 57 : 59;
                             break;
 
-                        case 45:
+                        case 46:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 59);
+                            return _context2.abrupt('break', 60);
 
-                        case 48:
+                        case 49:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 59);
+                            return _context2.abrupt('break', 60);
 
-                        case 50:
+                        case 51:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 59);
+                            return _context2.abrupt('break', 60);
 
-                        case 52:
+                        case 53:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 59);
+                            return _context2.abrupt('break', 60);
 
-                        case 54:
+                        case 55:
                             $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 59);
+                            return _context2.abrupt('break', 60);
 
-                        case 56:
+                        case 57:
                             $('#expired_poa').setVisibility(1);
-                            return _context2.abrupt('break', 59);
-
-                        case 58:
-                            return _context2.abrupt('break', 59);
+                            return _context2.abrupt('break', 60);
 
                         case 59:
+                            return _context2.abrupt('break', 60);
+
+                        case 60:
+                            _context2.next = 64;
+                            break;
+
+                        case 62:
+                            init();
+                            $('#not_authenticated').setVisibility(1);
+
+                        case 64:
+
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 61:
+                        case 66:
                         case 'end':
                             return _context2.stop();
                     }
