@@ -9694,9 +9694,7 @@ var BinaryLoader = function () {
         ContentVisibility.init().then(function () {
             BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
                 GTM.pushDataLayer({ event: 'page_load' }); // we need website_status.clients_country
-                setTimeout(function () {
-                    return LiveChat.init();
-                }, 1500);
+                LiveChat.init();
 
                 // first time load.
                 var last_image = $('#content img').last();
@@ -11034,13 +11032,13 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has expired.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 rejected: function rejected() {
-                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
+                    return buildSpecificMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_3] and [_2]proof of address[_3] have not been verified. Please check your email for details.'), ['<a href=\'' + Url.urlFor('user/authenticate') + '\'>', '<a href=\'' + Url.urlFor('user/authenticate') + '?authentication_tab=poa\'>', '</a>']);
                 },
                 rejected_identity: function rejected_identity() {
                     return buildMessage(localizeKeepPlaceholders('Your [_1]proof of identity[_2] has not been verified.'), 'user/authenticate');
                 },
                 rejected_document: function rejected_document() {
-                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has not been verified.'), 'user/authenticate', '?authentication_tab=poa');
+                    return buildMessage(localizeKeepPlaceholders('Your [_1]proof of address[_2] has not been verified. Please check your email for details.'), 'user/authenticate', '?authentication_tab=poa');
                 },
                 identity: function identity() {
                     return buildMessage(localizeKeepPlaceholders('Please submit your [_1]proof of identity[_2].'), 'user/authenticate');
@@ -11554,6 +11552,9 @@ var Page = function () {
                 if (!ClientBase.get('is_virtual')) {
                     // TODO: uncomment below to enable interview popup dialog
                     // InterviewPopup.onLoad();
+                }
+                if (window.location.href.indexOf('?data-elevio-article=') > 0) {
+                    Elevio.injectElevio();
                 }
             }
             Header.onLoad();
@@ -26986,57 +26987,43 @@ var Authenticate = function () {
                             initOnfido(service_token_response.token, documents_supported);
 
                         case 42:
-                            if (document.further_resubmissions_allowed) {
-                                _context2.next = 62;
-                                break;
-                            }
-
                             _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 46 : _context2.t1 === 'pending' ? 49 : _context2.t1 === 'rejected' ? 51 : _context2.t1 === 'suspected' ? 53 : _context2.t1 === 'verified' ? 55 : _context2.t1 === 'expired' ? 57 : 59;
+                            _context2.next = _context2.t1 === 'none' ? 45 : _context2.t1 === 'pending' ? 48 : _context2.t1 === 'rejected' ? 50 : _context2.t1 === 'suspected' ? 52 : _context2.t1 === 'verified' ? 54 : _context2.t1 === 'expired' ? 56 : 58;
                             break;
 
-                        case 46:
+                        case 45:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 60);
+                            return _context2.abrupt('break', 59);
 
-                        case 49:
+                        case 48:
                             $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 60);
+                            return _context2.abrupt('break', 59);
 
-                        case 51:
+                        case 50:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 60);
+                            return _context2.abrupt('break', 59);
 
-                        case 53:
+                        case 52:
                             $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 60);
+                            return _context2.abrupt('break', 59);
 
-                        case 55:
+                        case 54:
                             $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 60);
+                            return _context2.abrupt('break', 59);
 
-                        case 57:
+                        case 56:
                             $('#expired_poa').setVisibility(1);
-                            return _context2.abrupt('break', 60);
+                            return _context2.abrupt('break', 59);
+
+                        case 58:
+                            return _context2.abrupt('break', 59);
 
                         case 59:
-                            return _context2.abrupt('break', 60);
-
-                        case 60:
-                            _context2.next = 64;
-                            break;
-
-                        case 62:
-                            init();
-                            $('#not_authenticated').setVisibility(1);
-
-                        case 64:
-
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 66:
+                        case 61:
                         case 'end':
                             return _context2.stop();
                     }
