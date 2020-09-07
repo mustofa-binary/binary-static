@@ -286,7 +286,7 @@ const SelfExclusion = (() => {
                 Dialog.confirm({
                     id               : 'self_exclusion_dialog',
                     localized_title  : localize('Confirm changes'),
-                    localized_message: localize('We’ll update your limits. Click <strong>Agree and accept</strong> to acknowledge that you are fully responsible for your actions, and we are not liable for any addiction or loss.'),
+                    localized_message: localize('We’ll update your limits. Click [_1]Agree and accept[_2] to acknowledge that you are fully responsible for your actions, and we are not liable for any addiction or loss.', '<strong>', '</strong>'),
                     ok_text          : localize('Agree and accept'),
                     cancel_text      : localize('Go back'),
                 }).then((response) => resolve(response));
