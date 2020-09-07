@@ -19,12 +19,12 @@ const ResponsibleTrading = () => (
             <h2>{it.L('Written limits and self-exclusion')}</h2>
             <p data-show='eucountry'>{it.L('[_1] provides you with the opportunity to either self-exclude or [_2]set limits on your trading activities[_3] on this website. You may also [_4]contact us[_3] to state the limits you wish to set via email or phone. Available limits are:', it.website_name, `<a href="${it.url_for('user/security/self_exclusionws')}">`, '</a>', `<a href="${it.url_for('contact')}">`)}</p>
             <p data-show='-eucountry'>{it.L('You have the opportunity to [_1]set and amend limits[_2] on your trading activities on this website. Available limits are:', `<a href="${it.url_for('user/security/self_exclusionws')}">`, '</a>')}</p>
-            <ol>
+            <ul className='bullet'>
                 <li>{it.L('a limit on the amount you may trade within a specified period of time;')}</li>
                 <li>{it.L('a limit on the losses you may incur within a specified period of time;')}</li>
                 <li>{it.L('a limit on the amount of time you may trade in any given online session;')}</li>
                 <li data-show='eucountry'>{it.L('a definite or indefinite period during which you wish to exclude yourself from the website.')}</li>
-            </ol>
+            </ul>
 
             <div data-show='iom'>
                 <p>{it.L('Limits 1 to 3 may only be removed or increased once the limit date setting has expired.')}</p>
