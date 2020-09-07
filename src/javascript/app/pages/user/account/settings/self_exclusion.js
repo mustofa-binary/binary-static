@@ -277,19 +277,29 @@ const SelfExclusion = (() => {
             const is_changed = Object.keys(data).some(key => ( // using != in next line since response types is inconsistent
                 key !== 'set_self_exclusion' && (!(key in self_exclusion_data) || self_exclusion_data[key] != data[key]) // eslint-disable-line eqeqeq
             ));
+            const is_svg = Client.get('landing_company_shortcode') === 'svg';
             if (!is_changed) {
                 showFormMessage(localize('You did not change anything.'), false);
                 resolve(false);
             }
-
-            if ('timeout_until' in data || 'exclude_until' in data) {
+            if (is_svg) {
                 Dialog.confirm({
-                    id               : 'timeout_until_dialog',
-                    localized_message: localize('When you click "OK" you will be excluded from trading on the site until the selected date.'),
+                    id               : 'self_exclusion_dialog',
+                    localized_title  : localize('Confirm changes'),
+                    localized_message: localize('We’ll update your limits. Click [_1]Agree and accept[_2] to acknowledge that you are fully responsible for your actions, and we are not liable for any addiction or loss.', '<strong>', '</strong>'),
                 }).then((response) => resolve(response));
             } else {
-                resolve(true);
+                const has_timeout = 'timeout_until' in data || 'exclude_until' in data;
+                if (has_timeout) {
+                    Dialog.confirm({
+                        id               : 'timeout_until_dialog',
+                        localized_message: localize('When you click "OK" you will be excluded from trading on the site until the selected date.'),
+                    }).then((response) => resolve(response));
+                } else {
+                    resolve(true);
+                }
             }
+
         })
     );
 
