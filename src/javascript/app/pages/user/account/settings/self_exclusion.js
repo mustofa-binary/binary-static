@@ -19,6 +19,7 @@ const SelfExclusion = (() => {
         set_30day_turnover,
         currency,
         is_gamstop_client,
+        is_svg_client,
         has_exclude_until;
 
     const form_id                 = '#frm_self_exclusion';
@@ -44,6 +45,9 @@ const SelfExclusion = (() => {
 
         // gamstop is only applicable for UK residence & for MX, MLT clients
         is_gamstop_client = /gb/.test(Client.get('residence')) && /iom|malta/.test(Client.get('landing_company_shortcode'));
+
+        // svg is only applicable for CR clients
+        is_svg_client = Client.get('landing_company_shortcode') === 'svg';
 
         initDatePicker();
         getData(true);
@@ -144,7 +148,10 @@ const SelfExclusion = (() => {
             const options = { min: 0 };
             if (id in self_exclusion_data) {
                 checks.push('req');
-                options.max = self_exclusion_data[id];
+                if (!is_svg_client) {
+                    options.max = self_exclusion_data[id];
+                }
+                
             } else {
                 options.allow_empty = true;
             }
@@ -277,16 +284,17 @@ const SelfExclusion = (() => {
             const is_changed = Object.keys(data).some(key => ( // using != in next line since response types is inconsistent
                 key !== 'set_self_exclusion' && (!(key in self_exclusion_data) || self_exclusion_data[key] != data[key]) // eslint-disable-line eqeqeq
             ));
-            const is_svg = Client.get('landing_company_shortcode') === 'svg';
+            
             if (!is_changed) {
                 showFormMessage(localize('You did not change anything.'), false);
                 resolve(false);
             }
-            if (is_svg) {
+
+            if (is_svg_client && is_changed) {
                 Dialog.confirm({
                     id               : 'self_exclusion_dialog',
                     localized_title  : localize('Confirm changes'),
-                    localized_message: localize('We’ll update your limits. Click [_1]Agree and accept[_2] to acknowledge that you are fully responsible for your actions, and we are not liable for any addiction or loss.', '<strong>', '</strong>'),
+                    localized_message: localize('We’ll update your limits. Click [_1]Agree and accept[_2] to acknowledge that you are fully responsible for your actions, and we are not liable for any addiction or loss.', ['<strong>', '</strong>']),
                     ok_text          : localize('Agree and accept'),
                     cancel_text      : localize('Go back'),
                 }).then((response) => resolve(response));
