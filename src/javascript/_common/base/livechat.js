@@ -4,6 +4,8 @@ const ClientBase = require('./client_base');
 const LiveChat = (() => {
     const init = () => {
         if (window.LiveChatWidget) {
+            // We have to clear the session first on livechat init to prevent
+            // getting data from previous session.
             let session_variables = { loginid: '', landing_company_shortcode: '', currency: '', residence: '' };
             window.LiveChatWidget.call('set_customer_email', ' ');
             window.LiveChatWidget.call('set_customer_name', ' ');
