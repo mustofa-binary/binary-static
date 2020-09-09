@@ -22,7 +22,8 @@ const ResponsibleTrading = () => (
             <ul className='bullet'>
                 <li>{it.L('a limit on the amount you may trade within a specified period of time;')}</li>
                 <li>{it.L('a limit on the losses you may incur within a specified period of time;')}</li>
-                <li>{it.L('a limit on the amount of time you may trade in any given online session;')}</li>
+                <li data-show='-eucountry'>{it.L('a limit on the amount of time you may trade in any given online session.')}</li>
+                <li data-show='eucountry'>{it.L('a limit on the amount of time you may trade in any given online session;')}</li>
                 <li data-show='eucountry'>{it.L('a definite or indefinite period during which you wish to exclude yourself from the website.')}</li>
             </ul>
 

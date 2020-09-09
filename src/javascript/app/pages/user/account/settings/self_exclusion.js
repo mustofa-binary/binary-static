@@ -151,7 +151,6 @@ const SelfExclusion = (() => {
                 if (!is_svg_client) {
                     options.max = self_exclusion_data[id];
                 }
-                
             } else {
                 options.allow_empty = true;
             }
