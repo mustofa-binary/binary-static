@@ -9,8 +9,9 @@ const SelfExclusion = () => (
             <div data-show='iom'>
                 <p>{it.L('Online trading can be addictive. Self-exclusion is a facility to limit your online trading activity, should you need it. You can set limits in your account to help prevent unwanted losses. Limits may only be removed or increased, once the limit date setting has expired. [_1]Contact us[_2] to remove or adjust your limits.', `<a href="${it.url_for('contact')}">`, '</a>')}</p>
             </div>
-            <div data-show='-iom'>
-                <p>{it.L('Online trading can be addictive. This self-exclusion page is where you manage your online trading activity and exercise [_1]responsible trading[_2].', `<a href="${it.url_for('responsible-trading')}">`, '</a>')}</p>
+            <div>
+                <p data-show='svg'>{it.L('Online trading can be addictive. This self-exclusion page is where you manage your online trading activity and exercise [_1]responsible trading[_2].', `<a href="${it.url_for('responsible-trading')}">`, '</a>')}</p>
+                <p data-show='maltainvest'>{it.L('Online trading can be addictive. Self-exclusion is a facility to limit your online trading activity, should you need it. You can set limits in your account to help prevent unwanted losses. You may adjust these limits any time, but remove them only after 24 hours. [_1]Contact us[_2] to remove or adjust your limits.', `<a href="${it.url_for('contact')}">`, '</a>')}</p>
             </div>
             <p data-show='eucountry'>{it.L('You may also instruct us to exclude you from trading on [_1] for a specific period of time. This self-exclusion date cannot be amended once it is set.', it.website_name)}</p>
             <p data-show='-eucountry'>{it.L('Here, you can set and adjust the amount of money and time you spend trading on SmartTrader, WebTrader, and Binary Bot. Setting your limits is optional and you can adjust them at any time. If you don’t wish to set a specific limit, leave the field blank.')}</p>
