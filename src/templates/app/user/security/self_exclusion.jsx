@@ -12,6 +12,7 @@ const SelfExclusion = () => (
             <div data-show='-iom'>
                 <p>{it.L('Online trading can be addictive. This self-exclusion page is where you manage your online trading activity and exercise [_1]responsible trading[_2].', `<a href="${it.url_for('responsible-trading')}">`, '</a>')}</p>
             </div>
+            <p data-show='eucountry'>{it.L('You may also instruct us to exclude you from trading on [_1] for a specific period of time. This self-exclusion date cannot be amended once it is set.', it.website_name)}</p>
             <p data-show='-eucountry'>{it.L('Here, you can set and adjust the amount of money and time you spend trading on SmartTrader, WebTrader, and Binary Bot. Setting your limits is optional and you can adjust them at any time. If you don’t wish to set a specific limit, leave the field blank.')}</p>
             <p data-show='-eucountry'>{it.L('You can also decide to exclude yourself entirely from our website for a specified duration. Once the self-exclusion period has ended, you can either extend it further or resume trading immediately. If you wish to reduce or remove the self-exclusion period, contact our [_1]Customer Support[_2].', `<a href="${it.url_for('contact')}">`, '</a>')}</p>
             <div id='gamstop_info_top' className='invisible'>
