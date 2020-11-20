@@ -842,8 +842,9 @@ const Authenticate = (() => {
                 onfido = Onfido.init({
                     containerId: 'onfido',
                     language   : {
-                        locale : getLanguage().toLowerCase() || 'en',
-                        phrases: onfido_phrases[getLanguage().toLowerCase()],
+                        locale       : getLanguage().toLowerCase() || 'en_US',
+                        phrases      : onfido_phrases,
+                        mobilePhrases: onfido_phrases,
                     },
                     token     : sdk_token,
                     useModal  : false,
