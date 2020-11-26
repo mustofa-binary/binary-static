@@ -80,13 +80,23 @@ const Page = (() => {
             init();
             if (!isLoginPages()) {
                 Language.setCookie(Language.urlLang());
+                const url_query_strings = new URLSearchParams(window.location.search);
 
                 if (!ClientBase.get('is_virtual')) {
                     // TODO: uncomment below to enable interview popup dialog
                     // InterviewPopup.onLoad();
                 }
-                if (window.location.href.indexOf('?data-elevio-article=') > 0) {
+                if (url_query_strings.get('data-elevio-article')) {
                     Elevio.injectElevio();
+                }
+
+                // Handle opening livechat via URL
+                const is_livechat_open = url_query_strings.get('is_livechat_open');
+
+                if (is_livechat_open === 'true' && window.LiveChatWidget) {
+                    window.LiveChatWidget.on('ready', () => {
+                        window.LC_API.open_chat_window();
+                    });
                 }
             }
             Header.onLoad();
