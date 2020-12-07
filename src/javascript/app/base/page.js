@@ -80,18 +80,18 @@ const Page = (() => {
             init();
             if (!isLoginPages()) {
                 Language.setCookie(Language.urlLang());
-                const url_query_strings = new URLSearchParams(window.location.search);
+                const url_query_strings = Url.paramsHash();
 
                 if (!ClientBase.get('is_virtual')) {
                     // TODO: uncomment below to enable interview popup dialog
                     // InterviewPopup.onLoad();
                 }
-                if (url_query_strings.get('data-elevio-article')) {
+                if (url_query_strings['data-elevio-article']) {
                     Elevio.injectElevio();
                 }
 
                 // Handle opening livechat via URL
-                const is_livechat_open = url_query_strings.get('is_livechat_open') === 'true';
+                const is_livechat_open = url_query_strings.is_livechat_open === 'true';
 
                 if (is_livechat_open && window.LiveChatWidget) {
                     window.LiveChatWidget.on('ready', () => {
