@@ -91,9 +91,9 @@ const Page = (() => {
                 }
 
                 // Handle opening livechat via URL
-                const is_livechat_open = url_query_strings.get('is_livechat_open');
+                const is_livechat_open = url_query_strings.get('is_livechat_open') === 'true';
 
-                if (is_livechat_open === 'true' && window.LiveChatWidget) {
+                if (is_livechat_open && window.LiveChatWidget) {
                     window.LiveChatWidget.on('ready', () => {
                         window.LC_API.open_chat_window();
                     });
