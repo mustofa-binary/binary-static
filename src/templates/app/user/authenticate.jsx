@@ -68,7 +68,7 @@ const Authenticate = () => (
                         <div id='upload_complete' className='center-text gr-padding-20 invisible'>
                             <img className='gr-padding-20' src={it.url_for('images/pages/authenticate/letter.svg')} />
                             <h1 className='gr-padding-10'>{it.L('Your proof of identity was submitted successfully')}</h1>
-                            <p>{it.L('Your document is being reviewed, please check back in 1-3 days')}</p>
+                            <p>{it.L('Your document is being reviewed, Please [_1]chat with us[_2] to validate your personal details', '<span className="link" id="chat_with_us">', '</span>')}</p>
                         </div>
 
                         <div id='error_occured' className='center-text gr-padding-20 invisible'>

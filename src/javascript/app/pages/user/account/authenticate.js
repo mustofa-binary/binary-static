@@ -57,6 +57,10 @@ const Authenticate = (() => {
 
         $('#not_authenticated .file-picker').on('change', onFileSelected);
 
+        $('#chat_with_us').on('click', () => {
+            window.LC_API.open_chat_window();
+        });
+
         const language            = getLanguage();
         const language_based_link = ['ID', 'RU', 'PT'].includes(language) ? `_${language}` : '';
         const $not_authenticated  = $('#not_authenticated');
