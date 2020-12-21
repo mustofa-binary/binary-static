@@ -57,7 +57,7 @@ const Authenticate = (() => {
 
         $('#not_authenticated .file-picker').on('change', onFileSelected);
 
-        $('#chat_with_us').on('click', () => {
+        $('#chat_with_us').off('click').on('click', () => {
             window.LC_API.open_chat_window();
         });
 
