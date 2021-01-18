@@ -922,6 +922,11 @@ const Authenticate = (() => {
         return !is_not_required;
     };
 
+    const cleanElementVisibility = () => {
+        $('#personal_details_error').setVisibility(0);
+        $('#limited_poi').setVisibility(0);
+    };
+
     const initAuthentication = async () => {
         let has_personal_details_error = false;
         const authentication_status = await getAuthenticationStatus();
@@ -974,10 +979,6 @@ const Authenticate = (() => {
         if (has_personal_details_error) {
             $('#personal_details_error').setVisibility(1);
         } else if (has_submission_attempts) {
-            $('#limited_livechat').off('click').on('click', (e) => {
-                e.preventDefault();
-                window.LC_API.LC_API.open_chat_window();
-            });
             $('#limited_poi').setVisibility(1);
         } else if (!needs_verification.includes('identity')) {
             // if POI is verified and POA is not verified, redirect to POA tab
@@ -1055,6 +1056,7 @@ const Authenticate = (() => {
     };
 
     const onLoad = async () => {
+        cleanElementVisibility();
         const authentication_status = await getAuthenticationStatus();
         const is_required = checkIsRequired(authentication_status);
         if (!isAuthenticationAllowed()) {
