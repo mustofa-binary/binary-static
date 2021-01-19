@@ -27543,7 +27543,7 @@ var Authenticate = function () {
                             break;
 
                         case 23:
-                            if (!has_submission_attempts) {
+                            if (has_submission_attempts) {
                                 _context2.next = 27;
                                 break;
                             }
