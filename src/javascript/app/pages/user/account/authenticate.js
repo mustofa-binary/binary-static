@@ -978,7 +978,7 @@ const Authenticate = (() => {
 
         if (has_personal_details_error) {
             $('#personal_details_error').setVisibility(1);
-        } else if (has_submission_attempts) {
+        } else if (!has_submission_attempts) {
             $('#limited_poi').setVisibility(1);
         } else if (!needs_verification.includes('identity')) {
             // if POI is verified and POA is not verified, redirect to POA tab
