@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-01-14 06:37\n"
+"PO-Revision-Date: 2021-01-20 03:04\n"
 "Last-Translator: \n"
 "Language-Team: Acholi\n"
 "MIME-Version: 1.0\n"
@@ -434,7 +434,7 @@ msgid "%124/7 customer support%2 to enhance your trading experience"
 msgstr "crwdns120900:0%12crwdnd120900:0%2crwdne120900:0"
 
 msgid "%1Choose a currency%2 for your fiat currency account:"
-msgstr "crwdns85219:0%1Ccrwdnd85219:0%2crwdne85219:0"
+msgstr "crwdns159004:0%1Ccrwdnd159004:0%2crwdne159004:0"
 
 msgid "%1Contact us%2 to arrange a date and time for the video call."
 msgstr "crwdns37544:0%1Ccrwdnd37544:0%2crwdne37544:0"
@@ -452,7 +452,7 @@ msgid "%1No, change my fiat account's currency now%2"
 msgstr "crwdns53232:0%1crwdnd53232:0%2crwdne53232:0"
 
 msgid "%1Note%2: These limits are only applicable to your %3 real account. To set limits, switch to the respective account and set your limits accordingly."
-msgstr "crwdns85221:0%1crwdnd85221:0%2crwdnd85221:0%3crwdne85221:0"
+msgstr "crwdns159006:0%1crwdnd159006:0%2crwdnd159006:0%3crwdne159006:0"
 
 msgid "%1Please note that if you live in the United Kingdom, self-exclusion cannot be removed until its period has expired. %2If you wish to resume trading after your self-exclusion period is over, please make your request by calling %3. Requests by chat or email shall not be entertained."
 msgstr "crwdns157614:0%1crwdnd157614:0%2crwdnd157614:0%3crwdne157614:0"
@@ -604,8 +604,8 @@ msgstr "crwdns158264:0crwdne158264:0"
 msgid "20 – 39.999%"
 msgstr "crwdns66664:0crwdne66664:0"
 
-msgid "2020 Binary | All rights reserved"
-msgstr "crwdns157980:0crwdne157980:0"
+msgid "2021 Binary | All rights reserved"
+msgstr "crwdns158974:0crwdne158974:0"
 
 msgid "3.50"
 msgstr "crwdns66670:0crwdne66670:0"
@@ -2498,7 +2498,7 @@ msgid "Chief Executives, Senior Officials and Legislators"
 msgstr "crwdns38005:0crwdne38005:0"
 
 msgid "Choose a currency for your real account:"
-msgstr "crwdns85229:0crwdne85229:0"
+msgstr "crwdns159008:0crwdne159008:0"
 
 msgid "Choose a duration from 10 seconds to 365 days."
 msgstr "crwdns38007:0crwdne38007:0"
@@ -2534,7 +2534,7 @@ msgid "Choose from three main trade types:"
 msgstr "crwdns42069:0crwdne42069:0"
 
 msgid "Choose one or more cryptocurrency accounts:"
-msgstr "crwdns85231:0crwdne85231:0"
+msgstr "crwdns159010:0crwdne159010:0"
 
 msgid "Choose scopes:"
 msgstr "crwdns53622:0crwdne53622:0"
@@ -2702,7 +2702,7 @@ msgid "Close identity verification screen"
 msgstr "crwdns158296:0crwdne158296:0"
 
 msgid "Close my account"
-msgstr "crwdns85233:0crwdne85233:0"
+msgstr "crwdns159012:0crwdne159012:0"
 
 msgid "Close your %1 account."
 msgstr "crwdns85235:0%1crwdne85235:0"
@@ -2741,7 +2741,7 @@ msgid "Closing price"
 msgstr "crwdns42075:0crwdne42075:0"
 
 msgid "Closing your %1 accounts involves closing all open positions in your accounts, withdrawing your funds, and deactivating your accounts."
-msgstr "crwdns85237:0%1crwdne85237:0"
+msgstr "crwdns159014:0%1crwdne159014:0"
 
 msgid "Cloudflare's public DNS service gives you more secure and faster web browsing."
 msgstr "crwdns46518:0crwdne46518:0"
@@ -3961,6 +3961,9 @@ msgstr "crwdns56614:0crwdne56614:0"
 msgid "Dubai, United Arab Emirates"
 msgstr "crwdns56616:0crwdne56616:0"
 
+msgid "Due to an issue on our server, some of your MT5 accounts are unavailable at the moment. %1Please bear with us and thank you for your patience."
+msgstr "crwdns158976:0%1crwdne158976:0"
+
 msgid "Due to market volatility and gold's reputation as a safe-haven asset, you predict that the price of gold will rise."
 msgstr "crwdns42116:0crwdne42116:0"
 
@@ -4723,8 +4726,8 @@ msgstr "crwdns38444:0crwdne38444:0"
 msgid "February"
 msgstr "crwdns38445:0crwdne38445:0"
 
-msgid "Feel free to contact our friendly and helpful customer service experts. They're always available to answer your questions. You can contact us via email and telephone."
-msgstr "crwdns38446:0crwdne38446:0"
+msgid "Feel free to contact our friendly and helpful customer service experts. They're always available to answer your questions. You can contact us via live chat."
+msgstr "crwdns158978:0crwdne158978:0"
 
 msgid "Feel free to get in touch with us at %1. We'd love to hear from you."
 msgstr "crwdns53370:0%1crwdne53370:0"
@@ -4808,7 +4811,7 @@ msgid "Financial assessment"
 msgstr "crwdns53636:0crwdne53636:0"
 
 msgid "Financial concerns"
-msgstr "crwdns85239:0crwdne85239:0"
+msgstr "crwdns159016:0crwdne159016:0"
 
 msgid "Financial derivatives that allow you to trade on the movement of underlying assets."
 msgstr "crwdns43208:0crwdne43208:0"
@@ -5213,13 +5216,13 @@ msgid "Go to statement"
 msgstr "crwdns52708:0crwdne52708:0"
 
 msgid "Go to the %1Cashier%2 to withdraw funds from your %3 accounts."
-msgstr "crwdns85241:0%1Ccrwdnd85241:0%2crwdnd85241:0%3crwdne85241:0"
+msgstr "crwdns159018:0%1Ccrwdnd159018:0%2crwdnd159018:0%3crwdne159018:0"
 
 msgid "Go to the %1MT5 dashboard%2 to withdraw funds from your Binary.com MT5 account."
-msgstr "crwdns85243:0%1crwdnd85243:0%2crwdne85243:0"
+msgstr "crwdns159020:0%1crwdnd159020:0%2crwdne159020:0"
 
 msgid "Go to the %1portfolio page%2 to close all open positions from your Binary.com accounts."
-msgstr "crwdns85245:0%1pcrwdnd85245:0%2crwdne85245:0"
+msgstr "crwdns159022:0%1pcrwdnd159022:0%2crwdne159022:0"
 
 msgid "Go with the leader"
 msgstr "crwdns38562:0crwdne38562:0"
@@ -5510,34 +5513,34 @@ msgid "I hereby confirm that the tax information I provided is true and complete
 msgstr "crwdns123370:0crwdne123370:0"
 
 msgid "I want to change my affiliate instead"
-msgstr "crwdns85247:0crwdne85247:0"
+msgstr "crwdns159024:0crwdne159024:0"
 
 msgid "I want to change my currency instead"
-msgstr "crwdns85249:0crwdne85249:0"
+msgstr "crwdns159026:0crwdne159026:0"
 
 msgid "I want to close my account"
-msgstr "crwdns85251:0crwdne85251:0"
+msgstr "crwdns159028:0crwdne159028:0"
 
 msgid "I want to limit my trading activity instead"
-msgstr "crwdns85253:0crwdne85253:0"
+msgstr "crwdns159030:0crwdne159030:0"
 
 msgid "I want to open a cryptocurrency account instead"
-msgstr "crwdns85255:0crwdne85255:0"
+msgstr "crwdns159032:0crwdne159032:0"
 
 msgid "I want to open a fiat currency account instead"
-msgstr "crwdns85257:0crwdne85257:0"
+msgstr "crwdns159034:0crwdne159034:0"
 
 msgid "I want to open a real account instead"
-msgstr "crwdns85259:0crwdne85259:0"
+msgstr "crwdns159036:0crwdne159036:0"
 
 msgid "I want to open another cryptocurrency account instead"
-msgstr "crwdns85261:0crwdne85261:0"
+msgstr "crwdns159038:0crwdne159038:0"
 
 msgid "I want to reapply"
 msgstr "crwdns52954:0crwdne52954:0"
 
 msgid "I want to set my currency instead"
-msgstr "crwdns85263:0crwdne85263:0"
+msgstr "crwdns159040:0crwdne159040:0"
 
 msgid "I would like to be treated as a professional client."
 msgstr "crwdns52502:0crwdne52502:0"
@@ -5798,7 +5801,7 @@ msgid "If you have a payment reference (for example 122), you can enter it here.
 msgstr "crwdns85331:0crwdne85331:0"
 
 msgid "If you have opened positions in your MT5 account, please close them too."
-msgstr "crwdns85265:0crwdne85265:0"
+msgstr "crwdns159042:0crwdne159042:0"
 
 msgid "If you keep any positions open overnight, an interest adjustment will be made to your trading account as indication of the cost required to keep your position open."
 msgstr "crwdns42201:0crwdne42201:0"
@@ -5930,7 +5933,7 @@ msgid "If you select a specific <strong>end time</strong>, the <strong>end time<
 msgstr "crwdns38709:0crwdne38709:0"
 
 msgid "If you want to change your affiliate, contact %1partners@binary.com%2 for more information on how you can do this."
-msgstr "crwdns123440:0%1pcrwdnd123440:0%2crwdne123440:0"
+msgstr "crwdns159044:0%1pcrwdnd159044:0%2crwdne159044:0"
 
 msgid "If you wish to reduce or remove the self-exclusion period, contact our %1Customer Support%1."
 msgstr "crwdns156210:0%1Ccrwdnd156210:0%1crwdne156210:0"
@@ -7718,7 +7721,7 @@ msgid "Not at all. Joining our affiliate programme is completely free and always
 msgstr "crwdns43890:0crwdne43890:0"
 
 msgid "Not interested in trading"
-msgstr "crwdns85269:0crwdne85269:0"
+msgstr "crwdns159046:0crwdne159046:0"
 
 msgid "Not leaving devices unattended"
 msgstr "crwdns157330:0crwdne157330:0"
@@ -8063,7 +8066,7 @@ msgid "Other than the payment of Commissions, Binary is not liable to the Introd
 msgstr "crwdns54846:0crwdne54846:0"
 
 msgid "Others (please specify)"
-msgstr "crwdns85275:0crwdne85275:0"
+msgstr "crwdns159048:0crwdne159048:0"
 
 msgid "Our Accounting &amp; Payments team manages our wide range of bank accounts and e-currency systems, as well as the huge volume of transactions that take place every day."
 msgstr "crwdns52188:0crwdne52188:0"
@@ -8612,7 +8615,7 @@ msgid "Please select a country"
 msgstr "crwdns41906:0crwdne41906:0"
 
 msgid "Please select a reason."
-msgstr "crwdns85279:0crwdne85279:0"
+msgstr "crwdns159050:0crwdne159050:0"
 
 msgid "Please select a valid time."
 msgstr "crwdns39498:0crwdne39498:0"
@@ -8645,7 +8648,7 @@ msgid "Please set your %130-day turnover limit%2 to remove deposit limits."
 msgstr "crwdns50920:0%13crwdnd50920:0%2crwdne50920:0"
 
 msgid "Please specify the reasons for closing your accounts"
-msgstr "crwdns85281:0crwdne85281:0"
+msgstr "crwdns159052:0crwdne159052:0"
 
 msgid "Please specify your preferred reality-check interval in minutes"
 msgstr "crwdns39508:0crwdne39508:0"
@@ -8669,7 +8672,7 @@ msgid "Please take note that our swap rate also depends on the time and days you
 msgstr "crwdns42331:0crwdne42331:0"
 
 msgid "Please tell us why you are closing your account (please select one):"
-msgstr "crwdns85283:0crwdne85283:0"
+msgstr "crwdns159054:0crwdne159054:0"
 
 msgid "Please try again"
 msgstr "crwdns158458:0crwdne158458:0"
@@ -8795,7 +8798,7 @@ msgid "Predict the last decimal digit of the spot price with Digits. There are t
 msgstr "crwdns42349:0crwdne42349:0"
 
 msgid "Prefer another trading website"
-msgstr "crwdns85285:0crwdne85285:0"
+msgstr "crwdns159056:0crwdne159056:0"
 
 msgid "Preferences:"
 msgstr "crwdns39533:0crwdne39533:0"
@@ -10148,7 +10151,7 @@ msgid "Step 1: Choose demo or real account"
 msgstr "crwdns43145:0crwdne43145:0"
 
 msgid "Step 1: Close all open positions"
-msgstr "crwdns85287:0crwdne85287:0"
+msgstr "crwdns159058:0crwdne159058:0"
 
 msgid "Step 1: Define your position"
 msgstr "crwdns39844:0crwdne39844:0"
@@ -10169,7 +10172,7 @@ msgid "Step 2: Understand when to buy and when to sell"
 msgstr "crwdns42386:0crwdne42386:0"
 
 msgid "Step 2: Withdraw your funds"
-msgstr "crwdns85289:0crwdne85289:0"
+msgstr "crwdns159060:0crwdne159060:0"
 
 msgid "Step 3"
 msgstr "crwdns42387:0crwdne42387:0"
@@ -11927,7 +11930,7 @@ msgid "The provisions of this agreement or any orders and any applicable laws wi
 msgstr "crwdns55670:0crwdne55670:0"
 
 msgid "The reason should be between 5 and 250 characters"
-msgstr "crwdns85293:0crwdne85293:0"
+msgstr "crwdns159062:0crwdne159062:0"
 
 msgid "The requested transfer would reduce the client's Account Balance to less than the Margin required for the client's Open Positions."
 msgstr "crwdns56502:0crwdne56502:0"
@@ -12314,7 +12317,7 @@ msgid "This page is only available to logged out clients."
 msgstr "crwdns52504:0crwdne52504:0"
 
 msgid "This page will redirect to the %1 homepage after 10 seconds."
-msgstr "crwdns85295:0%1crwdne85295:0"
+msgstr "crwdns159064:0%1crwdne159064:0"
 
 msgid "This policy applies to clients classified as retail or professional. Clients classified as eligible counterparties are outside the scope of this policy."
 msgstr "crwdns51564:0crwdne51564:0"
@@ -12413,7 +12416,7 @@ msgid "To change your name, date of birth, country of residence, email, or tax i
 msgstr "crwdns52668:0%1Ccrwdnd52668:0%2crwdne52668:0"
 
 msgid "To close your account, complete the following steps:"
-msgstr "crwdns85297:0crwdne85297:0"
+msgstr "crwdns159066:0crwdne159066:0"
 
 msgid "To create a MetaTrader 5 account:"
 msgstr "crwdns67002:0crwdne67002:0"
@@ -12494,7 +12497,7 @@ msgid "Token name"
 msgstr "crwdns53674:0crwdne53674:0"
 
 msgid "Too addictive"
-msgstr "crwdns85299:0crwdne85299:0"
+msgstr "crwdns159068:0crwdne159068:0"
 
 msgid "Too many failed attempts"
 msgstr "crwdns158576:0crwdne158576:0"
@@ -12987,6 +12990,9 @@ msgstr "crwdns40314:0crwdne40314:0"
 
 msgid "Unable to read file %1"
 msgstr "crwdns50938:0%1crwdne50938:0"
+
+msgid "Unavailable"
+msgstr "crwdns158980:0crwdne158980:0"
 
 msgid "Under no circumstances shall the Company or its directors or employees be liable under this Agreement to the Programmer or any third party for any indirect, special, incidental, punitive, or consequential loss or damages or any other similar damages under any theory of liability (whether in contract, tort, strict liability, or any other theory), which are directly or indirectly attributable to the use of, or the inability to use, the %1 API, or any content contained thereon, even if the Company has been informed of the possibility thereof."
 msgstr "crwdns66838:0%1crwdne66838:0"
@@ -14060,10 +14066,10 @@ msgid "You are selling the base currency and buying the quote currency."
 msgstr "crwdns42536:0crwdne42536:0"
 
 msgid "You can %1open a cryptocurrency%2 account without closing your fiat currency account."
-msgstr "crwdns85305:0%1ocrwdnd85305:0%2crwdne85305:0"
+msgstr "crwdns159070:0%1ocrwdnd159070:0%2crwdne159070:0"
 
 msgid "You can %1open a real account%2 without closing your demo account."
-msgstr "crwdns85307:0%1ocrwdnd85307:0%2crwdne85307:0"
+msgstr "crwdns159072:0%1ocrwdnd159072:0%2crwdne159072:0"
 
 msgid "You can %1set a new currency%2 before you deposit for the first time or create an MT5 account."
 msgstr "crwdns53260:0%1scrwdnd53260:0%2crwdne53260:0"
@@ -14102,13 +14108,13 @@ msgid "You can now return to your computer to continue"
 msgstr "crwdns158622:0crwdne158622:0"
 
 msgid "You can open a fiat currency account without closing your cryptocurrency account."
-msgstr "crwdns85309:0crwdne85309:0"
+msgstr "crwdns159074:0crwdne159074:0"
 
 msgid "You can sell your contract before expiry to keep any profit you may have made or to minimise your loss."
 msgstr "crwdns40628:0crwdne40628:0"
 
 msgid "You can set limits to your account and trading activities. Go to the %1self-exclusion page%2 to manage your account limits."
-msgstr "crwdns85311:0%1scrwdnd85311:0%2crwdne85311:0"
+msgstr "crwdns159076:0%1scrwdnd159076:0%2crwdne159076:0"
 
 msgid "You can top up your demo account with an additional %1 if your balance is %2 or less."
 msgstr "crwdns53004:0%1crwdnd53004:0%2crwdne53004:0"
@@ -14132,10 +14138,10 @@ msgid "You expect the %1 to rise in value so you can sell it back for a profit."
 msgstr "crwdns90182:0%1crwdne90182:0"
 
 msgid "You have %1. You may open one or %2more cryptocurrency%3 accounts:"
-msgstr "crwdns85315:0%1crwdnd85315:0%2crwdnd85315:0%3crwdne85315:0"
+msgstr "crwdns159078:0%1crwdnd159078:0%2crwdnd159078:0%3crwdne159078:0"
 
 msgid "You have a %1 account. You may %2change your currency%3 to any of the following as long as you haven't made a deposit or created an MT5 account:"
-msgstr "crwdns85317:0%1crwdnd85317:0%2ccrwdnd85317:0%3crwdne85317:0"
+msgstr "crwdns159080:0%1crwdnd159080:0%2ccrwdnd159080:0%3crwdne159080:0"
 
 msgid "You have already withdrawn %1%2 in aggregate over the last %3 days."
 msgstr "crwdns90242:0%1crwdnd90242:0%2crwdnd90242:0%3crwdne90242:0"
@@ -14144,7 +14150,7 @@ msgid "You have already withdrawn %1%2."
 msgstr "crwdns90244:0%1crwdnd90244:0%2crwdne90244:0"
 
 msgid "You have an account but have not set a currency. You may %1choose one%2 of these as your account currency"
-msgstr "crwdns85319:0%1ccrwdnd85319:0%2crwdne85319:0"
+msgstr "crwdns159082:0%1ccrwdnd159082:0%2crwdne159082:0"
 
 msgid "You have created all accounts available to you."
 msgstr "crwdns40638:0crwdne40638:0"
@@ -14354,7 +14360,7 @@ msgid "Your account is fully authenticated and your withdrawal limits have been 
 msgstr "crwdns40731:0crwdne40731:0"
 
 msgid "Your account is now closed"
-msgstr "crwdns85321:0crwdne85321:0"
+msgstr "crwdns159084:0crwdne159084:0"
 
 msgid "Your account is restricted. Kindly %1contact customer support%2 for assistance."
 msgstr "crwdns40733:0%1ccrwdnd40733:0%2crwdne40733:0"
@@ -14510,7 +14516,7 @@ msgid "You’ll be logged out automatically."
 msgstr "crwdns123536:0crwdne123536:0"
 
 msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
-msgstr "crwdns85325:0%1crwdne85325:0"
+msgstr "crwdns159086:0%1crwdne159086:0"
 
 msgid "ZingPay is a payment facility that allows online bank transfers for clients in South Africa."
 msgstr "crwdns89794:0crwdne89794:0"
@@ -14549,10 +14555,10 @@ msgid "a. Access the MT5 trading platform through the direct link %1 from DIEL's
 msgstr "crwdns122068:0%1crwdne122068:0"
 
 msgid "account"
-msgstr "crwdns85327:0crwdne85327:0"
+msgstr "crwdns159088:0crwdne159088:0"
 
 msgid "accounts"
-msgstr "crwdns85329:0crwdne85329:0"
+msgstr "crwdns159090:0crwdne159090:0"
 
 msgid "an Order to execute a transaction to close an Open Position when the price reaches the client's specified price"
 msgstr "crwdns57014:0crwdne57014:0"
