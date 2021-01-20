@@ -27347,7 +27347,7 @@ var Authenticate = function () {
     };
 
     var initOnfido = function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token, documents_supported) {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sdk_token, documents_supported, country_code) {
             return regeneratorRuntime.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -27360,8 +27360,8 @@ var Authenticate = function () {
                                         containerId: 'onfido',
                                         language: {
                                             locale: getLanguage().toLowerCase() || 'en',
-                                            phrases: onfido_phrases[getLanguage().toLowerCase()],
-                                            mobilePhrases: onfido_phrases[getLanguage().toLowerCase()]
+                                            phrases: onfido_phrases,
+                                            mobilePhrases: onfido_phrases
                                         },
                                         token: sdk_token,
                                         useModal: false,
@@ -27377,11 +27377,15 @@ var Authenticate = function () {
                                                     driving_licence: documents_supported.some(function (doc) {
                                                         return (/Driving Licence/g.test(doc)
                                                         );
-                                                    }),
+                                                    }) ? {
+                                                        country: country_code
+                                                    } : false,
                                                     national_identity_card: documents_supported.some(function (doc) {
                                                         return (/National Identity Card/g.test(doc)
                                                         );
-                                                    })
+                                                    }) ? {
+                                                        country: country_code
+                                                    } : false
                                                 }
                                             }
                                         }, 'face']
@@ -27401,7 +27405,7 @@ var Authenticate = function () {
             }, _callee, undefined);
         }));
 
-        return function initOnfido(_x, _x2) {
+        return function initOnfido(_x, _x2, _x3) {
             return _ref.apply(this, arguments);
         };
     }();
@@ -27462,14 +27466,9 @@ var Authenticate = function () {
         return !is_not_required;
     };
 
-    var cleanElementVisibility = function cleanElementVisibility() {
-        $('#personal_details_error').setVisibility(0);
-        $('#limited_poi').setVisibility(0);
-    };
-
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var has_personal_details_error, authentication_status, service_token_response, personal_fields_errors, missing_personal_fields, error_msgs, identity, needs_verification, document, is_fully_authenticated, should_allow_resubmission, documents_supported, has_submission_attempts;
+            var has_personal_details_error, authentication_status, service_token_response, personal_fields_errors, missing_personal_fields, error_msgs, identity, needs_verification, document, is_fully_authenticated, should_allow_resubmission, documents_supported, country_code;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -27525,7 +27524,7 @@ var Authenticate = function () {
 
                             onfido_unsupported = !identity.services.onfido.is_country_supported;
                             documents_supported = identity.services.onfido.documents_supported;
-                            has_submission_attempts = !!identity.services.onfido.submissions_left;
+                            country_code = identity.services.onfido.country_code;
 
 
                             if (is_fully_authenticated && !should_allow_resubmission) {
@@ -27539,22 +27538,12 @@ var Authenticate = function () {
                             }
 
                             $('#personal_details_error').setVisibility(1);
-                            _context2.next = 48;
+                            _context2.next = 44;
                             break;
 
                         case 23:
-                            if (has_submission_attempts) {
-                                _context2.next = 27;
-                                break;
-                            }
-
-                            $('#limited_poi').setVisibility(1);
-                            _context2.next = 48;
-                            break;
-
-                        case 27:
                             if (needs_verification.includes('identity')) {
-                                _context2.next = 47;
+                                _context2.next = 43;
                                 break;
                             }
 
@@ -27563,106 +27552,106 @@ var Authenticate = function () {
                                 Url.updateParamsWithoutReload({ authentication_tab: 'poa' }, true);
                             }
                             _context2.t0 = identity.status;
-                            _context2.next = _context2.t0 === 'none' ? 32 : _context2.t0 === 'pending' ? 34 : _context2.t0 === 'rejected' ? 36 : _context2.t0 === 'verified' ? 38 : _context2.t0 === 'expired' ? 40 : _context2.t0 === 'suspected' ? 42 : 44;
+                            _context2.next = _context2.t0 === 'none' ? 28 : _context2.t0 === 'pending' ? 30 : _context2.t0 === 'rejected' ? 32 : _context2.t0 === 'verified' ? 34 : _context2.t0 === 'expired' ? 36 : _context2.t0 === 'suspected' ? 38 : 40;
                             break;
 
-                        case 32:
+                        case 28:
                             if (onfido_unsupported) {
                                 $('#not_authenticated_uns').setVisibility(1);
                                 initUnsupported();
                             } else {
-                                initOnfido(service_token_response.token, documents_supported);
+                                initOnfido(service_token_response.token, documents_supported, country_code);
                             }
-                            return _context2.abrupt('break', 45);
+                            return _context2.abrupt('break', 41);
+
+                        case 30:
+                            $('#upload_complete').setVisibility(1);
+                            return _context2.abrupt('break', 41);
+
+                        case 32:
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 41);
 
                         case 34:
-                            $('#upload_complete').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            $('#verified').setVisibility(1);
+                            return _context2.abrupt('break', 41);
 
                         case 36:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            $('#expired_poi').setVisibility(1);
+                            return _context2.abrupt('break', 41);
 
                         case 38:
-                            $('#verified').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            $('#unverified').setVisibility(1);
+                            return _context2.abrupt('break', 41);
 
                         case 40:
-                            $('#expired_poi').setVisibility(1);
-                            return _context2.abrupt('break', 45);
+                            return _context2.abrupt('break', 41);
 
-                        case 42:
-                            $('#unverified').setVisibility(1);
-                            return _context2.abrupt('break', 45);
-
-                        case 44:
-                            return _context2.abrupt('break', 45);
-
-                        case 45:
-                            _context2.next = 48;
+                        case 41:
+                            _context2.next = 44;
                             break;
 
-                        case 47:
+                        case 43:
                             // eslint-disable-next-line no-lonely-if
                             if (onfido_unsupported) {
                                 $('#not_authenticated_uns').setVisibility(1);
                                 initUnsupported();
                             } else {
-                                initOnfido(service_token_response.token, documents_supported);
+                                initOnfido(service_token_response.token, documents_supported, country_code);
                             }
 
-                        case 48:
+                        case 44:
                             if (needs_verification.includes('document')) {
-                                _context2.next = 68;
+                                _context2.next = 64;
                                 break;
                             }
 
                             _context2.t1 = document.status;
-                            _context2.next = _context2.t1 === 'none' ? 52 : _context2.t1 === 'pending' ? 55 : _context2.t1 === 'rejected' ? 57 : _context2.t1 === 'suspected' ? 59 : _context2.t1 === 'verified' ? 61 : _context2.t1 === 'expired' ? 63 : 65;
+                            _context2.next = _context2.t1 === 'none' ? 48 : _context2.t1 === 'pending' ? 51 : _context2.t1 === 'rejected' ? 53 : _context2.t1 === 'suspected' ? 55 : _context2.t1 === 'verified' ? 57 : _context2.t1 === 'expired' ? 59 : 61;
                             break;
 
-                        case 52:
+                        case 48:
                             init();
                             $('#not_authenticated').setVisibility(1);
-                            return _context2.abrupt('break', 66);
+                            return _context2.abrupt('break', 62);
+
+                        case 51:
+                            $('#pending_poa').setVisibility(1);
+                            return _context2.abrupt('break', 62);
+
+                        case 53:
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 62);
 
                         case 55:
-                            $('#pending_poa').setVisibility(1);
-                            return _context2.abrupt('break', 66);
+                            $('#unverified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 62);
 
                         case 57:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 66);
+                            $('#verified_poa').setVisibility(1);
+                            return _context2.abrupt('break', 62);
 
                         case 59:
-                            $('#unverified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 66);
+                            $('#expired_poa').setVisibility(1);
+                            return _context2.abrupt('break', 62);
 
                         case 61:
-                            $('#verified_poa').setVisibility(1);
-                            return _context2.abrupt('break', 66);
+                            return _context2.abrupt('break', 62);
 
-                        case 63:
-                            $('#expired_poa').setVisibility(1);
-                            return _context2.abrupt('break', 66);
-
-                        case 65:
-                            return _context2.abrupt('break', 66);
-
-                        case 66:
-                            _context2.next = 70;
+                        case 62:
+                            _context2.next = 66;
                             break;
 
-                        case 68:
+                        case 64:
                             init();
                             $('#not_authenticated').setVisibility(1);
 
-                        case 70:
+                        case 66:
 
                             $('#authentication_loading').setVisibility(0);
                             TabSelector.updateTabDisplay();
 
-                        case 72:
+                        case 68:
                         case 'end':
                             return _context2.stop();
                     }
@@ -27682,11 +27671,10 @@ var Authenticate = function () {
                 while (1) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
-                            cleanElementVisibility();
-                            _context3.next = 3;
+                            _context3.next = 2;
                             return getAuthenticationStatus();
 
-                        case 3:
+                        case 2:
                             authentication_status = _context3.sent;
                             is_required = checkIsRequired(authentication_status);
 
@@ -27707,7 +27695,7 @@ var Authenticate = function () {
                                 $('#authentication_loading').setVisibility(0);
                             }
 
-                        case 8:
+                        case 7:
                         case 'end':
                             return _context3.stop();
                     }
@@ -27808,16 +27796,9 @@ module.exports = ChangePassword;
 "use strict";
 
 
-var _pt = __webpack_require__(/*! ./pt */ "./src/javascript/app/pages/user/account/onfido_phrases/pt.js");
-
-var _pt2 = _interopRequireDefault(_pt);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 
 module.exports = {
-    pt: _pt2.default,
     country_select: {
         alert_dropdown: {
             country_not_found: localize('Country not found')
@@ -28135,299 +28116,6 @@ module.exports = {
         next_button: localize('Verify Identity'),
         title: localize('Open your new bank account')
     }
-};
-
-/***/ }),
-
-/***/ "./src/javascript/app/pages/user/account/onfido_phrases/pt.js":
-/*!********************************************************************!*\
-  !*** ./src/javascript/app/pages/user/account/onfido_phrases/pt.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-    document_selector: {
-        identity: {
-            title: 'Verifique sua identidade',
-            hint: 'Selecione o tipo de documento que você deseja enviar',
-            passport_hint: 'Foto da página que mostra o rosto',
-            driving_licence_hint: 'Frente e verso',
-            national_identity_card_hint: 'Frente e verso'
-        }
-    },
-    capture: {
-        driving_licence: {
-            front: {
-                title: 'Enviar carteira de condução (frente)',
-                instructions: 'Enviar a frente da carteira de condução direto do seu computador',
-                webcam: 'Posicione a frente da cateira de condução no quadro (ela será detectada automaticamente)'
-            },
-            back: {
-                title: 'Enviar carteira de condução (verso)',
-                instructions: 'Enviar o verso da carteira de condução direto do seu computador',
-                webcam: 'Posicione o verso da cateira de condução no quadro (ela será detectada automaticamente)'
-            }
-        },
-        national_identity_card: {
-            front: {
-                title: 'Enviar carteira de identidade nacional (frente)',
-                instructions: 'Enviar a frente da carteira nacional direto do seu computador',
-                webcam: 'Posicione a frente da carteira nacional no quadro (ela será detectada automaticamente)'
-            },
-            back: {
-                title: 'Enviar carteira de identidade nacional (verso)',
-                instructions: 'Enviar o verso da carteira nacional direto do seu computador',
-                webcam: 'Posicione o verso da carteira nacional no quadro (ela será detectada automaticamente)'
-            }
-        },
-        passport: {
-            front: {
-                title: 'Enviar foto da página do passaporte',
-                instructions: 'Enviar a página do passaporte (a que mostra sua foto) direto do seu computador',
-                webcam: 'Posicione a página do passaporte (a que mostra sua foto) no quadro (ela será detectada automaticamente)'
-            }
-        },
-        face: {
-            title: 'Tire uma selfie',
-            upload_title: 'Selfie',
-            instructions: 'Enviar uma selfie direto do seu computador',
-            intro: {
-                title: 'Tire uma selfie',
-                subtitle: 'Carregar uma selfie do seu computador',
-                selfie_instruction: 'Olhe para frente e verifique se seus olhos estão claramente visíveis',
-                glasses_instruction: 'Retire os óculos, se necessário',
-                accessibility: {
-                    selfie_capture_tips: 'Dicas para tirar uma boa selfie'
-                }
-            }
-        },
-        upload_document: 'Enviar',
-        upload_file: 'ou fazer upload de foto - (não envie digitalizações)',
-        take_photo: 'Tirar uma foto',
-        switch_device: 'Continue no telefone'
-    },
-    confirm: {
-        document: {
-            title: 'Verificar legibilidade',
-            alt: 'Foto do seu documento'
-        },
-        driving_licence: {
-            message: 'Certifique-se de que todos os detalhes da sua carteira de condução estejam visíveis, sem borrões ou reflexos'
-        },
-        national_identity_card: {
-            message: 'Certifique-se de que todos os detalhes da sua ID nacional estejam visíveis, sem borrões ou reflexos'
-        },
-        passport: {
-            message: 'Certifique-se de que todos os detalhes da seu passaporte estejam visíveis, sem borrões ou reflexos'
-        },
-        face: {
-            standard: {
-                title: 'Verifique sua selfie',
-                message: 'Verifique se a sua selfie mostra claramente o seu rosto',
-                alt: 'Foto do seu rosto'
-            }
-        },
-        confirm: 'Confirmar',
-        continue: 'Continuar',
-        redo: 'Voltar',
-        enlarge_image: {
-            enlarge: 'Ampliar imagem',
-            close: 'Fechar'
-        }
-    },
-    cross_device: {
-        intro: {
-            title: 'Continue no telefone',
-            sub_title: 'Veja como fazer:',
-            description_li_1: 'Envie um link seguro para o seu telefone',
-            description_li_2: 'Abra o link e conclua as tarefas',
-            description_li_3: 'Volte aqui para finalizar o envio',
-            action: 'Obter link seguro'
-        },
-        client_success: {
-            title: 'Envios bem-sucedidos',
-            sub_title: 'Agora você pode retornar ao seu computador para continuar',
-            body: 'O seu computador pode demorar alguns segundos para atualizar'
-        },
-        link: {
-            title: 'Obtenha seu link seguro',
-            qr_code_sub_title: 'Digitalize o código QR com o seu telefone',
-            sms_sub_title: 'Envie este link único para o seu telefone',
-            copy_link_sub_title: 'Abra o link no seu celular',
-            options_divider_label: 'ou',
-            sms_option: 'Obter link via SMS',
-            copy_link_option: 'Copiar link',
-            qr_code_option: 'Digitalizar código QR',
-            copy_link: {
-                action: 'Copiar',
-                success: 'Copiado'
-            },
-            button_copy: {
-                action: 'Enviar link',
-                status: 'Enviando'
-            },
-            qr_code: {
-                help_label: 'Como digitalizar um código QR',
-                help_step_1: 'Aponte a câmera do seu telefone para o código QR',
-                help_step_2: 'Se não funcionar, baixe um scanner de código QR no Google Play ou na App Store'
-            },
-            sms_label: 'Digite seu número de celular:',
-            copy_link_label: 'Copie o link para o seu navegador no celular'
-        },
-        submit: {
-            title: 'Ótimo, é tudo o que precisamos',
-            sub_title: 'Agora estamos prontos para verificar sua identidade',
-            selfie_uploaded: 'Selfie enviada',
-            video_uploaded: 'Video enviado',
-            action: 'Enviar verificação',
-            multiple_docs_uploaded: 'Documentos enviados',
-            one_doc_uploaded: 'Documento enviado'
-        },
-        phone_number_placeholder: 'Digite o número do celular',
-        loading: 'Carregando...',
-        mobile_connected: {
-            title: {
-                message: 'Conectado ao seu celular',
-                submessage: 'Quando terminar, levaremos você para o próximo passo'
-            },
-            tips: {
-                item_1: 'Mantenha essa janela aberta enquanto estiver usando seu celular',
-                item_2: 'Seu link para celular expirará em uma hora',
-                item_3: 'Não atualize esta página'
-            }
-        },
-        mobile_notification_sent: {
-            title: 'Verifique seu celular',
-            submessage: 'Enviamos um link seguro para %{number}',
-            bold_message: 'Pode demorar alguns minutos para chegar',
-            tips: {
-                item_1: 'Mantenha essa janela aberta enquanto estiver usando seu celular',
-                item_2: 'Seu link expirará em uma hora'
-            },
-            resend_link: 'Reenviar link'
-        },
-        switch_device: {
-            header: 'Tire uma foto com seu telefone'
-        },
-        tips: 'Dicas'
-    },
-    webcam_permissions: {
-        allow_access: 'Permitir acesso à câmera',
-        enable_webcam_for_selfie: 'Quando solicitado, você deve habilitar o acesso à câmera para continuar',
-        click_allow: 'Não podemos verificar você sem usar sua câmera',
-        allow: 'Permitir',
-        why: 'Por que eu preciso fazer isso?',
-        if_denied: 'Se você negar o acesso à câmera, não poderá tirar fotos e concluir o processo de verificação.',
-        enable_webcam: 'Ativar câmera',
-        access_denied: 'Acesso à câmera negado',
-        recover_access: 'Recupere o acesso da câmera para continuar a verificação de rosto',
-        recovery: 'Recuperação',
-        follow_steps: 'Siga estas etapas para recuperar o acesso da câmera:',
-        grant_access: 'Conceda acesso à sua câmera a partir das configurações do navegador',
-        refresh_page: 'Atualize esta página para reiniciar o processo de verificação de identidade',
-        refresh: 'Atualizar'
-    },
-    errors: {
-        invalid_capture: {
-            message: 'Nenhum documento detectado',
-            instruction: 'Verifique se todo o documento está na foto'
-        },
-        invalid_type: {
-            message: 'Arquivo não carregado.',
-            instruction: 'Tente enviar outro tipo de arquivo.'
-        },
-        unsupported_file: {
-            message: 'Tipo de arquivo não suportado',
-            instruction: 'Tente usar um arquivo JPG ou PNG'
-        },
-        invalid_size: {
-            message: 'Tamanho do arquivo excedido.',
-            instruction: 'Deve ter menos de 10 MB.'
-        },
-        no_face: {
-            message: 'Nenhum rosto encontrado',
-            instruction: 'Seu rosto é necessário na selfie'
-        },
-        multiple_faces: {
-            message: 'Mais de um rosto encontrado',
-            instruction: 'Somente seu rosto pode estar na selfie'
-        },
-        server_error: {
-            message: 'Conexão perdida',
-            instruction: 'Por favor, tente novamente'
-        },
-        glare_detected: {
-            message: 'Brilho detectado',
-            instruction: 'Todos os detalhes devem ser nítidos e legíveis'
-        },
-        sms_failed: {
-            message: 'Algo deu errado',
-            instruction: 'Copie o link para o seu telefone'
-        },
-        sms_overuse: {
-            message: 'Muitas tentativas falhas',
-            instruction: 'Copie o link para o seu telefone'
-        },
-        lazy_loading: {
-            message: 'Ocorreu um erro ao carregar o componente'
-        },
-        invalid_number: {
-            message: 'Verifique se o seu número está correto'
-        },
-        generic_client_error: {
-            message: 'Algo deu errado',
-            instruction: 'Você precisará reiniciar sua verificação no seu computador'
-        },
-        forbidden_client_error: {
-            message: 'Algo deu errado',
-            instruction: 'O link funciona apenas em dispositivos móveis'
-        },
-        camera_not_working: {
-            message: 'A câmera não está funcionando',
-            instruction: 'Pode estar desconectado. <fallback>Tente usar seu telefone</fallback>.'
-        },
-        camera_inactive: {
-            message: 'Está tendo problemas com a câmera?',
-            instruction: '<fallback>Use seu celular</fallback> para continuar a verificação de rosto'
-        },
-        interrupted_flow_error: {
-            message: 'Câmera não detectada',
-            instruction: 'Reinicie o processo em um dispositivo diferente'
-        },
-        unsupported_android_browser: {
-            message: 'Navegador não suportado',
-            instruction: 'Reinicie o processo na versão mais recente do Google Chrome'
-        },
-        unsupported_ios_browser: {
-            message: 'Navegador não suportado',
-            instruction: 'Reinicie o processo na versão mais recente do Safari'
-        }
-    },
-    accessibility: {
-        close_sdk_screen: 'Fechar tela de verificação de identidade',
-        dismiss_alert: 'Fechar alerta',
-        camera_view: 'Vista da câmera',
-        shutter: 'Tire uma foto',
-        document_types: 'Documentos que você pode usar para verificar sua identidade',
-        selfie_video_actions: 'Ações para gravar uma selfie em vídeo',
-        cross_device_verification: 'Etapas necessárias para continuar a verificação no seu celular',
-        country_select: 'Selecione o país'
-    },
-    passport: 'Passaporte',
-    driving_licence: 'Carteira de condução',
-    national_identity_card: 'Carteira de identidade',
-    short_passport: 'passaporte',
-    short_driving_licence: 'Carteira de condução',
-    short_national_identity_card: 'ID nacional',
-    loading: 'Carregando',
-    back: 'verso',
-    cancel: 'Cancelar',
-    close: 'Fechar',
-    continue: 'Continuar'
 };
 
 /***/ }),
@@ -34099,25 +33787,56 @@ var MetaTrader = function () {
                 return;
             }
 
+            // const valid_account = Object.values(response.mt5_login_list).filter(acc => !acc.error);
+
+            // if (has_multi_mt5_accounts && (has_demo_error || has_real_error)) {
+            //     const { account_type, market_type, sub_account_type } = valid_account[0];
+            //     current_acc_type = `${account_type}_${market_type}_${sub_account_type}`;
+            // }
+
             var _State$getResponse = State.getResponse('landing_company'),
                 mt_financial_company = _State$getResponse.mt_financial_company,
                 mt_gaming_company = _State$getResponse.mt_gaming_company;
 
             addAccount('gaming', mt_gaming_company);
             addAccount('financial', mt_financial_company);
+            // TODO: Remove once details in inaccessible error provides necessary accounts info
+            addAccount('unknown', null);
 
             var trading_servers = State.getResponse('trading_servers');
             // for legacy clients on the real01 server, real01 server is not going to be offered in trading servers
             // but we need to build their object in accounts_info or they can't view their legacy account
             response.mt5_login_list.forEach(function (mt5_login) {
-                var is_server_offered = trading_servers.find(function (trading_server) {
-                    return trading_server.id === mt5_login.server;
-                });
 
-                if (!is_server_offered && !/demo/.test(mt5_login.server)) {
-                    var landing_company = mt5_login.market_type === 'gaming' ? mt_gaming_company : mt_financial_company;
+                if (mt5_login.error) {
+                    var account_type = mt5_login.error.details.account_type;
 
-                    addAccount(mt5_login.market_type, landing_company, mt5_login.server);
+                    var message = mt5_login.error.message_to_client;
+                    switch (mt5_login.error.code) {
+                        case 'MT5AccountInaccessible':
+                            {
+                                MetaTraderUI.setDisabledAccountTypes({
+                                    'real': account_type === 'real',
+                                    'demo': account_type === 'demo'
+                                });
+                                message = localize('Due to an issue on our server, some of your MT5 accounts are unavailable at the moment. [_1]Please bear with us and thank you for your patience.', '<br />');
+                                break;
+                            }
+                        default:
+                            break;
+                    }
+
+                    MetaTraderUI.displayPageError(message);
+                } else {
+                    var is_server_offered = trading_servers.find(function (trading_server) {
+                        return trading_server.id === mt5_login.server;
+                    });
+
+                    if (!is_server_offered && !/demo/.test(mt5_login.server)) {
+                        var landing_company = mt5_login.market_type === 'gaming' ? mt_gaming_company : mt_financial_company;
+
+                        addAccount(mt5_login.market_type, landing_company, mt5_login.server);
+                    }
                 }
             });
 
@@ -34140,53 +33859,70 @@ var MetaTrader = function () {
         var company = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
         var server = arguments[2];
 
-        Object.keys(company).filter(function (sub_account_type) {
-            return sub_account_type !== 'swap_free';
-        }) // TODO: remove this when releasing swap_free
-        .forEach(function (sub_account_type) {
-            var landing_company_short = company[sub_account_type].shortcode;
-
-            ['demo', 'real'].forEach(function (account_type) {
-                var is_demo = account_type === 'demo';
-                var display_name = Client.getMT5AccountDisplays(market_type, sub_account_type, is_demo);
-                var leverage = getLeverage(market_type, sub_account_type, landing_company_short);
-
-                var addAccountsInfo = function addAccountsInfo(trading_server) {
-                    // e.g. real_gaming_financial
-                    var key = account_type + '_' + market_type + '_' + sub_account_type;
-
-                    // e.g. real_gaming_financial_real01
-                    if (trading_server) {
-                        key += '_' + trading_server.id;
-                    }
-
-                    accounts_info[key] = {
-                        is_demo: is_demo,
-                        landing_company_short: landing_company_short,
-                        leverage: leverage,
-                        market_type: market_type,
-                        sub_account_type: sub_account_type,
-                        short_title: display_name.short,
-                        title: display_name.full
-                    };
+        // TODO: Update once market_types are available in inaccessible account details
+        if (market_type === 'unknown' && !company) {
+            var addUnknownAccount = function addUnknownAccount(acc_type) {
+                return accounts_info[acc_type + '_unknown'] = {
+                    is_demo: acc_type === 'demo',
+                    landing_company_short: localize('Unavailable'),
+                    leverage: localize('Unavailable'),
+                    market_type: localize('Unavailable'),
+                    sub_account_type: localize('Unavailable'),
+                    short_title: localize('Unavailable'),
+                    title: localize('Unavailable')
                 };
+            };
+            addUnknownAccount('demo');
+            addUnknownAccount('real');
+        } else {
+            Object.keys(company).filter(function (sub_account_type) {
+                return sub_account_type !== 'swap_free';
+            }) // TODO: remove this when releasing swap_free
+            .forEach(function (sub_account_type) {
+                var landing_company_short = company[sub_account_type].shortcode;
 
-                if (server && !is_demo) {
-                    addAccountsInfo({ id: server });
-                } else {
-                    var available_servers = getAvailableServers(market_type, sub_account_type);
+                ['demo', 'real'].forEach(function (account_type) {
+                    var is_demo = account_type === 'demo';
+                    var display_name = Client.getMT5AccountDisplays(market_type, sub_account_type, is_demo);
+                    var leverage = getLeverage(market_type, sub_account_type, landing_company_short);
 
-                    // demo only has one server, no need to create for each trade server
-                    if (available_servers.length > 1 && !is_demo) {
-                        available_servers.forEach(function (trading_server) {
-                            return addAccountsInfo(trading_server);
-                        });
+                    var addAccountsInfo = function addAccountsInfo(trading_server) {
+                        // e.g. real_gaming_financial
+                        var key = account_type + '_' + market_type + '_' + sub_account_type;
+
+                        // e.g. real_gaming_financial_real01
+                        if (trading_server) {
+                            key += '_' + trading_server.id;
+                        }
+
+                        accounts_info[key] = {
+                            is_demo: is_demo,
+                            landing_company_short: landing_company_short,
+                            leverage: leverage,
+                            market_type: market_type,
+                            sub_account_type: sub_account_type,
+                            short_title: display_name.short,
+                            title: display_name.full
+                        };
+                    };
+
+                    if (server && !is_demo) {
+                        addAccountsInfo({ id: server });
                     } else {
-                        addAccountsInfo();
+                        var available_servers = getAvailableServers(market_type, sub_account_type);
+
+                        // demo only has one server, no need to create for each trade server
+                        if (available_servers.length > 1 && !is_demo) {
+                            available_servers.forEach(function (trading_server) {
+                                return addAccountsInfo(trading_server);
+                            });
+                        } else {
+                            addAccountsInfo();
+                        }
                     }
-                }
+                });
             });
-        });
+        }
     };
 
     var getAvailableServers = function getAvailableServers(market_type, sub_account_type) {
@@ -34198,9 +33934,7 @@ var MetaTrader = function () {
             var _trading_server$suppo = trading_server.supported_accounts,
                 supported_accounts = _trading_server$suppo === undefined ? [] : _trading_server$suppo;
 
-            var is_server_supported = is_synthetic && supported_accounts.includes('gaming') || is_financial && supported_accounts.includes('financial') || is_financial_stp && supported_accounts.includes('financial_stp');
-
-            return is_server_supported;
+            return is_synthetic && supported_accounts.includes('gaming') || is_financial && supported_accounts.includes('financial') || is_financial_stp && supported_accounts.includes('financial_stp');
         });
     };
 
@@ -34230,6 +33964,15 @@ var MetaTrader = function () {
         var default_account = '';
         if (MetaTraderConfig.hasAccount(Client.get('mt5_account'))) {
             default_account = Client.get('mt5_account');
+
+            if (/unknown+$/.test(default_account)) {
+                var available_accounts = MetaTraderConfig.getAllAccounts().filter(function (account) {
+                    return !/unknown+$/.test(account);
+                });
+                if (available_accounts.length > 0) {
+                    default_account = available_accounts[0];
+                }
+            }
         } else {
             default_account = MetaTraderConfig.getAllAccounts()[0] || '';
         }
@@ -34405,7 +34148,29 @@ var MetaTrader = function () {
             return;
         }
 
+        var has_multi_mt5_accounts = response.mt5_login_list.length > 1;
+        var checkAccountTypeErrors = function checkAccountTypeErrors(type) {
+            return Object.values(response.mt5_login_list).filter(function (account) {
+                if (account.error) {
+                    return account.error.details.account_type === type;
+                }
+                return null;
+            });
+        };
+        var has_demo_error = checkAccountTypeErrors('demo').length > 0;
+        var has_real_error = checkAccountTypeErrors('real').length > 0;
+
         var trading_servers = State.getResponse('trading_servers');
+
+        var getDisplayServer = function getDisplayServer(trade_servers, server_name) {
+            var geolocation = trade_servers ? (trade_servers.find(function (server) {
+                return server.id === server_name;
+            }) || {}).geolocation : null;
+            if (geolocation) {
+                return geolocation.sequence > 1 ? geolocation.region + ' ' + geolocation.sequence : geolocation.region;
+            }
+            return null;
+        };
 
         // Update account info
         response.mt5_login_list.forEach(function (account) {
@@ -34416,21 +34181,38 @@ var MetaTrader = function () {
             }
 
             // in case trading_server API response is corrupted, acc_type will not exist in accounts_info due to missing supported_accounts prop
-            if (acc_type in accounts_info) {
+            if (acc_type in accounts_info && !/unknown+$/.test(acc_type)) {
                 accounts_info[acc_type].info = account;
 
                 accounts_info[acc_type].info.display_login = MetaTraderConfig.getDisplayLogin(account.login);
                 accounts_info[acc_type].info.login = account.login;
                 accounts_info[acc_type].info.server = account.server;
 
-                var geolocation = (trading_servers.find(function (server) {
-                    return server.id === account.server;
-                }) || {}).geolocation;
-                if (geolocation) {
-                    accounts_info[acc_type].info.display_server = geolocation.sequence > 1 ? geolocation.region + ' ' + geolocation.sequence : geolocation.region;
+                if (getDisplayServer(trading_servers, account.server)) {
+                    accounts_info[acc_type].info.display_server = getDisplayServer(trading_servers, account.server);
                 }
-
                 MetaTraderUI.updateAccount(acc_type);
+            } else if (account.error) {
+                var _account$error$detail = account.error.details,
+                    login = _account$error$detail.login,
+                    account_type = _account$error$detail.account_type,
+                    server = _account$error$detail.server;
+
+                // TODO: remove exception handlers for unknown_acc_type when details include market_types and sub market types
+
+                var unknown_acc_type = account_type === 'real' ? 'real_unknown' : 'demo_unknown';
+                accounts_info[unknown_acc_type].info = {
+                    display_login: MetaTraderConfig.getDisplayLogin(login),
+                    display_server: getDisplayServer(trading_servers, server),
+                    login: login
+                };
+                MetaTraderUI.updateAccount(unknown_acc_type, false);
+
+                if (!has_multi_mt5_accounts && (has_demo_error || has_real_error)) {
+                    MetaTraderUI.loadAction('new_account', null, true);
+                } else if (has_real_error && has_demo_error) {
+                    MetaTraderUI.disableButtonLink('.act_new_account');
+                }
             }
         });
 
@@ -34443,6 +34225,11 @@ var MetaTrader = function () {
         }).forEach(function (acc_type) {
             MetaTraderUI.updateAccount(acc_type);
         });
+
+        if (/unknown+$/.test(current_acc_type)) {
+            MetaTraderUI.updateAccount(current_acc_type);
+            MetaTraderUI.loadAction('new_account', null, true);
+        }
     };
 
     var sendTopupDemo = function sendTopupDemo() {
@@ -34553,6 +34340,15 @@ var MetaTraderUI = function () {
     var accounts_info = MetaTraderConfig.accounts_info;
     var actions_info = MetaTraderConfig.actions_info;
 
+    var disabled_signup_types = {
+        'real': false,
+        'demo': false
+    };
+
+    var setDisabledAccountTypes = function setDisabledAccountTypes(disabled_types_obj) {
+        disabled_signup_types = _extends({ disabled_signup_types: disabled_signup_types }, disabled_types_obj);
+    };
+
     var init = function init(submit_func, topup_demo_func) {
         token = getHashValue('token');
         topup_demo = topup_demo_func;
@@ -34638,9 +34434,13 @@ var MetaTraderUI = function () {
     };
 
     var updateAccount = function updateAccount(acc_type) {
+        var should_set_account = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
         updateListItem(acc_type);
-        setCurrentAccount(acc_type);
-        showHideFinancialAuthenticate(acc_type);
+        if (should_set_account) {
+            setCurrentAccount(acc_type);
+            showHideFinancialAuthenticate(acc_type);
+        }
     };
 
     var setMTAccountText = function setMTAccountText() {
@@ -34655,14 +34455,28 @@ var MetaTraderUI = function () {
         }
     };
 
+    var disableButtonLink = function disableButtonLink(selector) {
+        var button_link_el = $container.find(selector);
+        button_link_el.addClass('button-disabled');
+        button_link_el.children('span').addClass('disabled');
+    };
+
     var updateListItem = function updateListItem(acc_type) {
         var $acc_item = $list.find('[value="' + acc_type + '"]');
         $acc_item.find('.mt-type').text(accounts_info[acc_type].short_title);
         if (accounts_info[acc_type].info) {
             setMTAccountText();
             $acc_item.find('.mt-login').text('(' + accounts_info[acc_type].info.display_login + ')');
-            if (accounts_info[acc_type].info.display_server && MetaTraderConfig.hasMultipleTradeServers(acc_type, accounts_info)) {
+            if (accounts_info[acc_type].info.display_server && MetaTraderConfig.hasMultipleTradeServers(acc_type, accounts_info) || /unknown+$/.test(acc_type)) {
                 $acc_item.find('.mt-server').text('' + accounts_info[acc_type].info.display_server);
+
+                // add disabled style to unknown or unavailable accounts
+                if (/unknown+$/.test(acc_type)) {
+                    $acc_item.find('.mt-server').css({
+                        'color': '#fff',
+                        'background-color': '#dedede'
+                    });
+                }
             } else {
                 $acc_item.find('.mt-server').remove();
             }
@@ -34676,7 +34490,11 @@ var MetaTraderUI = function () {
                 var mt_balance = Currency.formatMoney(MetaTraderConfig.getCurrency(acc_type), +accounts_info[acc_type].info.balance);
                 $acc_item.find('.mt-balance').html(mt_balance);
                 $action.find('.mt5-balance').html(mt_balance);
-                $container.find('#btn_add_more_servers').setVisibility(getAvailableServers(false, acc_type).length > 0 && !accounts_info[acc_type].is_demo);
+                var $add_server_btn = $container.find('#btn_add_more_servers');
+                $add_server_btn.setVisibility(getAvailableServers(false, acc_type).length > 0 && !accounts_info[acc_type].is_demo);
+                if (disabled_signup_types.real) {
+                    $add_server_btn.addClass('button-disabled');
+                }
             }
             // disable MT5 account opening if created all available accounts
             if (Object.keys(accounts_info).every(function (type) {
@@ -34687,6 +34505,9 @@ var MetaTraderUI = function () {
 
             // Add more trade servers button.
             $container.find('#btn_add_more_servers').click(function () {
+                if (disabled_signup_types.real) {
+                    return;
+                }
                 var $back_button = _$form.find('#view_2 .btn-back');
                 var $cancel_button = _$form.find('#view_2 .btn-cancel');
                 var account_type = Client.get('mt5_account');
@@ -34701,6 +34522,10 @@ var MetaTraderUI = function () {
             });
         } else {
             $acc_item.setVisibility(0);
+        }
+        // TODO: Remove once market subtype and market types are provided by error details for inaccessible accounts
+        if (acc_type.split('_')[1] === 'unknown') {
+            $acc_item.addClass('disabled');
         }
     };
 
@@ -34795,12 +34620,21 @@ var MetaTraderUI = function () {
         current_action_ui = null;
     };
 
-    var loadAction = function loadAction(action, acc_type) {
+    var loadAction = function loadAction(action, acc_type, should_hide_cancel) {
         $container.find('[class~=act_' + (action || defaultAction(acc_type)) + ']').click();
+        if (should_hide_cancel) {
+            _$form.find('#view_1 .btn-cancel').hide();
+            _$form.find('#view_2 .btn-cancel').hide();
+        }
     };
 
     var populateForm = function populateForm(e) {
         var $target = $(e.target);
+
+        if ($target.hasClass('button-disabled')) {
+            return;
+        }
+
         if ($target.prop('tagName').toLowerCase() !== 'a') {
             $target = $target.parents('a');
         }
@@ -34936,6 +34770,7 @@ var MetaTraderUI = function () {
         var should_ignore_used = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
         var acc_type = arguments[1];
         return State.getResponse('trading_servers').filter(function (trading_server) {
+            if (/unknown+$/.test(acc_type)) return false;
             var account_type = acc_type || newAccountGetType();
             // if server is not added to account type, and in accounts_info we are storing it without server
             if (!/\d$/.test(account_type) && !accounts_info[account_type]) {
@@ -35174,6 +35009,13 @@ var MetaTraderUI = function () {
 
         // Account type selection
         _$form.find('.mt5_type_box').click(selectAccountTypeUI);
+
+        // disable signups by types that have errors
+        if (disabled_signup_types.demo) {
+            $('#rbtn_demo').addClass('disabled').next('p').css('color', '#DEDEDE');
+        } else if (disabled_signup_types.real) {
+            $('#rbtn_real').addClass('disabled').next('p').css('color', '#DEDEDE');
+        }
     };
 
     var newAccountGetType = function newAccountGetType() {
@@ -35274,6 +35116,8 @@ var MetaTraderUI = function () {
         });
 
         Object.keys(filtered_accounts).forEach(function (acc_type) {
+            // TODO: remove once we have market type and sub type data from error response details
+            if (/unknown+$/.test(acc_type)) return;
             var $acc = filtered_accounts[acc_type].is_demo ? $acc_template_demo.clone() : $acc_template_real.clone();
             var type = acc_type.split('_').slice(1).join('_');
             var image = filtered_accounts[acc_type].market_type === 'gaming' ? 'synthetic' : filtered_accounts[acc_type].sub_account_type; // image name can be (financial_stp|financial|synthetic)
@@ -35377,6 +35221,11 @@ var MetaTraderUI = function () {
     };
 
     var setCounterpartyAndJurisdictionTooltip = function setCounterpartyAndJurisdictionTooltip($el, acc_type) {
+        // TODO: Remove once we have market type and sub type in error details
+        if (/unknown+$/.test(acc_type)) {
+            return;
+        }
+
         var $icon = $el.parent().find('.display_login_tip');
         var is_mobile = window.innerWidth < 770;
         /*
@@ -35470,6 +35319,7 @@ var MetaTraderUI = function () {
     return {
         init: init,
         setAccountType: setAccountType,
+        setDisabledAccountTypes: setDisabledAccountTypes,
         loadAction: loadAction,
         updateAccount: updateAccount,
         postValidate: postValidate,
@@ -35479,6 +35329,7 @@ var MetaTraderUI = function () {
         displayMessage: displayMessage,
         displayPageError: displayPageError,
         disableButton: disableButton,
+        disableButtonLink: disableButtonLink,
         enableButton: enableButton,
         refreshAction: refreshAction,
         setTopupLoading: setTopupLoading,
@@ -35486,6 +35337,9 @@ var MetaTraderUI = function () {
 
         $form: function $form() {
             return _$form;
+        },
+        getDisabledAccountTypes: function getDisabledAccountTypes() {
+            return disabled_signup_types;
         },
         getToken: function getToken() {
             return token;
@@ -35572,10 +35426,21 @@ var FinancialAccOpening = function () {
     var get_settings = void 0,
         txt_secret_answer = void 0;
 
+    var doneLoading = function doneLoading() {
+        $('#financial_loading').remove();
+        $('#financial_wrapper').setVisibility(1);
+    };
+
     var onLoad = function onLoad() {
+        var client_details = sessionStorage.getItem('client_form_response');
+
         if (Client.hasAccountType('financial') || !Client.get('residence')) {
             BinaryPjax.loadPreviousUrl();
             return;
+        }
+
+        if (sessionStorage.getItem('is_risk_disclaimer')) {
+            handleResponse(JSON.parse(client_details));
         }
 
         var req_financial_assessment = BinarySocket.send({ get_financial_assessment: 1 }).then(function (response) {
@@ -35611,6 +35476,15 @@ var FinancialAccOpening = function () {
         });
 
         Promise.all([req_settings, req_financial_assessment]).then(function () {
+            var client_form_response = client_details ? JSON.parse(client_details).echo_req : {};
+            if (!isEmptyObject(client_form_response)) {
+                var keys = Object.keys(client_form_response);
+                keys.forEach(function (key) {
+                    var val = client_form_response[key];
+                    $('#' + key).val(val);
+                });
+            }
+
             AccountOpening.populateForm(form_id, getValidations, true);
 
             // date_of_birth can be 0 as a valid epoch
@@ -35629,6 +35503,10 @@ var FinancialAccOpening = function () {
             e.stopPropagation();
             $('#tax_information_note_toggle').toggleClass('open');
             $('#tax_information_note').slideToggle();
+        });
+
+        $('#financial_risk_decline').off('click').on('click', function () {
+            sessionStorage.removeItem('is_risk_disclaimer');
         });
 
         AccountOpening.showHidePulser(0);
@@ -35650,18 +35528,20 @@ var FinancialAccOpening = function () {
         if (place_of_birth) {
             validations = validations.concat([{ request_field: 'place_of_birth', value: place_of_birth }]);
         }
+        doneLoading();
         return validations;
     };
 
     var handleResponse = function handleResponse(response) {
+        sessionStorage.setItem('client_form_response', JSON.stringify(response));
         if ('error' in response && response.error.code === 'show risk disclaimer') {
+            sessionStorage.setItem('is_risk_disclaimer', true);
             $(form_id).setVisibility(0);
             $('#client_message').setVisibility(0);
-            var $financial_risk = $('#financial-risk');
-            $financial_risk.setVisibility(1);
-            $.scrollTo($financial_risk, 500, { offset: -10 });
-
             var risk_form_id = '#financial-risk';
+            $(risk_form_id).setVisibility(1);
+            $.scrollTo($(risk_form_id), 500, { offset: -10 });
+
             FormManager.init(risk_form_id, []);
 
             var echo_req = $.extend({}, response.echo_req);
@@ -35672,7 +35552,9 @@ var FinancialAccOpening = function () {
                 obj_request: echo_req,
                 fnc_response_handler: handleResponse
             });
+            doneLoading();
         } else {
+            sessionStorage.removeItem('is_risk_disclaimer');
             AccountOpening.handleNewAccount(response, response.msg_type);
         }
     };
