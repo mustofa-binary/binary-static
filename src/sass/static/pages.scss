@@ -1054,8 +1054,16 @@ body #not_authenticated_financial ul.checked > li {
         display: inline-block;
         margin-left: 5px;
     }
-    ul.bullet > li {
-        list-style-image: url('../images/pages/authenticate/error.svg');
+    ul.rejected > li {
+        background: url('../images/pages/authenticate/error.svg') no-repeat left 0.3em;
+        width: fit-content;
+        text-align: left;
+        padding-left: 1.4em;
+        margin-top: 1em;
+        min-height: auto;
+    }
+    #last_rejection_button {
+        margin-top: 1.4em;
     }
     #resolve_error {
         color: $COLOR_RED;

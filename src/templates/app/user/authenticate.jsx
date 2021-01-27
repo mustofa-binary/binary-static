@@ -86,7 +86,15 @@ const Authenticate = () => (
                         <div id='last_rejection_poi' className='center-text gr-padding-20 invisible'>
                             <img className='gr-padding-20' src={it.url_for('images/pages/authenticate/invalid.svg')} />
                             <h1 className='gr-padding-10'>{it.L('Your proof of identity submission failed because:')}</h1>
-                            <ul id='last_rejection_list' className='bullet gr-padding-20' />
+                            <div className='gr-8 gr-12-m gr-centered gr-no-gutter gr-gutter-m'>
+                                <ul id='last_rejection_list' className='rejected' />
+                            </div>
+                            <button
+                                className='button'
+                                id='last_rejection_button'
+                            >
+                                {it.L('Upload document')}
+                            </button>
                         </div>
 
                         <div id='limited_poi' className='center-text gr-padding-20 invisible'>

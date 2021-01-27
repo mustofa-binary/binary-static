@@ -989,7 +989,7 @@ const Authenticate = (() => {
             $('#last_rejection_poi').setVisibility(1);
 
             last_rejected_reasons.forEach(reason => {
-                $('#last_rejection_poi').append(`<li>${reason}</li>`);
+                $('#last_rejection_list').append(`<li>${reason}</li>`);
             });
 
             $('#last_rejection_button').off('click').on('click', () => {
