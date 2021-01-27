@@ -1713,6 +1713,9 @@ body #not_authenticated_financial ul.checked > li {
   display: inline-block;
   margin-left: 5px; }
 
+.authentication ul.bullet > li {
+  list-style-image: url("../images/pages/authenticate/error.svg"); }
+
 .authentication #resolve_error {
   color: #c03; }
 
