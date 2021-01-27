@@ -975,6 +975,8 @@ const Authenticate = (() => {
         const documents_supported = identity.services.onfido.documents_supported;
         const country_code = identity.services.onfido.country_code;
         const has_submission_attempts = !!identity.services.onfido.submissions_left;
+        const last_rejected_reasons = identity.services.onfido.last_rejected;
+        const is_last_rejected = !!last_rejected_reasons.length;
 
         if (is_fully_authenticated && !should_allow_resubmission) {
             $('#authentication_tab').setVisibility(0);
@@ -983,6 +985,23 @@ const Authenticate = (() => {
 
         if (has_personal_details_error) {
             $('#personal_details_error').setVisibility(1);
+        } else if (is_last_rejected && has_submission_attempts) {
+            $('#last_rejection_poi').setVisibility(1);
+
+            last_rejected_reasons.forEach(reason => {
+                $('#last_rejection_poi').append(`<li>${reason}</li>`);
+            });
+
+            $('#last_rejection_button').off('click').on('click', () => {
+                $('#last_rejection_poi').setVisibility(0);
+                
+                if (onfido_unsupported) {
+                    $('#not_authenticated_uns').setVisibility(1);
+                    initUnsupported();
+                } else {
+                    initOnfido(service_token_response.token, documents_supported, country_code);
+                }
+            });
         } else if (!has_submission_attempts) {
             $('#limited_poi').setVisibility(1);
         } else if (!needs_verification.includes('identity')) {

@@ -1054,6 +1054,9 @@ body #not_authenticated_financial ul.checked > li {
         display: inline-block;
         margin-left: 5px;
     }
+    ul.bullet > li {
+        list-style-image: url('../images/pages/authenticate/error.svg');
+    }
     #resolve_error {
         color: $COLOR_RED;
     }
