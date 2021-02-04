@@ -1723,8 +1723,17 @@ body #not_authenticated_financial ul.checked > li {
   margin-top: 1em;
   min-height: auto; }
 
+.authentication #last_rejection_poi span {
+  cursor: pointer;
+  color: #e98024; }
+  .authentication #last_rejection_poi span:hover {
+    text-decoration: underline; }
+
 .authentication #last_rejection_button {
   margin-top: 1.4em; }
+
+.authentication #last_rejection_list {
+  margin-bottom: 0.9em; }
 
 .authentication #resolve_error {
   color: #c03; }
