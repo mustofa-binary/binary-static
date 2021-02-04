@@ -986,9 +986,10 @@ const Authenticate = (() => {
         if (has_personal_details_error) {
             $('#personal_details_error').setVisibility(1);
         } else if (is_last_rejected && has_submission_attempts) {
+            const maximum_reasons = last_rejected_reasons.slice(0, 3);
             $('#last_rejection_poi').setVisibility(1);
 
-            last_rejected_reasons.forEach(reason => {
+            maximum_reasons.forEach(reason => {
                 $('#last_rejection_list').append(`<li>${reason}</li>`);
             });
 
@@ -1001,6 +1002,27 @@ const Authenticate = (() => {
                 } else {
                     initOnfido(service_token_response.token, documents_supported, country_code);
                 }
+            });
+
+            $('#last_rejection_more').off('click').on('click', () => {
+                $('#last_rejection_more').setVisibility(0);
+                $('#last_rejection_less').setVisibility(1);
+
+                $('#last_rejection_list').empty();
+
+                last_rejected_reasons.forEach(reason => {
+                    $('#last_rejection_list').append(`<li>${reason}</li>`);
+                });
+            });
+            $('#last_rejection_less').off('click').on('click', () => {
+                $('#last_rejection_less').setVisibility(0);
+                $('#last_rejection_more').setVisibility(1);
+
+                $('#last_rejection_list').empty();
+
+                maximum_reasons.forEach(reason => {
+                    $('#last_rejection_list').append(`<li>${reason}</li>`);
+                });
             });
         } else if (!has_submission_attempts) {
             $('#limited_poi').setVisibility(1);

@@ -1062,8 +1062,23 @@ body #not_authenticated_financial ul.checked > li {
         margin-top: 1em;
         min-height: auto;
     }
-    #last_rejection_button {
-        margin-top: 1.4em;
+    #last_rejection {
+        &_poi {
+            span {
+                cursor: pointer;
+                color: $COLOR_ORANGE;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        &_button {
+            margin-top: 1.4em;
+        }
+        &_list {
+            margin-bottom: 0.9em;
+        }
     }
     #resolve_error {
         color: $COLOR_RED;

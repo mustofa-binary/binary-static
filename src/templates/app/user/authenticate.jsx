@@ -88,6 +88,17 @@ const Authenticate = () => (
                             <h1 className='gr-padding-10'>{it.L('Your proof of identity submission failed because:')}</h1>
                             <div className='gr-8 gr-12-m gr-centered gr-no-gutter gr-gutter-m'>
                                 <ul id='last_rejection_list' className='rejected' />
+                                <span
+                                    id='last_rejection_more'
+                                >
+                                    {it.L('Show more')}
+                                </span>
+                                <span
+                                    className='invisible'
+                                    id='last_rejection_less'
+                                >
+                                    {it.L('Show less')}
+                                </span>
                             </div>
                             <button
                                 className='button'
