@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-01-26 02:55\n"
+"PO-Revision-Date: 2021-02-08 07:35\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,17 @@ msgstr "5"
 msgid "10"
 msgstr "10"
 
+msgid "40"
+msgstr "40"
+
+msgid "50"
+msgstr "50"
+
 msgid "404"
 msgstr "404"
+
+msgid "500"
+msgstr "500"
 
 msgid " (account created)"
 msgstr " (счет открыт)"
@@ -523,14 +532,8 @@ msgstr "0-1 года"
 msgid "0-5 transactions in the past 12 months"
 msgstr "0-5 транзакций за последние 12 месяцев"
 
-msgid "0.2%"
-msgstr "0.2%"
-
 msgid "0.20"
 msgstr "0.20"
-
-msgid "0.3%"
-msgstr "0.3%"
 
 msgid "0.4%"
 msgstr "0.4%"
@@ -949,9 +952,6 @@ msgstr "Доступ к личным данным"
 msgid "Access to the client's personal data is strictly prohibited, with the exception of key %1 personnel and only as needed for the performance of their duties."
 msgstr "Доступ к личным данным клиентов строго запрещен, за исключением ключевого персонала %1 и только по мере необходимости при выполнении ими своих обязанностей."
 
-msgid "Access your account with full trading permission."
-msgstr "Заходите на свой счёт с полным торговым функционалом."
-
 msgid "Accomplished writing and editing skills with at least five years editorial experience in digital advertising or online media"
 msgstr "Хорошие навыки написания и редактирования текстов, минимум пять лет редакторского опыта в сфере цифрового маркетинга и онлайн рекламы."
 
@@ -1308,6 +1308,9 @@ msgstr "Все версии для Android"
 
 msgid "All versions for iOS"
 msgstr "Все версии для iOS"
+
+msgid "All you’ll need from now is one password"
+msgstr ""
 
 msgid "Allow Clients to deposit with lower amounts (via local currency)"
 msgstr "Позволяют Клиентам пополнять счет небольшими суммами (в местной валюте)"
@@ -1876,8 +1879,20 @@ msgstr "B. Начало действия соглашения"
 msgid "B. Scope"
 msgstr "B. Сфера действия Политики"
 
+msgid "BCH/USD"
+msgstr "BCH/USD"
+
+msgid "BNB vs US dollar"
+msgstr "BNB против доллара США"
+
+msgid "BNB/USD"
+msgstr "BNB/USD"
+
 msgid "BTC"
 msgstr "BTC"
+
+msgid "BTC/USD"
+msgstr "BTC/USD"
 
 msgid "Bachelor's degree in computer science, or an equivalent combination of technical education, training, and work experience"
 msgstr "Степень бакалавра в области информатики или техническое образование, обучение и опыт работы в смежной области"
@@ -2431,14 +2446,17 @@ msgstr "Champion Group Ltd: Вануату"
 msgid "Change API Endpoint"
 msgstr "Изменить конечную точку API"
 
-msgid "Change MT5 password"
-msgstr "Изменить пароль MT5"
-
 msgid "Change Password"
 msgstr "Сменить пароль"
 
 msgid "Change currency"
 msgstr "Изменить валюту"
+
+msgid "Change investor password"
+msgstr ""
+
+msgid "Change main password"
+msgstr ""
 
 msgid "Change password"
 msgstr "Изменение пароля"
@@ -2649,6 +2667,12 @@ msgstr "Клиенты могут запросить дополнительну�
 
 msgid "Clients hereby declare that they are dealing with DIEL outside the scope of their economic or professional activity, and DIEL will therefore treat the client as an individual retail client for the purposes of EMIR compliance, unless advised otherwise."
 msgstr "Не умаляя вышеизложенного, настоящим клиент подтверждает, что работает с DIEL вне сферы своей экономической или профессиональной деятельности, и DIEL будет рассматривать клиента в качестве физического лица и индивидуального клиента в рамках соблюдения Правил регулирования инфраструктуры европейского финансового рынка (EMIR), если не указано иное."
+
+msgid "Clients in the European Union who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
+msgstr "Счета клиентов в Евросоюзе, желающих торговать на игорных продуктах, будут открыты в компании Deriv (Europe) Limited."
+
+msgid "Clients in the Isle of Man and the UK who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
+msgstr "Клиенты на Острове Мэн и в Великобритании, желающие торговать на игорных продуктах, могут открыть счет в компании Deriv (MX) Ltd."
 
 msgid "Clients may trade on our platforms only when they are using their own money and are drawing on funds that have been acquired honestly. If you have any suspicion that clients are using money that has been acquired dishonestly, you must inform %1.  In such cases, we may decide to conduct checks on the client’s status and background. %2 management will decide what information needs to be reported to government officials and through what channels."
 msgstr "Клиенты могут торговать на наших платформах только на собственные честно заработанные средства. Если у вас возникли какие-либо подозрения о том, что клиенты могут пользоваться нечестно приобретёнными средствами, вы должны сообщить об этом %1. В таких ситуациях мы можем провести проверку статуса и истории клиента. Менеджмент %2 примет решение, какую информацию необходимо передать государственным органам и каким способом это сделать."
@@ -2931,6 +2955,9 @@ msgstr "Подтвердить новый пароль"
 
 msgid "Confirm changes"
 msgstr "Подтвердить изменения"
+
+msgid "Confirm current password"
+msgstr ""
 
 msgid "Conflicts Policy"
 msgstr "Политика по конфликтам"
@@ -3277,17 +3304,11 @@ msgstr "Крипто"
 msgid "Cryptocurrencies"
 msgstr "Криптовалюты"
 
-msgid "Cryptocurrencies commission per round trade. For example, a round trade of 1 lot of BTC/USD with spot price of 10,000 USD will pay 30 USD on financial accounts and 20 USD on financial STP accounts."
-msgstr "Комиссия за полный контракт на криптовалютах. Пример: полный контракт в размере 1 лот на паре BTC/USD со спот-ценой 10,000 принесёт 30 USD с финансовых счетов и 20 USD с финансовых STP счетов."
-
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital assets that enable instant payments to anywhere in the world."
 msgstr "Криптовалюты, например Bitcoin или Ethereum, являются децентрализованными цифровыми активами, позволяющими совершать мгновенные платежи в любую точку земного шара."
 
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital currencies on the blockchain."
 msgstr "Криптовалюты (например, Bitcoin и Ethereum), являются децентрализованными цифровыми валютами, работающими на основе технологии блокчейн."
-
-msgid "Cryptocurrencies**"
-msgstr "Криптовалюты**"
 
 msgid "Cryptocurrency"
 msgstr "Криптовалюта"
@@ -3321,9 +3342,6 @@ msgstr "Валютные пары делятся на следующие кат�
 
 msgid "Current"
 msgstr "Текущие"
-
-msgid "Current MT5 password"
-msgstr "Текущий пароль MT5"
 
 msgid "Current Time"
 msgstr "Текущее время"
@@ -3408,6 +3426,9 @@ msgstr "DIEL оставляет за собой право принять или
 
 msgid "DIEL shall not be obliged to provide professional clients with the following:"
 msgstr "DIEL не несёт обязательств по предоставлению следующих услуг профессиональным клиентам:"
+
+msgid "DSH/USD"
+msgstr "DSH/USD"
 
 msgid "Daily Reset Indices – Daily Reset Indices replicate markets with a bullish and bearish trend with a constant volatility. The Bull Market and Bear Market indices start at 00:00 GMT each day, replicating bullish and bearish markets respectively."
 msgstr "Ежедневные индексы Reset, копирующие рынки с восходящими и нисходящими трендами, а также постоянной волатильностью. Индексы бычьего и медвежьего рынка ежедневно начинают работу в 00:00 GMT, копируя динамику растущего и снижающегося рынка, соответственно."
@@ -3598,8 +3619,8 @@ msgstr "Deriv (Europe) Limited"
 msgid "Deriv (Europe) Limited,"
 msgstr "Deriv (Europe) Limited,"
 
-msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta  (licence no. %2) - %3view licence%4 and also maintains an Irish licence. For UK clients by the UK Gambling Commission - %5view licence%4."
-msgstr "Компания Deriv (Europe) Limited расположена по адресу W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Компания лицензирована и регулируется (исключительно для игорных продуктов – Синтетических индексов %1) Управлением по азартным играм Мальты (номер лицензии %2; %3см. лицензию%4), а также имеет лицензию в Ирландии. Для клиентов из Великобритании компания находится под управлением Комиссии по азартным играм Великобритании (%5см. лицензию%4)."
+msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta, is licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta (%2licence no. MGA/B2C/102/2000%4), by the Gambling Commission for clients in Great Britain under (%3account no. 39495%4), and by the Revenue Commissioners for clients in Ireland (licence no. 1010285)."
+msgstr "Компания Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta, лицензирована и регулируется (только в отношении игорных продуктов - синтетических индексов %1) Управлением по азартным играм Мальты (%2номер лицензии MGA/B2C/102/2000%4), Комиссией по азартным играм для клиентов в Великобритании под %3учетной записью № 39495%4 и Уполномоченным по доходам для клиентов в Ирландии (лицензия № 1010285)."
 
 msgid "Deriv (Europe) Limited, or"
 msgstr "Deriv (Europe) Limited или"
@@ -3622,8 +3643,8 @@ msgstr "Deriv (FX) Ltd: Лабуан, территория Малайзии"
 msgid "Deriv (MX) Ltd"
 msgstr "Deriv (MX) Ltd"
 
-msgid "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW. Licensed and regulated by the Gambling Supervision Commission in the Isle of Man (current online gambling licence granted on the 31 August 2017) - %1view licence%2 and for UK clients by the UK Gambling Commission - %3view licence%2."
-msgstr "Компания Deriv (MX) Ltd расположена по адресу First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW, лицензирована и регулируется Комиссией по надзору за азартными играми на Острове Мэн (настоящая лицензия выдана 31 августа 2017 года; %1см. лицензию%2), а для клиентов из Великобритании – Комиссией по азартным играм Великобритании (%3см. лицензию%2)."
+msgid "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man, is licensed and regulated in Great Britain by the Gambling Commission under %1account no. 39172%3 and by the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "Компания Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man, лицензирована и регулируется в Великобритании Комиссией по азартным играм под %1учетной записью № 39172%3 и Комиссией по надзору за азартными играми острова Мэн (%2см. лицензию%3)."
 
 msgid "Deriv (MX) Ltd."
 msgstr "Deriv (MX) Ltd."
@@ -4027,6 +4048,12 @@ msgstr "Церемония EGR Operator Awards"
 msgid "EOS vs US dollar"
 msgstr "EOS против доллара США"
 
+msgid "EOS/USD"
+msgstr "EOS/USD"
+
+msgid "ETH/USD"
+msgstr "ETH/USD"
+
 msgid "EU Passport Rights"
 msgstr "Паспортные права ЕС"
 
@@ -4317,9 +4344,6 @@ msgstr "Евро против турецкой лиры"
 
 msgid "Euro vs US dollar"
 msgstr "Евро против доллара США"
-
-msgid "European Union residents who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
-msgstr "Резиденты Евросоюза, желающие работать с продуктами, связанными с азартными играми, могут открыть счета под юрисдикцией Deriv (Europe) Limited."
 
 msgid "European Union residents who wish to trade investment products will have their accounts opened with Deriv Investments (Europe) Limited."
 msgstr "Резиденты Евросоюза, желающие торговать на инвестиционных продуктах, смогут открыть счета под юрисдикцией Deriv Investments (Europe) Limited."
@@ -5219,6 +5243,9 @@ msgstr "Перейти к странице загрузки MT5"
 msgid "Go to MetaTrader 5 dashboard"
 msgstr "Перейти к панели MetaTrader 5"
 
+msgid "Go to settings"
+msgstr ""
+
 msgid "Go to statement"
 msgstr "Вернуться к выпискам"
 
@@ -5529,13 +5556,13 @@ msgid "I want to close my account"
 msgstr "Я хочу закрыть счет"
 
 msgid "I want to limit my trading activity instead"
-msgstr "Я хотел бы установить ограничения на свою торговую деятельность."
+msgstr "Я хотел(а) бы установить ограничения на свою торговую деятельность."
 
 msgid "I want to open a cryptocurrency account instead"
 msgstr "Я хочу открыть криптовалютный счет"
 
 msgid "I want to open a fiat currency account instead"
-msgstr "Я хочу открыть фидуциарный счет"
+msgstr "Я хочу открыть фиатный счет"
 
 msgid "I want to open a real account instead"
 msgstr "Я хочу открыть реальный счет"
@@ -5801,6 +5828,9 @@ msgstr "Если у вас ещё нет реального счёта %1, по�
 msgid "If you don't receive the email within the next few minutes, please check your junk/spam folder."
 msgstr "Если вы не получите сообщения от нас в следующие несколько минут, пожалуйста, проверьте папку со спамом."
 
+msgid "If you don’t receive the email within the next few minutes, please check your junk/spam folder."
+msgstr ""
+
 msgid "If you find any vulnerabilities in our %1open-source code%2, feel free to submit a pull request on GitHub."
 msgstr "Если вы обнаружите какие-либо уязвимости в нашем %1проекте с открытым кодом%2, пожалуйста, отправьте pull-запрос на GitHub."
 
@@ -5940,7 +5970,7 @@ msgid "If you select a specific <strong>end time</strong>, the <strong>end time<
 msgstr "Если вы выбираете определенное <strong>время окончания</strong>, <strong>временем окончания</strong> контракта будет выбранное вами время."
 
 msgid "If you want to change your affiliate, contact %1partners@binary.com%2 for more information on how you can do this."
-msgstr "Если вы хотите указать другого реферера, пожалуйста, напишите нам на %1partners@binary.com%2, и мы подскажем, как это можно сделать."
+msgstr "Если вы хотите указать другого реферера, пожалуйста, напишите на %1partners@binary.com%2, и мы подскажем, как это можно сделать."
 
 msgid "If you wish to reduce or remove the self-exclusion period, contact our %1Customer Support%1."
 msgstr "Если вы хотите сократить или убрать период самоисключения, обратитесь в %1службу поддержки%1."
@@ -6101,8 +6131,8 @@ msgstr "Компания Deriv Investments (Europe) Limited, расположе�
 msgid "In the EU, financial products are offered by Deriv Investments (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta, regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (%1licence no. IS/70156%2)."
 msgstr "На территории ЕС финансовые продукты предоставляются компанией Deriv Investments (Europe) Limited. Компания расположена по адресу W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta, регулируется Мальтийским управлением финансовых услуг в качестве поставщика инвестиционных услуг 3-й категории (%1лицензия номер IS/70156%2)."
 
-msgid "In the Isle of Man and the UK, Synthetic Indices are offered by Deriv (MX) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles; licensed and regulated respectively by (1) the Gambling Supervision Commission in the Isle of Man (current licence issued on 31 August 2017) and by (2) the Gambling Commission in the UK (licence %1reference no: 39172%2)."
-msgstr "Синтетические индексы на острове Мэн и в Великобритании предоставлены компанией Deriv (MX) Ltd., расположенной по адресу First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles. Компания лицензирована и регулируется (1) Комиссией по надзору за азартными играми на Острове Мэн (текущая лицензия выдана 31 августа 2017 г.), а также (2) Комиссией по азартным играм Великобритании (номер лицензии: %1 39172%2)."
+msgid "In the Isle of Man and the UK, Synthetic indices are offered by Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man; licensed and regulated in Great Britain by (1) the Gambling Commission under %1account no. 39172%3 and by (2) the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "На острове Мэн и в Великобритании синтетические индексы предоставлены компанией Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man. Компания лицензирована и регулируется в Великобритании (1) Комиссией по азартным играм под %1учетной записью № 39172%3 и (2) Комиссией по надзору за азартными играми острова Мэн (%2см. лицензию%3)."
 
 msgid "In the UK, our clients trade through Deriv (MX) Ltd and Deriv Investments (Europe) Limited. In the Isle of Man, they trade through Deriv (MX) Ltd. In the European Union (except UK), they trade through Deriv (Europe) Limited and Deriv Investments (Europe) Limited. In the rest of the world, they trade through Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd and Deriv (FX) Ltd."
 msgstr "Наши клиенты из Великобритании работают через Deriv (MX) Ltd и Deriv Investments (Europe) Limited. Клиентов с Острова Мэн обслуживает компания Deriv (MX) Ltd. Клиенты из Европейского Союза (за исключением Великобритании) работают через Deriv (Europe) Limited и Deriv Investments (Europe) Limited. Клиенты из других стран мира работают через Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd и Deriv (FX) Ltd."
@@ -6134,8 +6164,8 @@ msgstr "в случае, когда Компания не получила от 
 msgid "In the event that the Company is aware of an Affiliate who is in breach of any of the above provisions, the Company shall have the right, in addition to any other right or remedy available to it under this Agreement or applicable law, to immediately block the Affiliate's access to this programme. The Affiliate hereby irrevocably waives their rights to, and shall indemnify the Company and any member of the Deriv group of companies for, any claims or demands made against the Company or any member of the Deriv group of companies, their directors, officers, shareholders, or employees or against the %1 website if the Company revokes the Affiliate's access to the programme."
 msgstr "Если Компании станет известно о нарушении Партнёром любых вышеперечисленных положений, Компания оставляет за собой право (в дополнение к любым правам и средствам правовой защиты, предоставленным ей в рамках данного Соглашения или применимого законодательства) незамедлительно заблокировать доступ Партнёра к данной программе. Настоящим Партнёр окончательно отказывается от своего права, а также обязуется оградить Компанию и любого члена группы компаний Deriv Group от подачи какой-либо претензии или иска против Компании или любого другого представителя группы компаний Deriv Group, их директоров, акционеров, работников, а также против сайта %1 (в случае, когда Компания заблокировала доступ Партнёра к данной программе)."
 
-msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority in Malta (%1licence no. MGA/B2C/102/2000%4 issued on 01 August 2018), for UK clients by (2) the UK Gambling Commission (licence %2reference no: 39495%4), and for Irish clients by (3) the Revenue Commissioners in Ireland (Remote Bookmaker's Licence no. 1010285 issued on 1 July 2017). View complete %3Regulatory Information%4."
-msgstr "В остальной части ЕС Синтетические индексы предоставлены компанией Deriv (Europe) Limited, расположенной по адресу W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Компания лицензирована и регулируется (1) Управлением по азартным играм Мальты (%1лицензия номер MGA/B2C/102/2000%4 выдана 1 августа 2018 г.), для клиентов из Великобритании - (2) Управлением по азартным играм Великобритании (%2лицензия номер 39495%4), а для клиентов из Ирландии - (3) Налоговой службой Ирландии (лицензия удалённого букмекера номер 1010285, выданная 1 июля 2017 г). Ознакомьтесь с %3Информацией о регулировании%4."
+msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority (%1licence no. MGA/B2C/102/2000%4), by (2) the Gambling Commission for clients in Great Britain under %2account no. 39495%4, and by (3) the Revenue Commissioners for clients in Ireland (licence no. 1010285). View complete %3Regulatory Information%4."
+msgstr "В остальных странах ЕС синтетические индексы предоставлены компанией Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta. Компания лицензирована и регулируется (1) Управлением по азартным играм Мальты (%1номер лицензии MGA/B2C/102/2000%4), (2) Комиссией по азартным играм для клиентов в Великобритании под %2учетной записью № 39495%4 и (3) Уполномоченным по доходам для клиентов в Ирландии (лицензия № 1010285). См. полную %3Нормативную информацию%4."
 
 msgid "In this Agreement, unless the context otherwise requires, the following definitions hold:"
 msgstr "В рамках данного соглашения и если контекст не предполагает иного, нижеуказанные термины должны иметь следующее толкование:"
@@ -6325,9 +6355,6 @@ msgstr "Инвестиционные продукты для резиденто�
 
 msgid "Investments &amp; Dividends"
 msgstr "Инвестиции и дивиденды"
-
-msgid "Investor"
-msgstr "Инвестор"
 
 msgid "Investor Compensation Scheme"
 msgstr "Схема компенсации инвесторам"
@@ -6574,6 +6601,9 @@ msgstr "Офис в Куала-Лумпуре"
 
 msgid "L. Manifest Error"
 msgstr "L. Явные ошибки"
+
+msgid "LTC/USD"
+msgstr "LTC/USD"
 
 msgid "Labuan"
 msgstr "Лабуан"
@@ -6956,12 +6986,6 @@ msgstr "Удалось произвести хорошее впечатлени�
 msgid "Maestro is an international debit card service by Mastercard. For more information, please visit %1."
 msgstr "Maestro – это международная дебетовая карта, поддерживаемая системой Mastercard. Более подробную информацию можно получить по адресу %1."
 
-msgid "Main"
-msgstr "Основной"
-
-msgid "Main password"
-msgstr "Основной пароль"
-
 msgid "Maintain accurate system pricing parameters"
 msgstr "Поддержание точных параметров системы ценообразования"
 
@@ -7011,7 +7035,7 @@ msgid "Make another transfer"
 msgstr "Выполнить ещё один перевод"
 
 msgid "Make sure all of the document is in the photo"
-msgstr "Убедитесь, что на фото весь документ"
+msgstr "Убедитесь, что на фото весь документ."
 
 msgid "Make sure details are clear to read, with no blur or glare"
 msgstr "Убедитесь, что данные четко видны, читаемы, без размытия или бликов."
@@ -7029,16 +7053,16 @@ msgid "Make sure your card details are clear to read, with no blur or glare"
 msgstr "Убедитесь, что данные карты четко видны, читаемы, без размытия или бликов."
 
 msgid "Make sure your device has a working camera"
-msgstr "Убедитесь, что на вашем устройстве работает камера"
+msgstr "Убедитесь, что на вашем устройстве работает камера."
 
 msgid "Make sure your device's camera works"
-msgstr "Убедитесь, что на вашем устройстве работает камера"
+msgstr "Убедитесь, что на вашем устройстве работает камера."
 
 msgid "Make sure your license details are clear to read, with no blur or glare"
 msgstr "Убедитесь, что данные на правах четко видны, читаемы, без размытия или бликов."
 
 msgid "Make sure your passport details are clear to read, with no blur or glare"
-msgstr "Убедитесь, что паспортные данные четко видны, читаемы, без размытия или бликов"
+msgstr "Убедитесь, что паспортные данные четко видны, читаемы, без размытия или бликов."
 
 msgid "Make sure your permit details are clear to read, with no blur or glare"
 msgstr "Убедитесь, что данные вида на жительство четко видны, читаемы, без размытия или бликов."
@@ -7592,9 +7616,6 @@ msgstr "Никогда"
 msgid "Never Used"
 msgstr "Никогда не использовался"
 
-msgid "New MT5 password"
-msgstr "Новый пароль на MT5"
-
 msgid "New Password"
 msgstr "Новый пароль"
 
@@ -7618,6 +7639,9 @@ msgstr "Новозеландский доллар против американ�
 
 msgid "New account"
 msgstr "Новый счёт"
+
+msgid "New investor password"
+msgstr ""
 
 msgid "New office in Asunción, Paraguay"
 msgstr "Новый офис в Асунсьоне, Парагвай"
@@ -8244,7 +8268,10 @@ msgid "Passport"
 msgstr "Паспорт"
 
 msgid "Passport photo page"
-msgstr "Страница паспорта с фотографией"
+msgstr "Страница паспорта с фото"
+
+msgid "Password"
+msgstr ""
 
 msgid "Password Reset"
 msgstr "Изменение пароля"
@@ -8257,9 +8284,6 @@ msgstr "Изменение пароля"
 
 msgid "Password should have lower and uppercase English letters with numbers."
 msgstr "Пароль должен состоять из заглавных, строчных латинских букв и цифр."
-
-msgid "Password type"
-msgstr "Вид пароля"
 
 msgid "Patented technology"
 msgstr "Запатентованная технология"
@@ -8543,6 +8567,9 @@ msgstr "Пожалуйста подтвердите, что вы не являе
 msgid "Please confirm the transaction details in order to complete the transfer:"
 msgstr "Подтвердите данные транзакции для завершения перевода:"
 
+msgid "Please confirm your %1 password to create an MT5 account. If you’ve forgotten your password, click Reset password."
+msgstr ""
+
 msgid "Please contact your payment agent to validate your withdrawal request."
 msgstr "Пожалуйста, свяжитесь со своим платежным агентом, чтобы подтвердить запрос на вывод средств."
 
@@ -8679,7 +8706,7 @@ msgid "Please take note that our swap rate also depends on the time and days you
 msgstr "Пожалуйста, примите во внимание, что наши свопы также зависят от времени суток и количества дней, в которые ваши позиции остаются открытыми:"
 
 msgid "Please tell us why you are closing your account (please select one):"
-msgstr "Пожалуйста, скажите нам, почему вы решили закрыть свой счет (вы можете выбрать одну из причин ниже):"
+msgstr "Пожалуйста, скажите нам, почему вы решили закрыть счет (можно выбрать одну из причин ниже):"
 
 msgid "Please try again"
 msgstr "Пожалуйста, попробуйте снова"
@@ -9422,9 +9449,6 @@ msgstr "Reset Колл"
 msgid "Reset Call/Reset Put"
 msgstr "Reset колл/Reset пут"
 
-msgid "Reset MT5 password"
-msgstr "Изменить пароль MT5"
-
 msgid "Reset Password"
 msgstr "Изменить пароль"
 
@@ -9433,6 +9457,12 @@ msgstr "Reset Пут"
 
 msgid "Reset Time"
 msgstr "Время Reset"
+
+msgid "Reset account password"
+msgstr ""
+
+msgid "Reset investor password"
+msgstr ""
 
 msgid "Reset my virtual balance"
 msgstr "Сбросить мой виртуальный баланс"
@@ -9886,9 +9916,6 @@ msgstr "Установите двухступенчатую аутентифик
 
 msgid "Severability"
 msgstr "Раздельность положений Соглашения"
-
-msgid "Share access to your account without any permission to trade."
-msgstr "Делитесь доступом к своему счету без разрешения на торговлю."
 
 msgid "Sharp prices"
 msgstr "Лучшие цены"
@@ -10404,10 +10431,10 @@ msgid "Swap scheme"
 msgstr "Схема свопов"
 
 msgid "Swaps Long (per annum)"
-msgstr "Свопы по длинным позициям (год)"
+msgstr "Свопы на покупку (% годовых)"
 
-msgid "Swaps short (per annum)"
-msgstr "Свопы по коротким позициям (год)"
+msgid "Swaps Short (per annum)"
+msgstr "Свопы на продажу (% годовых)"
 
 msgid "Swiss franc vs Japanese yen"
 msgstr "Швейцарский франк против японской иены"
@@ -12423,7 +12450,7 @@ msgid "To change your name, date of birth, country of residence, email, or tax i
 msgstr "Чтобы изменить имя, дату рождения, страну проживания или эл. адрес или налоговую информацию, пожалуйста, обратитесь в %1службу поддержки%2."
 
 msgid "To close your account, complete the following steps:"
-msgstr "Чтобы закрыть счет, пожалуйста, выполните следующие действия:"
+msgstr "Чтобы закрыть счет, выполните следующие действия:"
 
 msgid "To create a MetaTrader 5 account:"
 msgstr "Чтобы открыть счёт MetaTrader 5:"
@@ -12475,9 +12502,6 @@ msgstr "Чтобы предоставить клиенту лучший опыт
 
 msgid "To reset your password, enter the email address you used to create your account into the field below and click 'Reset password'."
 msgstr "Чтобы изменить пароль, введите ваш зарегистрированный эл. адрес в поле внизу и нажмите \"Изменить пароль\"."
-
-msgid "To reset your trading or investor password, please click the button below:"
-msgstr "Для изменения торгового или инвестиционного пароля нажмите на кнопку ниже:"
 
 msgid "To smoothly verify you, we need a better photo"
 msgstr "Нам нужно фото более высокого качества, чтобы верифицировать вас"
@@ -12929,9 +12953,6 @@ msgstr "Виды контрактов"
 msgid "UI/UX Designer"
 msgstr "Дизайнер UI/UX"
 
-msgid "UK and Manx residents who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
-msgstr "Резиденты Евросоюза и острова Мэн, желающие торговать на продуктах, связанных с азартными играми, смогут открыть счета под юрисдикцией Deriv (MX) Ltd."
-
 msgid "US Patents"
 msgstr "Патенты США"
 
@@ -13000,6 +13021,9 @@ msgstr "Не удалось прочитать файл %1"
 
 msgid "Unavailable"
 msgstr "Недоступно"
+
+msgid "Unavailable because of too many failed attempts. Please try again in a minute or reset your account password to continue."
+msgstr ""
 
 msgid "Under no circumstances shall the Company or its directors or employees be liable under this Agreement to the Programmer or any third party for any indirect, special, incidental, punitive, or consequential loss or damages or any other similar damages under any theory of liability (whether in contract, tort, strict liability, or any other theory), which are directly or indirectly attributable to the use of, or the inability to use, the %1 API, or any content contained thereon, even if the Company has been informed of the possibility thereof."
 msgstr "Ни при каких обстоятельствах Компания, её директоры или сотрудники не будут нести ответственности в рамках данного соглашения перед Программистом или третьей стороной за любые косвенные, специальные, случайные, штрафные или последующие потери или убытки, а также любые другие убытки по любой теории ответственности (в рамках договора, правонарушения, объективной ответственности или любой другой теории), которые имеют прямое или косвенное отношение к использованию или невозможности использования API %1, а также к любому контенту сайта, даже если Компания была проинформирована о такой возможности."
@@ -13116,7 +13140,7 @@ msgid "Upload front of license from your computer"
 msgstr "Загрузите лицевую сторону прав со своего компьютера"
 
 msgid "Upload passport photo page"
-msgstr "Загрузите страницу паспорта с фотографией"
+msgstr "Загрузите страницу паспорта с фото"
 
 msgid "Upload passport photo page from your computer"
 msgstr "Загрузите страницу паспорта с фото со своего компьютера"
@@ -13223,6 +13247,9 @@ msgstr "Подтверждение"
 msgid "Verification code"
 msgstr "Код проверки"
 
+msgid "Verification code is wrong. Please use the link sent to your email, or request a new token by clicking Reset investor password."
+msgstr ""
+
 msgid "Verification code is wrong. Please use the link sent to your email."
 msgstr "Неправильный проверочный код. Пожалуйста, воспользуйтесь ссылкой, отправленной на ваш email."
 
@@ -13244,11 +13271,8 @@ msgstr "Проверка и утверждение запросов клиент
 msgid "Verify identity"
 msgstr "Подтвердить личность"
 
-msgid "Verify main password"
-msgstr "Подтвердите основной пароль"
-
-msgid "Verify new MT5 password"
-msgstr "Подтвердите новый пароль MT5"
+msgid "Verify new investor password"
+msgstr ""
 
 msgid "Verify new password"
 msgstr "Подтвердите новый пароль"
@@ -13588,6 +13612,12 @@ msgstr "Отличные организационные, администрат�
 
 msgid "We’ll update your limits. Click %1Agree and accept%2 to acknowledge that you are fully responsible for your actions, and we are not liable for any addiction or loss."
 msgstr "Мы обновим ваши лимиты. Нажмите %1Согласиться и принять%2, чтобы подтвердить, что вы осознаете и полностью отвечаете за свои действия, и мы не несем ответственности за какие-либо убытки или зависимость."
+
+msgid "We’ve upgraded our system to support a single, more secure password across %1. Once you’ve set a new password, you can use it to log into all your %1 and MT5 accounts."
+msgstr ""
+
+msgid "We’ve upgraded our system to support a single, more secure password across all of %1. Once you’ve set a new password, you can use it to log into all your %1, and MT5 accounts."
+msgstr ""
 
 msgid "What about instant execution? In this case, your order is placed at the price that's available at that time. Requotes are possible if the price fluctuates a great deal before the order execution is complete."
 msgstr "При мгновенном исполнении ваш ордер будет размещён по цене, доступной в данный момент времени. Изменение котировки возможно, если цена слишком сильно колеблется до исполнения ордера."
@@ -14033,6 +14063,15 @@ msgstr "Написание надёжного, качественного и г�
 msgid "Written limits and self-exclusion"
 msgstr "Принятые лимиты и самоисключение"
 
+msgid "XMR vs US dollar"
+msgstr "XMR против доллара США"
+
+msgid "XMR/USD"
+msgstr "XMR/USD"
+
+msgid "XRP/USD"
+msgstr "XRP/USD"
+
 msgid "Yes"
 msgstr "Да"
 
@@ -14073,7 +14112,7 @@ msgid "You are selling the base currency and buying the quote currency."
 msgstr "Вы продаёте основную (базовую) валюту и покупаете валюту котировки."
 
 msgid "You can %1open a cryptocurrency%2 account without closing your fiat currency account."
-msgstr "Вы можете %1открыть криптовалютный счет%2, не закрывая своего фидуциарного счета."
+msgstr "Вы можете %1открыть криптовалютный счет%2, не закрывая своего фиатного счета."
 
 msgid "You can %1open a real account%2 without closing your demo account."
 msgstr "Вы можете %1открыть реальный счет%2, не закрывая своего демо-счета."
@@ -14115,7 +14154,7 @@ msgid "You can now return to your computer to continue"
 msgstr "Теперь вы можете вернуться и продолжить со своего компьютера"
 
 msgid "You can open a fiat currency account without closing your cryptocurrency account."
-msgstr "Вы можете открыть фидуциарный счет, не закрывая своего криптовалютного счета."
+msgstr "Вы можете открыть фиатный счет, не закрывая своего криптовалютного счета."
 
 msgid "You can sell your contract before expiry to keep any profit you may have made or to minimise your loss."
 msgstr "Вы можете продать контракт до окончания срока его действия, чтобы сохранить имеющуюся прибыль или минимизировать убыток."
@@ -14145,7 +14184,7 @@ msgid "You expect the %1 to rise in value so you can sell it back for a profit."
 msgstr "Вы ожидаете, что %1 подорожает и его можно будет продать для получения прибыли."
 
 msgid "You have %1. You may open one or %2more cryptocurrency%3 accounts:"
-msgstr "У вас уже есть%1. Вы можете открыть один или %2несколько криптовалютных%3 счетов:"
+msgstr "У вас уже есть %1. Вы можете открыть один или %2несколько криптовалютных%3 счетов:"
 
 msgid "You have a %1 account. You may %2change your currency%3 to any of the following as long as you haven't made a deposit or created an MT5 account:"
 msgstr "У вас есть счет в %1. Вы можете %2изменить валюту счета%3 до того, как внесете средства или откроете счет МТ5. Доступные валюты:"
@@ -14354,6 +14393,9 @@ msgstr "Ваш клиент получит по электронной почт�
 msgid "Your Existing Accounts"
 msgstr "Ваши текущие счета"
 
+msgid "Your MT5 password is now same as your %1 account. To reset, please go to %2Settings%3 to change your password."
+msgstr ""
+
 msgid "Your account does not need authentication at this time.%1We will inform you if authentication is required in the future."
 msgstr "В настоящее время вам не нужно аутентифицировать свой счет.%1Мы сообщим вам, если счету потребуется аутентификация."
 
@@ -14507,6 +14549,9 @@ msgstr "Номер вашей транзакции:"
 msgid "Your transaction reference number is %1"
 msgstr "Номер вашей транзакции: %1"
 
+msgid "Your virtual balance has been reset."
+msgstr "Баланс вашего демо-счета был сброшен."
+
 msgid "Your web browser (%1) is out of date and may affect your trading experience. Proceed at your own risk. %2Update browser%3"
 msgstr "Ваш веб браузер (%1) устарел, что может повлиять на результаты вашей торговли. Рекомендуем %2обновить браузер%3"
 
@@ -14524,6 +14569,12 @@ msgstr "Вы автоматически выйдете из системы."
 
 msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
 msgstr "Вы успешно закрыли счет. Мы отправим письмо с подтверждением на %1."
+
+msgid "ZEC vs US dollar"
+msgstr "ZEC против доллара США"
+
+msgid "ZEC/USD"
+msgstr "ZEC/USD"
 
 msgid "ZingPay is a payment facility that allows online bank transfers for clients in South Africa."
 msgstr "ZingPay - это платежная система, которая позволяет осуществлять онлайн-переводы для клиентов в Южной Африке."
