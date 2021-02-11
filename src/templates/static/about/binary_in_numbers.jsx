@@ -21,13 +21,13 @@ const BinaryInNumbers = () => (
             <Numbers
                 className='client'
                 header={it.L('Active trading clients')}
-                text={it.L('Our active client base is expected to reach over 700,000 total clients this year.')}
+                text={it.L('Our active client base is expected to reach over 790,000 total clients this year.')}
                 image='chart-active-trading-clients'
             />
             <Numbers
                 className='transaction'
                 header={it.L('Number of transactions')}
-                text={it.L('We\'re projected to register over 435 million transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 1.1 billion.')}
+                text={it.L('We\'re projected to register over 1.1 billion transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 2.6 billion.')}
                 image='chart-num-transactions'
             />
             {/* <Numbers
@@ -39,7 +39,7 @@ const BinaryInNumbers = () => (
             <Numbers
                 className='employee'
                 header={it.L('Number of employees and contractors')}
-                text={it.L('We\'ve grown in size over the years - both in terms of manpower and offices. We currently have over [_1] employees across 6 offices in Malaysia, Malta, Paraguay Dubai, Rwanda and Cyprus. Further growth in headcount is expected this year to cater to the increased demand in our products and services.', '380')}
+                text={it.L('We\'ve grown in size over the years - both in terms of manpower and offices. We currently have over [_1] employees across 6 offices in Malaysia, Malta, Paraguay, Dubai, Rwanda and Cyprus. Further growth in headcount is expected this year to cater to the increased demand in our products and services.', '380')}
                 image='chart-num-employees'
             />
         </div>
