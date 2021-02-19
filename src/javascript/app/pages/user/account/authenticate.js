@@ -1028,7 +1028,7 @@ const Authenticate = (() => {
                 });
             }
             
-        } else if (!has_submission_attempts) {
+        } else if (!has_submission_attempts && identity.status !== 'verified') {
             $('#limited_poi').setVisibility(1);
         } else if (!needs_verification.includes('identity')) {
             // if POI is verified and POA is not verified, redirect to POA tab
