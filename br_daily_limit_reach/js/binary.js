@@ -27602,7 +27602,7 @@ var Authenticate = function () {
                             break;
 
                         case 35:
-                            if (has_submission_attempts) {
+                            if (!(!has_submission_attempts && identity.status !== 'verified')) {
                                 _context2.next = 39;
                                 break;
                             }
