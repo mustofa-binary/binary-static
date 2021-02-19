@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-02-11 07:21\n"
+"PO-Revision-Date: 2021-02-18 04:16\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "MIME-Version: 1.0\n"
@@ -953,7 +953,7 @@ msgid "Access to the client's personal data is strictly prohibited, with the exc
 msgstr "除非%1的關鍵人員在執行職務時有此必要，嚴格禁止任何人存取客戶的個人資料。"
 
 msgid "Access your account with full trading permission."
-msgstr ""
+msgstr "使用完整交易許可權存取您的帳戶。"
 
 msgid "Accomplished writing and editing skills with at least five years editorial experience in digital advertising or online media"
 msgstr "具備至少五年的數位廣告或網路媒體編輯經驗, 並具備寫作和編輯技能"
@@ -2447,7 +2447,7 @@ msgid "Change API Endpoint"
 msgstr "更改 API 端點"
 
 msgid "Change MT5 password"
-msgstr ""
+msgstr "更改MT5密碼"
 
 msgid "Change Password"
 msgstr "更改密碼"
@@ -3338,7 +3338,7 @@ msgid "Current"
 msgstr "目前"
 
 msgid "Current MT5 password"
-msgstr ""
+msgstr "目前MT5密碼"
 
 msgid "Current Time"
 msgstr "目前時間"
@@ -3933,6 +3933,9 @@ msgstr "下載MT5"
 
 msgid "Download MT5 for Linux"
 msgstr "Linux版MT5下載"
+
+msgid "Download MT5 for Mac"
+msgstr "Mac版MT5下載"
 
 msgid "Download MT5 for Windows"
 msgstr "Windows版MT5下載"
@@ -6347,7 +6350,7 @@ msgid "Investments &amp; Dividends"
 msgstr "投資&amp;分紅"
 
 msgid "Investor"
-msgstr ""
+msgstr "投資者"
 
 msgid "Investor Compensation Scheme"
 msgstr "投資者補償方案"
@@ -6784,8 +6787,8 @@ msgstr "與您的電腦連接"
 msgid "Links"
 msgstr "連結"
 
-msgid "Linux"
-msgstr "Linux"
+msgid "Linux or MacOs"
+msgstr "Linux 或 MacOs"
 
 msgid "Liquidity solutions"
 msgstr "流動性解決方案"
@@ -6867,9 +6870,6 @@ msgstr "回顧選項目前僅適用于 %1綜合指數%2。"
 
 msgid "Looking for %1 app?"
 msgstr "正在查找 %1 應用程式？"
-
-msgid "Looking for desktop apps?"
-msgstr "正在查找桌面應用程式？"
 
 msgid "Looking for the %1 Desktop app?"
 msgstr "正在查找 %1 桌面應用程式？"
@@ -6961,6 +6961,9 @@ msgstr "Windows版MT5"
 msgid "MT5 for iOS"
 msgstr "IOS版MT5"
 
+msgid "MT5 for macOS"
+msgstr "macOS版MT5"
+
 msgid "MT5 real-money account for Synthetic Indices only."
 msgstr "綜合指數專用的MT5真實資金帳戶。"
 
@@ -6973,6 +6976,9 @@ msgstr "MT5網上平台"
 msgid "MT5 withdrawals have been disabled on your account. Please check your email for more details."
 msgstr "您的MT5帳戶已被禁提款。請檢查您的電子郵件, 以瞭解更多詳情。"
 
+msgid "MacOs or Windows"
+msgstr "MacOs 或 Windows"
+
 msgid "Made an impression in the first interview? We'll invite you to a second interview with our CEO and/or hiring manager."
 msgstr "在第一次面試中留下了印象？我們將邀請您與首席執行官和/或招聘經理進行第二次面談。"
 
@@ -6980,10 +6986,10 @@ msgid "Maestro is an international debit card service by Mastercard. For more in
 msgstr "Maestro是萬事達卡的國際轉帳卡服務。欲瞭解詳細資訊, 請前往 %1。"
 
 msgid "Main"
-msgstr ""
+msgstr "首頁"
 
 msgid "Main password"
-msgstr ""
+msgstr "主密碼"
 
 msgid "Maintain accurate system pricing parameters"
 msgstr "維護準確的系統訂價參數"
@@ -7616,7 +7622,7 @@ msgid "Never Used"
 msgstr "從未使用過"
 
 msgid "New MT5 password"
-msgstr ""
+msgstr "MT5新密碼"
 
 msgid "New Password"
 msgstr "新密碼"
@@ -8114,7 +8120,7 @@ msgid "Our Synthetic account allows you to trade CFDs on Synthetic Indices - our
 msgstr "我們的綜合帳戶允許您對綜合指數進行差價交易 - 這是我們專有的綜合資產，可模擬市場力量。"
 
 msgid "Our active client base is expected to reach over 790,000 total clients this year."
-msgstr ""
+msgstr "我們今年的預計活躍客戶總數將超過79萬人。"
 
 msgid "Our business is founded on collaboration and we aim to build long-term, mutually beneficial relationships with our partners. However, we will never compromise our commitment to business integrity. In cases where our partners are unwilling or unable to abide by our principles, we reserve the right to withdraw from the business relationship."
 msgstr "我們的業務建立在合作基礎上，我們旨在與合作夥伴建立長期的互利關係。但是，我們絕不會對業務誠信的堅持作出妥協。如果我們的合作夥伴不願意或無法遵守我們的原則，我們保留退出業務關係的權利。"
@@ -8282,7 +8288,7 @@ msgid "Password should have lower and uppercase English letters with numbers."
 msgstr "密碼必須有大小寫英文字母和數字。"
 
 msgid "Password type"
-msgstr ""
+msgstr "密碼類型"
 
 msgid "Patented technology"
 msgstr "專利保護技術"
@@ -8875,6 +8881,9 @@ msgstr "價格/定價資料"
 msgid "Primary"
 msgstr "主要"
 
+msgid "Prime Brokerage Services Limited"
+msgstr "Prime Brokerage Services 有限公司"
+
 msgid "Prior to placing an Order, which results in opening a position, the client acknowledges that it is their responsibility to ensure that their Account Free Margin is sufficient to cover the Margin required in relation to the opening of the position (the \"Margin Requirement\"), and to continuously meet the Margin Requirement."
 msgstr "下單開盤交易前，客戶確認確保其帳戶可用保證金足以支付開盤交易所須的保證金（「要求保證金」），並持續滿足保證金要求是客戶的責任。"
 
@@ -9446,7 +9455,7 @@ msgid "Reset Call/Reset Put"
 msgstr "重置看漲/重置看跌"
 
 msgid "Reset MT5 password"
-msgstr ""
+msgstr "重設MT5密碼"
 
 msgid "Reset Password"
 msgstr "重設密碼"
@@ -9911,7 +9920,7 @@ msgid "Severability"
 msgstr "可分割性"
 
 msgid "Share access to your account without any permission to trade."
-msgstr ""
+msgstr "沒有任何交易許可的情況下共用您的帳戶的存取權。"
 
 msgid "Sharp prices"
 msgstr "精準報價"
@@ -11308,8 +11317,8 @@ msgstr "推介經紀的義務"
 msgid "The Investor Compensation Scheme"
 msgstr "投資者補償方案"
 
-msgid "The MT5 desktop app is not supported by macOS, Windows XP, Windows 2003, and Windows Vista."
-msgstr "MacOS Catalina、Windows XP、Windows 2003 和 Windows Vista 不支援 MT5 桌面應用程式。"
+msgid "The MT5 desktop app is not supported by Windows XP, Windows 2003, and Windows Vista."
+msgstr "Windows XP、Windows 2003 和 Windows Vista 不支援 MT5 桌面應用程式。"
 
 msgid "The Margin Level of the client's MT5 Real Account reaches or falls below the Stop Out Level."
 msgstr "客戶的MT5真實帳戶保證金層級已達到或低於強制平倉層級。"
@@ -12346,9 +12355,6 @@ msgstr "這項義務包括禁止非法付款或向公職人員、業務夥伴、
 msgid "This page is only available to logged out clients."
 msgstr "此頁面僅適用於已登出的客戶。"
 
-msgid "This page will redirect to the %1 homepage after 10 seconds."
-msgstr "十秒鐘後此頁面將重新導入%1首頁。"
-
 msgid "This policy applies to clients classified as retail or professional. Clients classified as eligible counterparties are outside the scope of this policy."
 msgstr "本政策適用于歸類為零售或專業的客戶。被列為符合條件的交易對手的客戶不在本政策的範圍之內。"
 
@@ -12500,7 +12506,7 @@ msgid "To reset your password, enter the email address you used to create your a
 msgstr "如要重新設定密碼，在下面的欄位中輸入您註冊的電子郵件地址並點選「重設密碼」。"
 
 msgid "To reset your trading or investor password, please click the button below:"
-msgstr ""
+msgstr "要重設您的交易或投資者密碼, 請按一下下面的按鈕:"
 
 msgid "To smoothly verify you, we need a better photo"
 msgstr "為了順利驗證，我們需要更好的照片"
@@ -12735,6 +12741,9 @@ msgstr "交易時間"
 
 msgid "Trading and Withdrawal Limits"
 msgstr "交易和取款限額"
+
+msgid "Trading and deposits have been disabled on your account. Kindly allow us some time to review the account."
+msgstr "您的帳戶已被禁交易和存款。請稍候，我們正在評估帳戶。"
 
 msgid "Trading and withdrawals have been disabled on your account. Kindly %1contact customer support%2 for assistance."
 msgstr "您的帳戶已被禁交易和提款。請 %1聯繫客服部%2尋求幫助。"
@@ -13265,10 +13274,10 @@ msgid "Verify identity"
 msgstr "身份驗證"
 
 msgid "Verify main password"
-msgstr ""
+msgstr "主密碼驗證"
 
 msgid "Verify new MT5 password"
-msgstr ""
+msgstr "MT5新密碼驗證"
 
 msgid "Verify new password"
 msgstr "驗證新密碼"
@@ -13556,13 +13565,16 @@ msgid "We're now ready to verify your identity"
 msgstr "我們現在準備驗證您的身份"
 
 msgid "We're projected to register over 1.1 billion transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 2.8 billion."
-msgstr ""
+msgstr "我們預計今年將有超過11億筆交易, 成立以來我們平台的購入和售出合約總數超過28億。"
 
 msgid "We're really proud of this award. We're strongly committed to offering an ethical and customer-focused trading experience, and the award shows that BetOnMarkets is a trusted brand that listens and caters to customers, whether they are experienced traders or novices. We offer customer services in English, Indonesian, Russian, Chinese and Spanish."
 msgstr "獲得這個獎項，我們真的很自豪。我們堅定地致力於提供一個合乎道德和以客戶為中心的交易體驗。獲取獎項表明 BetOnMarkets 是一個值得信賴的品牌，接受客戶意見，能夠滿足客戶的需求，無論他們是經驗豐富的交易者還是交易新手。我們為客戶提供英語、印尼語、俄語、中文和西班牙語服務。"
 
-msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across 6 offices in Malaysia, Malta, Paraguay, Dubai, Rwanda and Cyprus. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
-msgstr ""
+msgid "We're sorry to see you leave."
+msgstr "很遺憾您不再繼續使用。"
+
+msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across 10 offices in Malta, Dubai, Malaysia, Paraguay, Cyprus, Rwanda, and Belarus. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
+msgstr "多年來，無論在人力和辦公室方面， 我們的規模不斷擴大。目前在馬爾他、杜拜、馬來西亞、巴拉圭、塞普勒斯、盧安達和白俄羅斯有十個辦事處和%1多名員工。預計今年的員工人數將進一步增長, 以滿足我們產品和服務需求的增加。"
 
 msgid "We've sent a secure link to %{number}"
 msgstr "已傳送安全連結至%{number}"
@@ -13930,8 +13942,8 @@ msgstr "贏取乘數值乘以最高值減去收盤值。"
 msgid "Win the multiplier times the high minus low."
 msgstr "贏取乘數值乘以最高值減去最低值。"
 
-msgid "Windows"
-msgstr "Windows"
+msgid "Windows or Linux"
+msgstr "Windows 或 Linux"
 
 msgid "Winning the contract"
 msgstr "合約盈利"
@@ -14392,8 +14404,8 @@ msgstr "您的帳戶沒有登入/登出活動。"
 msgid "Your account is fully authenticated and your withdrawal limits have been lifted."
 msgstr "您的帳戶已經得到完全驗證，且您的取款限額已經取消。"
 
-msgid "Your account is now closed"
-msgstr "您的帳戶已關閉"
+msgid "Your account is now deactivated."
+msgstr "您的帳戶已停用."
 
 msgid "Your account is restricted. Kindly %1contact customer support%2 for assistance."
 msgstr "您的帳戶已被限制交易。請%1聯繫客服部%2，以取得協助。"
@@ -14550,9 +14562,6 @@ msgstr "您的取款限額是%1%2。"
 
 msgid "You’ll be logged out automatically."
 msgstr "您將自動登出。"
-
-msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
-msgstr "您的帳戶已成功關閉。我們將傳送確認郵件到%1。"
 
 msgid "ZEC vs US dollar"
 msgstr "大零幣兌美元"
