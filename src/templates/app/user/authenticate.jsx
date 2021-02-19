@@ -89,6 +89,7 @@ const Authenticate = () => (
                             <div className='gr-8 gr-12-m gr-centered gr-no-gutter gr-gutter-m'>
                                 <ul id='last_rejection_list' className='rejected' />
                                 <span
+                                    className='invisible'
                                     id='last_rejection_more'
                                 >
                                     {it.L('Show more')}
