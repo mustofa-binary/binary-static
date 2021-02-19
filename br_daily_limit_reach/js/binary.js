@@ -27473,7 +27473,7 @@ var Authenticate = function () {
 
     var initAuthentication = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var has_personal_details_error, authentication_status, service_token_response, personal_fields_errors, missing_personal_fields, error_msgs, identity, needs_verification, document, is_fully_authenticated, should_allow_resubmission, documents_supported, country_code, has_submission_attempts, last_rejected_reasons, is_last_rejected, maximum_reasons;
+            var has_personal_details_error, authentication_status, service_token_response, personal_fields_errors, missing_personal_fields, error_msgs, identity, needs_verification, document, is_fully_authenticated, should_allow_resubmission, documents_supported, country_code, has_submission_attempts, last_rejected_reasons, is_last_rejected, maximum_reasons, has_minimum_reasons;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -27556,6 +27556,7 @@ var Authenticate = function () {
                             }
 
                             maximum_reasons = last_rejected_reasons.slice(0, 3);
+                            has_minimum_reasons = last_rejected_reasons.length > 3;
 
                             $('#last_rejection_poi').setVisibility(1);
 
@@ -27573,27 +27574,30 @@ var Authenticate = function () {
                                     initOnfido(service_token_response.token, documents_supported, country_code);
                                 }
                             });
-
-                            $('#last_rejection_more').off('click').on('click', function () {
-                                $('#last_rejection_more').setVisibility(0);
-                                $('#last_rejection_less').setVisibility(1);
-
-                                $('#last_rejection_list').empty();
-
-                                last_rejected_reasons.forEach(function (reason) {
-                                    $('#last_rejection_list').append('<li>' + reason + '</li>');
-                                });
-                            });
-                            $('#last_rejection_less').off('click').on('click', function () {
-                                $('#last_rejection_less').setVisibility(0);
+                            if (has_minimum_reasons) {
                                 $('#last_rejection_more').setVisibility(1);
+                                $('#last_rejection_more').off('click').on('click', function () {
+                                    $('#last_rejection_more').setVisibility(0);
+                                    $('#last_rejection_less').setVisibility(1);
 
-                                $('#last_rejection_list').empty();
+                                    $('#last_rejection_list').empty();
 
-                                maximum_reasons.forEach(function (reason) {
-                                    $('#last_rejection_list').append('<li>' + reason + '</li>');
+                                    last_rejected_reasons.forEach(function (reason) {
+                                        $('#last_rejection_list').append('<li>' + reason + '</li>');
+                                    });
                                 });
-                            });
+                                $('#last_rejection_less').off('click').on('click', function () {
+                                    $('#last_rejection_less').setVisibility(0);
+                                    $('#last_rejection_more').setVisibility(1);
+
+                                    $('#last_rejection_list').empty();
+
+                                    maximum_reasons.forEach(function (reason) {
+                                        $('#last_rejection_list').append('<li>' + reason + '</li>');
+                                    });
+                                });
+                            }
+
                             _context2.next = 60;
                             break;
 
