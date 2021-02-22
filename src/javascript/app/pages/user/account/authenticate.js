@@ -975,8 +975,9 @@ const Authenticate = (() => {
         const documents_supported = identity.services.onfido.documents_supported;
         const country_code = identity.services.onfido.country_code;
         const has_submission_attempts = !!identity.services.onfido.submissions_left;
+        const is_rejected = identity.status === 'rejected';
         const last_rejected_reasons = identity.services.onfido.last_rejected;
-        const is_last_rejected = !!last_rejected_reasons.length;
+        const has_rejected_reasons = !!last_rejected_reasons.length && is_rejected;
 
         if (is_fully_authenticated && !should_allow_resubmission) {
             $('#authentication_tab').setVisibility(0);
@@ -985,7 +986,7 @@ const Authenticate = (() => {
 
         if (has_personal_details_error) {
             $('#personal_details_error').setVisibility(1);
-        } else if (is_last_rejected && has_submission_attempts) {
+        } else if (has_rejected_reasons && has_submission_attempts) {
             const maximum_reasons = last_rejected_reasons.slice(0, 3);
             const has_minimum_reasons = last_rejected_reasons.length > 3;
             $('#last_rejection_poi').setVisibility(1);
@@ -1028,7 +1029,7 @@ const Authenticate = (() => {
                 });
             }
             
-        } else if (!has_submission_attempts && identity.status !== 'verified') {
+        } else if (!has_submission_attempts && is_rejected) {
             $('#limited_poi').setVisibility(1);
         } else if (!needs_verification.includes('identity')) {
             // if POI is verified and POA is not verified, redirect to POA tab
