@@ -13,7 +13,16 @@ msgstr ""
 msgid "10"
 msgstr ""
 
+msgid "40"
+msgstr ""
+
+msgid "50"
+msgstr ""
+
 msgid "404"
+msgstr ""
+
+msgid "500"
 msgstr ""
 
 msgid " (account created)"
@@ -508,13 +517,7 @@ msgstr ""
 msgid "0-5 transactions in the past 12 months"
 msgstr ""
 
-msgid "0.2%"
-msgstr ""
-
 msgid "0.20"
-msgstr ""
-
-msgid "0.3%"
 msgstr ""
 
 msgid "0.4%"
@@ -1861,7 +1864,19 @@ msgstr ""
 msgid "B. Scope"
 msgstr ""
 
+msgid "BCH/USD"
+msgstr ""
+
+msgid "BNB vs US dollar"
+msgstr ""
+
+msgid "BNB/USD"
+msgstr ""
+
 msgid "BTC"
+msgstr ""
+
+msgid "BTC/USD"
 msgstr ""
 
 msgid "Bachelor's degree in computer science, or an equivalent combination of technical education, training, and work experience"
@@ -2620,7 +2635,7 @@ msgstr ""
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) who wish to trade CFDs on financial instruments and cryptocurrencies can have MetaTrader 5 accounts under Deriv (BVI) Ltd. %1 is not available in the British Virgin Islands."
 msgstr ""
 
-msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. %1 is not available in the Republic of Vanuatu."
+msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. This company does not offer CFDs on cryptocurrencies. %1 is not available in the Republic of Vanuatu."
 msgstr ""
 
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, and Hong Kong) will have their account opened with Deriv (SVG) LLC."
@@ -2633,6 +2648,12 @@ msgid "Clients have the opportunity to consider whether to ask for more informat
 msgstr ""
 
 msgid "Clients hereby declare that they are dealing with DIEL outside the scope of their economic or professional activity, and DIEL will therefore treat the client as an individual retail client for the purposes of EMIR compliance, unless advised otherwise."
+msgstr ""
+
+msgid "Clients in the European Union who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
+msgstr ""
+
+msgid "Clients in the Isle of Man and the UK who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
 msgstr ""
 
 msgid "Clients may trade on our platforms only when they are using their own money and are drawing on funds that have been acquired honestly. If you have any suspicion that clients are using money that has been acquired dishonestly, you must inform %1.  In such cases, we may decide to conduct checks on the client’s status and background. %2 management will decide what information needs to be reported to government officials and through what channels."
@@ -3262,16 +3283,10 @@ msgstr ""
 msgid "Cryptocurrencies"
 msgstr ""
 
-msgid "Cryptocurrencies commission per round trade. For example, a round trade of 1 lot of BTC/USD with spot price of 10,000 USD will pay 30 USD on financial accounts and 20 USD on financial STP accounts."
-msgstr ""
-
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital assets that enable instant payments to anywhere in the world."
 msgstr ""
 
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital currencies on the blockchain."
-msgstr ""
-
-msgid "Cryptocurrencies**"
 msgstr ""
 
 msgid "Cryptocurrency"
@@ -3392,6 +3407,9 @@ msgid "DIEL reserves the right to accept or refuse any requests for change in cl
 msgstr ""
 
 msgid "DIEL shall not be obliged to provide professional clients with the following:"
+msgstr ""
+
+msgid "DSH/USD"
 msgstr ""
 
 msgid "Daily Reset Indices – Daily Reset Indices replicate markets with a bullish and bearish trend with a constant volatility. The Bull Market and Bear Market indices start at 00:00 GMT each day, replicating bullish and bearish markets respectively."
@@ -3583,7 +3601,7 @@ msgstr ""
 msgid "Deriv (Europe) Limited,"
 msgstr ""
 
-msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta  (licence no. %2) - %3view licence%4 and also maintains an Irish licence. For UK clients by the UK Gambling Commission - %5view licence%4."
+msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta, is licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta (%2licence no. MGA/B2C/102/2000%4), by the Gambling Commission for clients in Great Britain under (%3account no. 39495%4), and by the Revenue Commissioners for clients in Ireland (licence no. 1010285)."
 msgstr ""
 
 msgid "Deriv (Europe) Limited, or"
@@ -3607,7 +3625,7 @@ msgstr ""
 msgid "Deriv (MX) Ltd"
 msgstr ""
 
-msgid "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW. Licensed and regulated by the Gambling Supervision Commission in the Isle of Man (current online gambling licence granted on the 31 August 2017) - %1view licence%2 and for UK clients by the UK Gambling Commission - %3view licence%2."
+msgid "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man, is licensed and regulated in Great Britain by the Gambling Commission under %1account no. 39172%3 and by the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
 msgstr ""
 
 msgid "Deriv (MX) Ltd."
@@ -3901,6 +3919,9 @@ msgstr ""
 msgid "Download MT5 for Linux"
 msgstr ""
 
+msgid "Download MT5 for Mac"
+msgstr ""
+
 msgid "Download MT5 for Windows"
 msgstr ""
 
@@ -4010,6 +4031,12 @@ msgid "EGR Operator Awards"
 msgstr ""
 
 msgid "EOS vs US dollar"
+msgstr ""
+
+msgid "EOS/USD"
+msgstr ""
+
+msgid "ETH/USD"
 msgstr ""
 
 msgid "EU Passport Rights"
@@ -4301,9 +4328,6 @@ msgid "Euro vs Turkish lira"
 msgstr ""
 
 msgid "Euro vs US dollar"
-msgstr ""
-
-msgid "European Union residents who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
 msgstr ""
 
 msgid "European Union residents who wish to trade investment products will have their accounts opened with Deriv Investments (Europe) Limited."
@@ -6085,7 +6109,7 @@ msgstr ""
 msgid "In the EU, financial products are offered by Deriv Investments (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta, regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (%1licence no. IS/70156%2)."
 msgstr ""
 
-msgid "In the Isle of Man and the UK, Synthetic Indices are offered by Deriv (MX) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles; licensed and regulated respectively by (1) the Gambling Supervision Commission in the Isle of Man (current licence issued on 31 August 2017) and by (2) the Gambling Commission in the UK (licence %1reference no: 39172%2)."
+msgid "In the Isle of Man and the UK, Synthetic indices are offered by Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man; licensed and regulated in Great Britain by (1) the Gambling Commission under %1account no. 39172%3 and by (2) the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
 msgstr ""
 
 msgid "In the UK, our clients trade through Deriv (MX) Ltd and Deriv Investments (Europe) Limited. In the Isle of Man, they trade through Deriv (MX) Ltd. In the European Union (except UK), they trade through Deriv (Europe) Limited and Deriv Investments (Europe) Limited. In the rest of the world, they trade through Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd and Deriv (FX) Ltd."
@@ -6118,7 +6142,7 @@ msgstr ""
 msgid "In the event that the Company is aware of an Affiliate who is in breach of any of the above provisions, the Company shall have the right, in addition to any other right or remedy available to it under this Agreement or applicable law, to immediately block the Affiliate's access to this programme. The Affiliate hereby irrevocably waives their rights to, and shall indemnify the Company and any member of the Deriv group of companies for, any claims or demands made against the Company or any member of the Deriv group of companies, their directors, officers, shareholders, or employees or against the %1 website if the Company revokes the Affiliate's access to the programme."
 msgstr ""
 
-msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority in Malta (%1licence no. MGA/B2C/102/2000%4 issued on 01 August 2018), for UK clients by (2) the UK Gambling Commission (licence %2reference no: 39495%4), and for Irish clients by (3) the Revenue Commissioners in Ireland (Remote Bookmaker's Licence no. 1010285 issued on 1 July 2017). View complete %3Regulatory Information%4."
+msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority (%1licence no. MGA/B2C/102/2000%4), by (2) the Gambling Commission for clients in Great Britain under %2account no. 39495%4, and by (3) the Revenue Commissioners for clients in Ireland (licence no. 1010285). View complete %3Regulatory Information%4."
 msgstr ""
 
 msgid "In this Agreement, unless the context otherwise requires, the following definitions hold:"
@@ -6559,6 +6583,9 @@ msgstr ""
 msgid "L. Manifest Error"
 msgstr ""
 
+msgid "LTC/USD"
+msgstr ""
+
 msgid "Labuan"
 msgstr ""
 
@@ -6745,7 +6772,7 @@ msgstr ""
 msgid "Links"
 msgstr ""
 
-msgid "Linux"
+msgid "Linux or MacOs"
 msgstr ""
 
 msgid "Liquidity solutions"
@@ -6827,9 +6854,6 @@ msgid "Lookbacks options are currently only available for %1Synthetic Indices%2.
 msgstr ""
 
 msgid "Looking for %1 app?"
-msgstr ""
-
-msgid "Looking for desktop apps?"
 msgstr ""
 
 msgid "Looking for the %1 Desktop app?"
@@ -6922,6 +6946,9 @@ msgstr ""
 msgid "MT5 for iOS"
 msgstr ""
 
+msgid "MT5 for macOS"
+msgstr ""
+
 msgid "MT5 real-money account for Synthetic Indices only."
 msgstr ""
 
@@ -6932,6 +6959,9 @@ msgid "MT5 web platform"
 msgstr ""
 
 msgid "MT5 withdrawals have been disabled on your account. Please check your email for more details."
+msgstr ""
+
+msgid "MacOs or Windows"
 msgstr ""
 
 msgid "Made an impression in the first interview? We'll invite you to a second interview with our CEO and/or hiring manager."
@@ -8074,7 +8104,7 @@ msgstr ""
 msgid "Our Synthetic account allows you to trade CFDs on Synthetic Indices - our proprietary synthetic assets that simulate market forces."
 msgstr ""
 
-msgid "Our active client base is expected to reach over 175,000 total clients this year."
+msgid "Our active client base is expected to reach over 790,000 total clients this year."
 msgstr ""
 
 msgid "Our business is founded on collaboration and we aim to build long-term, mutually beneficial relationships with our partners. However, we will never compromise our commitment to business integrity. In cases where our partners are unwilling or unable to abide by our principles, we reserve the right to withdraw from the business relationship."
@@ -8834,6 +8864,9 @@ msgid "Price(s)/Pricing Data"
 msgstr ""
 
 msgid "Primary"
+msgstr ""
+
+msgid "Prime Brokerage Services Limited"
 msgstr ""
 
 msgid "Prior to placing an Order, which results in opening a position, the client acknowledges that it is their responsibility to ensure that their Account Free Margin is sufficient to cover the Margin required in relation to the opening of the position (the \"Margin Requirement\"), and to continuously meet the Margin Requirement."
@@ -10390,7 +10423,7 @@ msgstr ""
 msgid "Swaps Long (per annum)"
 msgstr ""
 
-msgid "Swaps short (per annum)"
+msgid "Swaps Short (per annum)"
 msgstr ""
 
 msgid "Swiss franc vs Japanese yen"
@@ -11269,7 +11302,7 @@ msgstr ""
 msgid "The Investor Compensation Scheme"
 msgstr ""
 
-msgid "The MT5 desktop app is not supported by macOS, Windows XP, Windows 2003, and Windows Vista."
+msgid "The MT5 desktop app is not supported by Windows XP, Windows 2003, and Windows Vista."
 msgstr ""
 
 msgid "The Margin Level of the client's MT5 Real Account reaches or falls below the Stop Out Level."
@@ -12307,9 +12340,6 @@ msgstr ""
 msgid "This page is only available to logged out clients."
 msgstr ""
 
-msgid "This page will redirect to the %1 homepage after 10 seconds."
-msgstr ""
-
 msgid "This policy applies to clients classified as retail or professional. Clients classified as eligible counterparties are outside the scope of this policy."
 msgstr ""
 
@@ -12697,6 +12727,9 @@ msgstr ""
 msgid "Trading and Withdrawal Limits"
 msgstr ""
 
+msgid "Trading and deposits have been disabled on your account. Kindly allow us some time to review the account."
+msgstr ""
+
 msgid "Trading and withdrawals have been disabled on your account. Kindly %1contact customer support%2 for assistance."
 msgstr ""
 
@@ -12911,9 +12944,6 @@ msgid "Types of trades"
 msgstr ""
 
 msgid "UI/UX Designer"
-msgstr ""
-
-msgid "UK and Manx residents who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
 msgstr ""
 
 msgid "US Patents"
@@ -13507,9 +13537,6 @@ msgstr ""
 msgid "We're almost there"
 msgstr ""
 
-msgid "We're expected to generate over 2 USD billion in turnover this year, bringing our total turnover since inception to over 9.2 USD billion."
-msgstr ""
-
 msgid "We're granted patents for 'Computer trading system and method for speculating on a financial market' and 'Computer trading system for offering custom financial market speculations'. The patents show our ability to innovate and stay ahead of the pack."
 msgstr ""
 
@@ -13522,13 +13549,16 @@ msgstr ""
 msgid "We're now ready to verify your identity"
 msgstr ""
 
-msgid "We're projected to register over 377 million transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 1.42 billion."
+msgid "We're projected to register over 1.1 billion transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 2.8 billion."
 msgstr ""
 
 msgid "We're really proud of this award. We're strongly committed to offering an ethical and customer-focused trading experience, and the award shows that BetOnMarkets is a trusted brand that listens and caters to customers, whether they are experienced traders or novices. We offer customer services in English, Indonesian, Russian, Chinese and Spanish."
 msgstr ""
 
-msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across four offices in Malaysia, Malta, Paraguay and Dubai. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
+msgid "We're sorry to see you leave."
+msgstr ""
+
+msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across 10 offices in Malta, Dubai, Malaysia, Paraguay, Cyprus, Rwanda, and Belarus. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
 msgstr ""
 
 msgid "We've sent a secure link to %{number}"
@@ -13897,7 +13927,7 @@ msgstr ""
 msgid "Win the multiplier times the high minus low."
 msgstr ""
 
-msgid "Windows"
+msgid "Windows or Linux"
 msgstr ""
 
 msgid "Winning the contract"
@@ -14015,6 +14045,15 @@ msgid "Write robust, high-quality, and production-ready code for our websites an
 msgstr ""
 
 msgid "Written limits and self-exclusion"
+msgstr ""
+
+msgid "XMR vs US dollar"
+msgstr ""
+
+msgid "XMR/USD"
+msgstr ""
+
+msgid "XRP/USD"
 msgstr ""
 
 msgid "Yes"
@@ -14350,7 +14389,7 @@ msgstr ""
 msgid "Your account is fully authenticated and your withdrawal limits have been lifted."
 msgstr ""
 
-msgid "Your account is now closed"
+msgid "Your account is now deactivated."
 msgstr ""
 
 msgid "Your account is restricted. Kindly %1contact customer support%2 for assistance."
@@ -14491,6 +14530,9 @@ msgstr ""
 msgid "Your transaction reference number is %1"
 msgstr ""
 
+msgid "Your virtual balance has been reset."
+msgstr ""
+
 msgid "Your web browser (%1) is out of date and may affect your trading experience. Proceed at your own risk. %2Update browser%3"
 msgstr ""
 
@@ -14506,7 +14548,10 @@ msgstr ""
 msgid "You’ll be logged out automatically."
 msgstr ""
 
-msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
+msgid "ZEC vs US dollar"
+msgstr ""
+
+msgid "ZEC/USD"
 msgstr ""
 
 msgid "ZingPay is a payment facility that allows online bank transfers for clients in South Africa."

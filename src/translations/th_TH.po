@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-01-25 04:26\n"
+"PO-Revision-Date: 2021-02-19 05:35\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,17 @@ msgstr "5"
 msgid "10"
 msgstr "10"
 
+msgid "40"
+msgstr "40"
+
+msgid "50"
+msgstr "50"
+
 msgid "404"
 msgstr "404"
+
+msgid "500"
+msgstr "500"
 
 msgid " (account created)"
 msgstr " (สร้างบัญชีแล้ว)"
@@ -523,14 +532,8 @@ msgstr "0-1 ปี"
 msgid "0-5 transactions in the past 12 months"
 msgstr "0-5 ธุรกรรมในระยะเวลา 12 เดือน ที่ผ่านมา"
 
-msgid "0.2%"
-msgstr "0.2%"
-
 msgid "0.20"
 msgstr "0.20"
-
-msgid "0.3%"
-msgstr "0.3%"
 
 msgid "0.4%"
 msgstr "0.4%"
@@ -1298,7 +1301,7 @@ msgid "All times are in GMT (Greenwich Mean Time)."
 msgstr "เวลาที่ใช้อ้างอิง คือ GMT (Greenwich Mean Time) เวลามาตรฐานเมืองกรีนิช"
 
 msgid "All transactions"
-msgstr ""
+msgstr "ธุรกรรมทั้งหมด"
 
 msgid "All unforeseen openings or closings of positions initiated by the Expert Advisor, whether relevant to system error or otherwise, are out of the scope of the Company's responsibility; hence the Company is not liable for such actions or results."
 msgstr "ทุกตำแหน่งเปิดหรือปิดที่ไม่ได้พยากรณ์ไว้ล่วงหน้าแนะนำโดย Expert Advisor ที่เกิดจากความผิดพลาดของระบบหรือเหตุอื่นอยู่นอกเหนือจากความรับผิดชอบของบริษัทฯ บริษัทฯ ไม่มีหน้าที่รับผิดชอบต่อการกระทำ หรือ ผลของการกระทำดังกล่าว"
@@ -1876,8 +1879,20 @@ msgstr "ข. การเริ่มต้น"
 msgid "B. Scope"
 msgstr "B. ขอบเขต"
 
+msgid "BCH/USD"
+msgstr "BCH/USD"
+
+msgid "BNB vs US dollar"
+msgstr "BNB เทียบกับดอลลาร์สหรัฐ"
+
+msgid "BNB/USD"
+msgstr "BNB/USD"
+
 msgid "BTC"
 msgstr "BTC"
+
+msgid "BTC/USD"
+msgstr "BTC/USD"
 
 msgid "Bachelor's degree in computer science, or an equivalent combination of technical education, training, and work experience"
 msgstr "สำเร็จการศึกษาสาขาวิทยาการคอมพิวเตอร์ หรือเทียบเท่า โดยมีทักษะเชิงเทคนิค เข้าร่วมอบรมหลักสูตรต่างๆ และประสบการณ์การทำงานที่เกี่ยวข้อง"
@@ -2635,8 +2650,8 @@ msgstr "ลูกค้าพึงทราบว่า อาจเกิด�
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) who wish to trade CFDs on financial instruments and cryptocurrencies can have MetaTrader 5 accounts under Deriv (BVI) Ltd. %1 is not available in the British Virgin Islands."
 msgstr "ลูกค้าจากส่วนที่เหลือของโลก (ไม่รวมบางประเทศเช่นสหรัฐอเมริกาแคนาดาฮ่องกง) ที่ต้องการซื้อขาย CFDs ในเครื่องมือทางการเงินและ cryptocurrencies สามารถมีบัญชี MetaTrader 5 ภายใต้ Deriv (BVI) Ltd. %1 ไม่มีให้บริการในหมู่เกาะบริติชเวอร์จิน"
 
-msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. %1 is not available in the Republic of Vanuatu."
-msgstr "ลูกค้าจากประเทศอื่นๆ ทั่วโลก (ยกเว้นบางประเทศ เช่น สหรัฐอเมริกา แคนาดา ฮ่องกง) จะมีบัญชี FX และบัญชี CFD Metatrader 5 ที่เปิดบัญชีกับ Deriv (V) Ltd หากแต่ %1 จะไม่ได้ให้บริการในสาธารณรัฐวานูอาตู"
+msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. This company does not offer CFDs on cryptocurrencies. %1 is not available in the Republic of Vanuatu."
+msgstr ""
 
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, and Hong Kong) will have their account opened with Deriv (SVG) LLC."
 msgstr "ลูกค้าอื่นๆ ทั่วโลก (ที่ไม่ได้อยู่ในประเทศเหล่านี้ ได้แก่ สหรัฐอเมริกา แคนาดาและฮ่องกง) จะเปิดบัญชีกับ Deriv (SVG) LLC"
@@ -2649,6 +2664,12 @@ msgstr "ลูกค้าสามารถสอบถามข้อมูล
 
 msgid "Clients hereby declare that they are dealing with DIEL outside the scope of their economic or professional activity, and DIEL will therefore treat the client as an individual retail client for the purposes of EMIR compliance, unless advised otherwise."
 msgstr "ลูกค้ายืนยันว่า ลูกค้ากำลังติดต่อกับ DIEL นอกจากขอบเขตของกิจกรรมทางเศรษฐกิจและวิชาชีพของเขา ดังนั้น DIEL จะปฏิบัติกับลูกค้าเสมือนเป็นลูกค้ารายย่อยส่วนบุคคลเพื่อจุดประสงค์ในการปฏิบัติตามหลักเกณฑ์ EMIR เว้นแต่จะมีการแจ้งเป็นอย่างอื่น"
+
+msgid "Clients in the European Union who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
+msgstr "ลูกค้าในสหภาพยุโรปที่ต้องการซื้อขายผลิตภัณฑ์การพนันจะมีบัญชีเปิดกับ Deriv (Europe) จํากัด"
+
+msgid "Clients in the Isle of Man and the UK who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
+msgstr "ลูกค้าในเกาะไอล์ออฟแมนและสหราชอาณาจักรที่ต้องการซื้อขายผลิตภัณฑ์การพนันจะต้องเปิดบัญชีกับ Deriv (MX) Ltd."
 
 msgid "Clients may trade on our platforms only when they are using their own money and are drawing on funds that have been acquired honestly. If you have any suspicion that clients are using money that has been acquired dishonestly, you must inform %1.  In such cases, we may decide to conduct checks on the client’s status and background. %2 management will decide what information needs to be reported to government officials and through what channels."
 msgstr "ลูกค้าสามารถซื้อขายบนแพลตฟอร์มของเราได้ก็ต่อเมื่อพวกเขาใช้เงินของตัวเองและกำลังดึงเงินที่ได้มาโดยสุจริต หากคุณมีข้อสงสัยว่าลูกค้าใช้เงินที่ได้มาโดยไม่สุจริตคุณต้องแจ้ง %1 ในกรณีดังกล่าวเราอาจตัดสินใจที่จะดำเนินการตรวจสอบสถานะและภูมิหลังของลูกค้า การจัดการ %2 จะตัดสินใจว่าจะต้องรายงานข้อมูลใดต่อเจ้าหน้าที่ของรัฐและผ่านช่องทางใด"
@@ -3278,17 +3299,11 @@ msgstr "การเข้ารหัสลับ"
 msgid "Cryptocurrencies"
 msgstr "เงินดิจิทัล"
 
-msgid "Cryptocurrencies commission per round trade. For example, a round trade of 1 lot of BTC/USD with spot price of 10,000 USD will pay 30 USD on financial accounts and 20 USD on financial STP accounts."
-msgstr "ค่าคอมมิชชั่นสกุลเงินดิจิทัลต่อรอบการซื้อขาย ตัวอย่างเช่น การซื้อขายรอบ 1 ล็อตของ BTC/USD ที่มีราคาสปอต 10,000 USD จะจ่าย 30 USD ในบัญชี financial และ 20 USD ในบัญชี financial STP"
-
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital assets that enable instant payments to anywhere in the world."
 msgstr "เงินดิจิทัล เช่น บิทคอยน์ และ อีเธอเรียม เป็นสินทรัพย์ดิจิทัลที่ไม่ได้รวมเข้ากับศูนย์กลางซึ่งทำให้สามารถชำระเงินได้ทันทีที่ใดก็ได้ในโลก"
 
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital currencies on the blockchain."
 msgstr "เงินดิจิทัล ได้แก่ บิทคอยน์ และ อีเธอเรียม เป็นสกุลเงินดิจิทัลบนบล็อกเชนที่แยกออกจากการควบคุมโดยศูนย์กลาง"
-
-msgid "Cryptocurrencies**"
-msgstr "เงินดิจิทัล**"
 
 msgid "Cryptocurrency"
 msgstr "เงินดิจิทัล"
@@ -3409,6 +3424,9 @@ msgstr "DIEL สงวนสิทธิ์ในการยอมรับ ห
 
 msgid "DIEL shall not be obliged to provide professional clients with the following:"
 msgstr "DIEL จะไม่ได้ให้ Professional Clients ในรายการและสิทธิ์ต่อไปนี้:"
+
+msgid "DSH/USD"
+msgstr "DSH/USD"
 
 msgid "Daily Reset Indices – Daily Reset Indices replicate markets with a bullish and bearish trend with a constant volatility. The Bull Market and Bear Market indices start at 00:00 GMT each day, replicating bullish and bearish markets respectively."
 msgstr "ดัชนีถูกตั้งค่าใหม่รายวัน - ดัชนีถูกตั้งค่าใหม่รายวันจำลองสภาพตลาดที่มีแนวโน้มความตื่นตัวและความซบเซาของตลาดด้วยความผันผวนที่คงที่ ดัชนีกระทิง และดัชนีหมี เริ่มที่ 00:00 GMT ในแต่ละวัน เพื่อจำลองสภาพตลาดกระทิงและตลาดหมีตามลำดับ"
@@ -3599,8 +3617,8 @@ msgstr "Deriv (Europe) Limited"
 msgid "Deriv (Europe) Limited,"
 msgstr "Deriv (Europe) Limited,"
 
-msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta  (licence no. %2) - %3view licence%4 and also maintains an Irish licence. For UK clients by the UK Gambling Commission - %5view licence%4."
-msgstr "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033 ประเทศมอลตา ได้รับอนุญาตและควบคุม (สำหรับผลิตภัณฑ์การพนันเท่านั้น - ดัชนีสังเคราะห์ของ %1) โดย Malta Gaming Authority ในมอลตา (ใบอนุญาตเลขที่ %2) - %3ดูใบอนุญาต%4 และยังคงได้รับใบอนุญาตให้ดำเนินธุรกิจในประเทศไอร์แลนด์ สำหรับลูกค้าในสหราชอาณาจักรโดย UK Gambling Commission - %5ดูใบอนุญาต%4"
+msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta, is licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta (%2licence no. MGA/B2C/102/2000%4), by the Gambling Commission for clients in Great Britain under (%3account no. 39495%4), and by the Revenue Commissioners for clients in Ireland (licence no. 1010285)."
+msgstr "Deriv (Europe) Limited, W Business Center, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta ได้รับอนุญาตและควบคุม (สำหรับผลิตภัณฑ์การพนันเท่านั้น - ดัชนีสังเคราะห์ %1) โดย Malta Gaming Authority ในมอลตา (%2ใบอนุญาตเลขที่ MGA/B2C/102/2000%4) โดย Gambling Commission สำหรับลูกค้าในบริเตนใหญ่ภายใต้ (%3เลขที่บัญชี 39495%4) และโดย Revenue Commission สำหรับลูกค้าในไอร์แลนด์ (ใบอนุญาตเลขที่ 1010285)"
 
 msgid "Deriv (Europe) Limited, or"
 msgstr "Deriv (Europe) Limited หรือ"
@@ -3623,8 +3641,8 @@ msgstr "Deriv (FX) Ltd: ลาบวน, ดินแดนมาเลเซี
 msgid "Deriv (MX) Ltd"
 msgstr "Deriv (MX) Ltd"
 
-msgid "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW. Licensed and regulated by the Gambling Supervision Commission in the Isle of Man (current online gambling licence granted on the 31 August 2017) - %1view licence%2 and for UK clients by the UK Gambling Commission - %3view licence%2."
-msgstr "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW ได้รับอนุญาตและควบคุมโดย Gambling Supervision Commission ในเกาะไอล์ออฟแมน (ใบอนุญาตการพนันออนไลน์ฉบับปัจจุบัน เมื่อวันที่ 31 สิงหาคม 2017) - %1ดูใบอนุญาต%2 และสำหรับลูกค้าในสหราชอาณาจักรโดย Gambling Commission - %3ดูใบอนุญาต%2"
+msgid "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man, is licensed and regulated in Great Britain by the Gambling Commission under %1account no. 39172%3 and by the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW ในเกาะไอล์ออฟแมน ได้รับอนุญาตและควบคุมในสหราชอาณาจักรโดยคณะกรรมาธิการการพนันภายใต้ %1จํานวน 39172%3 และโดยคณะกรรมการกํากับดูแลการพนันในเกาะแมน (%2ดูใบอนุญาต%3)"
 
 msgid "Deriv (MX) Ltd."
 msgstr "Deriv (MX) Ltd"
@@ -3917,6 +3935,9 @@ msgstr "ดาวน์โหลด MT5"
 msgid "Download MT5 for Linux"
 msgstr "ดาวน์โหลด MT5 สำหรับระบบปฏิบัติการลินุกซ์"
 
+msgid "Download MT5 for Mac"
+msgstr "ดาวน์โหลด MT5 สำหรับ Mac"
+
 msgid "Download MT5 for Windows"
 msgstr "ดาวน์โหลด MT5 สำหรับระบบปฏิบัติการวินโดวส์"
 
@@ -3966,7 +3987,7 @@ msgid "Dubai, United Arab Emirates"
 msgstr "ดูไบ ประเทศสหรัฐอาหรับเอมิเรตส์"
 
 msgid "Due to an issue on our server, some MT5 accounts are unavailable at the moment. Please bear with us and thank you for your patience."
-msgstr ""
+msgstr "เนื่องจากเซิร์ฟเวอร์ของเรามีปัญหาทำให้บัญชี MT5 บางบัญชีไม่สามารถใช้งานได้ในขณะนี้ อดทนกับเราและขอขอบคุณที่อดทนรอ"
 
 msgid "Due to an issue on our server, some of your MT5 accounts are unavailable at the moment. %1Please bear with us and thank you for your patience."
 msgstr "เนื่องจากปัญหาบนเซิร์ฟเวอร์ของเราบัญชี MT5 บางบัญชีของคุณไม่พร้อมใช้งานในขณะนี้ %1หมีกับเราและขอขอบคุณสําหรับความอดทนของคุณ"
@@ -4027,6 +4048,12 @@ msgstr "รางวัลผู้ประกอบการ EGR"
 
 msgid "EOS vs US dollar"
 msgstr "EOS เทียบกับ ดอลลาร์สหรัฐ"
+
+msgid "EOS/USD"
+msgstr "EOS/USD"
+
+msgid "ETH/USD"
+msgstr "ETH/USD"
 
 msgid "EU Passport Rights"
 msgstr "สิทธิ์ตามหนังสือเดินทาง EU"
@@ -4318,9 +4345,6 @@ msgstr "ยูโร เทียบกับ ลีร่าตุรกี"
 
 msgid "Euro vs US dollar"
 msgstr "ยูโร เทียบกับ ดอลลาร์สหรัฐ"
-
-msgid "European Union residents who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
-msgstr "ผู้อยู่อาศัยในสหภาพยุโรปที่ต้องการซื้อขายผลิตภัณฑ์การพนันจะมีบัญชีเปิดกับ Deriv (Europe) Limited"
 
 msgid "European Union residents who wish to trade investment products will have their accounts opened with Deriv Investments (Europe) Limited."
 msgstr "ผู้อยู่อาศัยในสหภาพยุโรปที่ต้องการซื้อขายผลิตภัณฑ์การลงทุนจะมีบัญชีเปิดกับ Deriv Investments (Europe) Limited"
@@ -6101,8 +6125,8 @@ msgstr "ในสหภาพยุโรปผลิตภัณฑ์ทาง
 msgid "In the EU, financial products are offered by Deriv Investments (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta, regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (%1licence no. IS/70156%2)."
 msgstr "ในสหภาพยุโรป ผลิตภัณฑ์ทางการเงินมีให้บริการโดย Deriv Investments (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033 ประเทศมอลตาได้รับการควบคุมโดยผู้ให้บริการการลงทุนประเภทที่ 3 Malta Financial Services Authority (%1liใบอนุญาตหมายเลข IS/70156%2)"
 
-msgid "In the Isle of Man and the UK, Synthetic Indices are offered by Deriv (MX) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles; licensed and regulated respectively by (1) the Gambling Supervision Commission in the Isle of Man (current licence issued on 31 August 2017) and by (2) the Gambling Commission in the UK (licence %1reference no: 39172%2)."
-msgstr "ในเกาะไอล์ออฟแมนและสหราชอาณาจักรดัชนีสังเคราะห์มีให้บริการโดย Deriv (MX) Ltd. , First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles ได้รับอนุญาตและควบคุมตามลำดับโดย (1) Gambling Supervision Commission ในเกาะไอล์ออฟแมน (ใบอนุญาตปัจจุบันออกเมื่อวันที่ 31 สิงหาคม 2017) และโดย (2) Gambling Commission ในสหราชอาณาจักร (ใบอนุญาต %1หมายเลขอ้างอิง: 39172%2)"
+msgid "In the Isle of Man and the UK, Synthetic indices are offered by Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man; licensed and regulated in Great Britain by (1) the Gambling Commission under %1account no. 39172%3 and by (2) the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "ในเกาะแมนและสหราชอาณาจักรดัชนีสังเคราะห์จะนําเสนอโดย Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW ในเกาะไอล์ออฟแมน ได้รับอนุญาตและควบคุมในสหราชอาณาจักรโดย (1) คณะกรรมาธิการการพนันภายใต้ %1จํานวน 39172%3 และโดย (2) คณะกรรมการกํากับดูแลการพนันในเกาะแมน (%2ดูใบอนุญาต%3)"
 
 msgid "In the UK, our clients trade through Deriv (MX) Ltd and Deriv Investments (Europe) Limited. In the Isle of Man, they trade through Deriv (MX) Ltd. In the European Union (except UK), they trade through Deriv (Europe) Limited and Deriv Investments (Europe) Limited. In the rest of the world, they trade through Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd and Deriv (FX) Ltd."
 msgstr "ในสหราชอาณาจักรลูกค้าของเราซื้อขายผ่าน Deriv (MX) Ltd และ Deriv Investments (Europe) Limited ในเกาะไอล์ออฟแมน พวกเขาซื้อขายผ่าน Deriv (MX) Ltd ในสหภาพยุโรป (ยกเว้นสหราชอาณาจักร) พวกเขาซื้อขายผ่าน Deriv (Europe) Limited และ Deriv Investments (Europe) Limited ในส่วนประเทศอื่นๆ พวกเขาซื้อขายผ่าน Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd และ Deriv (FX) Ltd"
@@ -6134,8 +6158,8 @@ msgstr "ในกรณีที่บริษัทฯ ไม่ได้ร�
 msgid "In the event that the Company is aware of an Affiliate who is in breach of any of the above provisions, the Company shall have the right, in addition to any other right or remedy available to it under this Agreement or applicable law, to immediately block the Affiliate's access to this programme. The Affiliate hereby irrevocably waives their rights to, and shall indemnify the Company and any member of the Deriv group of companies for, any claims or demands made against the Company or any member of the Deriv group of companies, their directors, officers, shareholders, or employees or against the %1 website if the Company revokes the Affiliate's access to the programme."
 msgstr "ในกรณีใดๆ อันจะพึงเกิดขึ้นหากบริษัท ได้รับทราบถึงพันธมิตรนายหน้าออนไลน์ผู้ซึ่งประพฤติขัดต่อกฎ หรือนโยบายข้างต้น บริษัทมีสิทธิ์นอกเหนือจากสิทธิ์หรือการแก้ไขที่มีภายใต้ข้อตกลงนี้หรือกฎหมายที่เกี่ยวข้อง ที่จะจำกัดพันธมิตร ในการเข้าถึงหรือใช้งานโปรแกรมได้ทันที พันธมิตรนายหน้าออนไลน์สละสิทธิ์ที่จะดำเนินการใน และจะชดใช้ค่าเสียหายให้กับบริษัท และสมาชิกของกลุ่มบริษัทในเครือ Deriv อื่นๆ ต่อข้อเรียกร้องใดต่อบริษัท และสมาชิกของกลุ่มบริษัทในเครือ Deriv อื่นๆ ต่อผู้อำนวยการ ต่อเจ้าหน้าที่ ต่อผู้ถือหุ้น ต่อพนักงาน หรือต่อเว็บไซต์ของ %1 หากบริษัทเพิกถอนการเข้าถึงหรือใช้งานโปรแกรมของพันธมิตร"
 
-msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority in Malta (%1licence no. MGA/B2C/102/2000%4 issued on 01 August 2018), for UK clients by (2) the UK Gambling Commission (licence %2reference no: 39495%4), and for Irish clients by (3) the Revenue Commissioners in Ireland (Remote Bookmaker's Licence no. 1010285 issued on 1 July 2017). View complete %3Regulatory Information%4."
-msgstr "ในส่วนที่เหลือของสหภาพยุโรปดัชนีสังเคราะห์มีให้บริการโดย Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033 ประเทศมอลตาได้รับใบอนุญาตและกำกับดูแลตามกฎหมายโดย (1) Malta Gaming Authority ประเทศมอลตา (%1liใบอนุญาตเลขที่ MGA/B2C/102/2000%4 ออกให้เมื่อวันที่ 1 สิงหาคม ค.ศ. 2018) สำหรับลูกค้าสหราชอาณาจักร โดย (2) UK Gambling Commission (ใบอนุญาต %2หมายเลขอ้างอิง: 39495%4) และสำหรับลูกค้าไอร์แลนด์ โดย (3) Revenue Commissioners ในประเทศไอร์แลนด์ (ใบอนุญาตเลขที่ 1010285 ออกให้เมื่อวันที่ 1 กรกฎาคม ค.ศ. 2017) ดู %3ข้อมูลเกี่ยวกับหลักเกณฑ์%4 ฉบับสมบูรณ์"
+msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority (%1licence no. MGA/B2C/102/2000%4), by (2) the Gambling Commission for clients in Great Britain under %2account no. 39495%4, and by (3) the Revenue Commissioners for clients in Ireland (licence no. 1010285). View complete %3Regulatory Information%4."
+msgstr "ในส่วนที่เหลือของสหภาพยุโรปดัชนีสังเคราะห์จะถูกนําเสนอโดย Deriv (Europe) Limited, W Business Center, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta; ได้รับอนุญาตและควบคุมโดย (1) Malta Gaming Authority (%1ใบอนุญาตเลขที่ MGA/B2C/102/2000%4)โดย (2) Gambling Commission สำหรับลูกค้าในบริเตนใหญ่ภายใต้ %3เลขที่บัญชี 39495%4 และโดย (3) Revenue Commission สำหรับลูกค้าในไอร์แลนด์ (ใบอนุญาตเลขที่ 1010285) ดูข้อมูล %3ข้อกําหนดการบังคับเสร็จสมบูรณ์%4"
 
 msgid "In this Agreement, unless the context otherwise requires, the following definitions hold:"
 msgstr "ในสัญญานี้ ยกเว้นว่าบริบทกำหนดให้เป็นอย่างอื่น นิยามจะมีรายละเอียดดังต่อไปนี้"
@@ -6575,6 +6599,9 @@ msgstr "สำนักงานกัวลาลัมเปอร์"
 msgid "L. Manifest Error"
 msgstr "ฏ. ข้อผิดพลาดโดยเจตนา"
 
+msgid "LTC/USD"
+msgstr "LTC/USD"
+
 msgid "Labuan"
 msgstr "ลาบวน"
 
@@ -6761,8 +6788,8 @@ msgstr "การเชื่อมโยงไปยังคอมพิวเ
 msgid "Links"
 msgstr "ลิงค์"
 
-msgid "Linux"
-msgstr "ลินุกซ์"
+msgid "Linux or MacOs"
+msgstr "Linux หรือ MacO"
 
 msgid "Liquidity solutions"
 msgstr "ทางแก้ปัญหาสภาพคล่อง"
@@ -6844,9 +6871,6 @@ msgstr "ขณะนี้ตัวเลือกการมองย้อน
 
 msgid "Looking for %1 app?"
 msgstr "กำลังมองหาแอพ %1 ?"
-
-msgid "Looking for desktop apps?"
-msgstr "กำลังมองหาแอปเดสก์ท็อปใช่หรือไม่?"
 
 msgid "Looking for the %1 Desktop app?"
 msgstr "กำลังมองหาแอป %1 สำหรับเดสก์ท็อปใช่หรือไม่?"
@@ -6938,6 +6962,9 @@ msgstr "MT5 สำหรับวินโดวส์"
 msgid "MT5 for iOS"
 msgstr "MT5 สำหรับ iOS"
 
+msgid "MT5 for macOS"
+msgstr "MT5 สำหรับ macOS"
+
 msgid "MT5 real-money account for Synthetic Indices only."
 msgstr "บัญชีเงินจริง MT5 สำหรับดัชนีสังเคราะห์เท่านั้น"
 
@@ -6949,6 +6976,9 @@ msgstr "แพลตฟอร์มเว็บ MT5"
 
 msgid "MT5 withdrawals have been disabled on your account. Please check your email for more details."
 msgstr "ได้มีการปิดการใช้งานการถอนเงิน MT5 ในบัญชีของท่าน โปรดตรวจสอบอีเมล์เพื่อศึกษารายละเอียดเพิ่มเติม"
+
+msgid "MacOs or Windows"
+msgstr "MacOs หรือ Windows"
 
 msgid "Made an impression in the first interview? We'll invite you to a second interview with our CEO and/or hiring manager."
 msgstr "หากท่านได้สร้างความประทับใจในการสัมภาษณ์ครั้งแรก บริษัทฯ จะเชิญท่านให้มาสัมภาษณ์ครั้งที่สอง กับ CEO ของเรา และ/หรือ หัวหน้างานของตำแหน่งที่กำลังรับสมัครนี้"
@@ -8091,8 +8121,8 @@ msgstr "บัญชี MetaTrader 5 Financial ของเราเหมาะ
 msgid "Our Synthetic account allows you to trade CFDs on Synthetic Indices - our proprietary synthetic assets that simulate market forces."
 msgstr "บัญชีสังเคราะห์ ของเราอนุญาตให้คุณซื้อขาย CFD ในดัชนีสังเคราะห์ - สินทรัพย์สังเคราะห์ที่เป็นกรรมสิทธิ์ของเราจากการจำลองเหตุการณ์ที่เป็นไปตามกลไกของตลาด"
 
-msgid "Our active client base is expected to reach over 175,000 total clients this year."
-msgstr "ฐานลูกค้าที่ใช้งานอยู่ของเราคาดว่าจะเข้าถึงลูกค้าได้มากกว่า 175,000 รายในปีนี้"
+msgid "Our active client base is expected to reach over 790,000 total clients this year."
+msgstr "คาดว่าฐานลูกค้าที่ใช้งานอยู่ของเราทั้งหมดจะเกิน 790,000 รายปีนี้"
 
 msgid "Our business is founded on collaboration and we aim to build long-term, mutually beneficial relationships with our partners. However, we will never compromise our commitment to business integrity. In cases where our partners are unwilling or unable to abide by our principles, we reserve the right to withdraw from the business relationship."
 msgstr "ธุรกิจของเราก่อตั้งขึ้นจากความร่วมมือและเรามุ่งมั่นที่จะสร้างความสัมพันธ์ระยะยาวและเป็นประโยชน์ร่วมกันกับหุ้นส่วนของเรา อย่างไรก็ตามเราจะไม่ลดทอนความมุ่งมั่นของเราที่มีต่อความซื่อสัตย์ทางธุรกิจ ในกรณีที่หุ้นส่วนของเราไม่เต็มใจหรือไม่สามารถปฏิบัติตามหลักการของเราได้ เราขอสงวนสิทธิ์ในการถอนตัวจากความสัมพันธ์ทางธุรกิจ"
@@ -8852,6 +8882,9 @@ msgstr "ราคา / ข้อมูลราคา"
 
 msgid "Primary"
 msgstr "หลัก"
+
+msgid "Prime Brokerage Services Limited"
+msgstr "Prime Brokerage Services Limited"
 
 msgid "Prior to placing an Order, which results in opening a position, the client acknowledges that it is their responsibility to ensure that their Account Free Margin is sufficient to cover the Margin required in relation to the opening of the position (the \"Margin Requirement\"), and to continuously meet the Margin Requirement."
 msgstr "ก่อนการส่งคำสั่งซื้อที่จะทำให้เกิดการเปิดธุรกรรม ลูกค้าทราบว่า ถือเป็นความรับผิดชอบของลูกค้าที่จะตรวจสอบให้แน่ใจว่า บัญชีมีมาร์จินฟรีเพียงพอสำหรับจำนวนมาร์จินที่กำหนดไว้เพื่อการเปิดธุรกรรม (\"ข้อกำหนดของมาร์จิน\") และเพื่อให้คงสภาพตามข้อกำหนดของมาร์จินนี้อย่างต่อเนื่อง"
@@ -10407,8 +10440,8 @@ msgstr "แผนการแลกเปลี่ยน"
 msgid "Swaps Long (per annum)"
 msgstr "สัญญาระยะยาว (ต่อปี)"
 
-msgid "Swaps short (per annum)"
-msgstr "สัญญาระยะสั้น (ต่อปี)"
+msgid "Swaps Short (per annum)"
+msgstr "สวอปสั้น (ต่อปี)"
 
 msgid "Swiss franc vs Japanese yen"
 msgstr "ฟรังก์สวิส เทียบกับ เยนญี่ปุ่น"
@@ -11286,8 +11319,8 @@ msgstr "ภาระหน้าที่ของโบรกเกอร์แ
 msgid "The Investor Compensation Scheme"
 msgstr "แผนผลประโยชน์ของนักลงทุน"
 
-msgid "The MT5 desktop app is not supported by macOS, Windows XP, Windows 2003, and Windows Vista."
-msgstr "แอปเดสก์ท็อป MT5 ไม่รองรับ macOS, Windows XP, Windows 2003, และ Windows Vista"
+msgid "The MT5 desktop app is not supported by Windows XP, Windows 2003, and Windows Vista."
+msgstr "แอพเดสก์ท็อป MT5 ไม่รองรับ Windows XP, Windows 2003, และ Windows Vista"
 
 msgid "The Margin Level of the client's MT5 Real Account reaches or falls below the Stop Out Level."
 msgstr "ระดับมาร์จินของบัญชี MT5 จริงของลูกค้าถึง หรือ ลดต่ำลงจากระดับยุติการซื้อขาย"
@@ -12326,9 +12359,6 @@ msgstr "หน้าที่ความรับผิดชอบนี้ห
 msgid "This page is only available to logged out clients."
 msgstr "หน้านี้สำหรับแสดงให้กับผู้ใช้งานที่ออกจากระบบแล้ว"
 
-msgid "This page will redirect to the %1 homepage after 10 seconds."
-msgstr "หน้านี้จะเปลี่ยนไปยังหน้าแรกของ %1 หลังจาก 10 วินาที"
-
 msgid "This policy applies to clients classified as retail or professional. Clients classified as eligible counterparties are outside the scope of this policy."
 msgstr "นโยบายนี้ใช้กับลูกค้าในกลุ่มลูกค้ารายย่อย (Retail) หรือ ลูกค้าผู้เชี่ยวชาญ (Professional) ไม่สามารถใช้กับลูกค้าพึงมีคุณสมบัติ (Eligible Counterparty)"
 
@@ -12480,7 +12510,7 @@ msgid "To reset your password, enter the email address you used to create your a
 msgstr "เพื่อตั้งค่ารหัสผ่านของท่านใหม่ ป้อนอีเมล์ที่ท่านลงทะเบียนไว้ในช่องว่างข้างล่าง และคลิก 'ตั้งรหัสผ่านใหม่'"
 
 msgid "To reset your trading or investor password, please click the button below:"
-msgstr "โปรดคลิกที่ปุ่มด้านล่างนี้ เพื่อตั้งรหัสผ่านการซื้อขาย หรือ รหัสผ่านนักลงทุนใหม่"
+msgstr "กรุณาคลิกที่ปุ่มด้านล่างนี้ เพื่อตั้งรหัสผ่านการซื้อขายหรือนักลงทุนใหม่"
 
 msgid "To smoothly verify you, we need a better photo"
 msgstr "หากต้องการยืนยันคุณอย่างราบรื่นเราต้องการภาพถ่ายที่ดีกว่า"
@@ -12716,6 +12746,9 @@ msgstr "เวลาซื้อขาย"
 msgid "Trading and Withdrawal Limits"
 msgstr "วงเงินซื้อขายและถอนเงิน"
 
+msgid "Trading and deposits have been disabled on your account. Kindly allow us some time to review the account."
+msgstr "การซื้อขายและการฝากเงินถูกปิดใช้งานในบัญชีของคุณ กรุณาให้เวลาเราตรวจสอบบัญชี"
+
 msgid "Trading and withdrawals have been disabled on your account. Kindly %1contact customer support%2 for assistance."
 msgstr "การซื้อขายและการถอนเงินถูกปิดการใช้งานในบัญชีของคุณ โปรด %1cติดต่อฝ่ายบริการลูกค้า%2 เพื่อขอความช่วยเหลือ"
 
@@ -12931,9 +12964,6 @@ msgstr "ประเภทของการซื้อขาย"
 
 msgid "UI/UX Designer"
 msgstr "นักออกแบบ UI/UX"
-
-msgid "UK and Manx residents who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
-msgstr "ผู้ที่อยู่อาศัยในสหราชอาณาจักรและไอล์ออฟแมน ที่ต้องการซื้อขายผลิตภัณฑ์การพนันจะดำเนินการเปิดบัญชีกับ Deriv (MX) Ltd"
 
 msgid "US Patents"
 msgstr "สิทธิบัตรสหรัฐอเมริกา"
@@ -13526,9 +13556,6 @@ msgstr "เราจะเปรียบเทียบกับเอกสา
 msgid "We're almost there"
 msgstr "เราใกล้จะถึงแล้ว"
 
-msgid "We're expected to generate over 2 USD billion in turnover this year, bringing our total turnover since inception to over 9.2 USD billion."
-msgstr "เราคาดว่าจะสร้างมูลค่าการซื้อขายได้มากกว่า 2 พันล้านเหรียญสหรัฐในปีนี้ทำให้มูลค่าการซื้อขายรวมของเราตั้งแต่เริ่มก่อตั้งเป็นเงินกว่า 9.2 พันล้านเหรียญ"
-
 msgid "We're granted patents for 'Computer trading system and method for speculating on a financial market' and 'Computer trading system for offering custom financial market speculations'. The patents show our ability to innovate and stay ahead of the pack."
 msgstr "พวกเราได้รับสิทธิบัตรสำหรับ 'ระบบคอมพิวเตอร์สำหรับการซื้อขายและวิธีในการเก็งกำไรในตลาดการเงิน' และ 'ระบบคอมพิวเตอร์สำหรับการซื้อขายที่นำเสนอการเก็งกำไรในตลาดการเงิน' สิทธิบัตรแสดงถึงความสามารถของพวกเราในการสร้างสรรค์และนำหน้าตลาด"
 
@@ -13541,14 +13568,17 @@ msgstr "เราไม่มีข้อผูกมัดในการดำ
 msgid "We're now ready to verify your identity"
 msgstr "ตอนนี้เราพร้อมแล้วที่จะยืนยันตัวตนของคุณ"
 
-msgid "We're projected to register over 377 million transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 1.42 billion."
-msgstr "เราคาดการณ์ที่จะลงทะเบียนในธุรกรรมมากกว่า 377 ล้านธุรกรรมในปีนี้ ซึ่งทำให้จำนวนสัญญาที่ถูกซื้อและขายบนแพลตฟอร์มของเราตั้งแต่ก่อตั้งมีมากกว่า 1.42 พันล้านธุรกรรม"
+msgid "We're projected to register over 1.1 billion transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 2.8 billion."
+msgstr "เราคาดการณ์ที่จะลงทะเบียนในธุรกรรมมากกว่า 1.1 พันล้านธุรกรรม ในปีนี้ ซึ่งทำให้จำนวนสัญญาที่ถูกซื้อและขายบนแพลตฟอร์มของเราตั้งแต่ก่อตั้งมีมากกว่า 2.8 พันล้านธุรกรรม"
 
 msgid "We're really proud of this award. We're strongly committed to offering an ethical and customer-focused trading experience, and the award shows that BetOnMarkets is a trusted brand that listens and caters to customers, whether they are experienced traders or novices. We offer customer services in English, Indonesian, Russian, Chinese and Spanish."
 msgstr "พวกเรามีความภูมิใจในรางวัลนี้มาก พวกเราให้คำสัญญาอย่างแน่วแน่ในการทำให้ท่านมีประสบการณ์การซื้อขายอย่างมีจริยธรรม รางวัลนี้แสดงว่า BetOnMarkets เป็นแบรนด์ที่ได้รับความไว้วางใจ รับฟังและดูแลลูกค้า ผู้ซึ่งมีประสบการณ์ในการลงทุนมาแล้ว หรือ นักลงทุนมือใหม่ พวกเรามีทีมงานลูกค้าสัมพันธ์ที่สามารถสื่อสารกับท่านได้ด้วยภาษาอังกฤษ ภาษาอินโดนีเซีย ภาษารัสเซีย ภาษาจีน และภาษาสเปน"
 
-msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across four offices in Malaysia, Malta, Paraguay and Dubai. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
-msgstr "เราเติบโตขึ้นในช่วงหลายปีที่ผ่านมาทั้งในด้านกำลังคนและสำนักงาน ปัจจุบันเรามีพนักงานมากกว่า %1 คนในสำนักงาน 4 แห่งในมาเลเซีย มอลตา ปารากวัยและดูไบ คาดว่าการเติบโตของจำนวนพนักงานเพิ่มขึ้นในปีนี้เพื่อรองรับความต้องการที่เพิ่มขึ้นในผลิตภัณฑ์และบริการของเรา"
+msgid "We're sorry to see you leave."
+msgstr "เราเสียใจที่เห็นคุณจากไป"
+
+msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across 10 offices in Malta, Dubai, Malaysia, Paraguay, Cyprus, Rwanda, and Belarus. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
+msgstr "เราเติบโตขึ้นในช่วงหลายปีที่ผ่านมาทั้งในด้านกำลังคนและสำนักงาน ปัจจุบันเรามีพนักงานมากกว่า %1 คนในสำนักงาน 10 แห่งในมอลตาดูไบมาเลเซียปารากวัยไซปรัสรวันดาและเบลารุส คาดว่าการเติบโตของจำนวนพนักงานเพิ่มขึ้นในปีนี้เพื่อรองรับความต้องการที่เพิ่มขึ้นในผลิตภัณฑ์และบริการของเรา"
 
 msgid "We've sent a secure link to %{number}"
 msgstr "เราได้ส่งลิงก์ที่ปลอดภัยไปยัง %{number}"
@@ -13916,8 +13946,8 @@ msgstr "ชนะด้วย ตัวคูณคูณตัวสูงล�
 msgid "Win the multiplier times the high minus low."
 msgstr "ชนะด้วย ตัวคูณคูณตัวสูงลบจุดต่ำ"
 
-msgid "Windows"
-msgstr "Windows"
+msgid "Windows or Linux"
+msgstr "Windows หรือ Linux"
 
 msgid "Winning the contract"
 msgstr "ชนะสัญญา"
@@ -14035,6 +14065,15 @@ msgstr "พัฒนาระบบที่มีความปลอดภั
 
 msgid "Written limits and self-exclusion"
 msgstr "วงเงินและการพักการซื้อขายที่แจ้งเป็นลายลักษณ์อักษร"
+
+msgid "XMR vs US dollar"
+msgstr "XMR เทียบกับดอลลาร์สหรัฐ"
+
+msgid "XMR/USD"
+msgstr "XMR/USD"
+
+msgid "XRP/USD"
+msgstr "XRP/USD"
 
 msgid "Yes"
 msgstr "ใช่"
@@ -14325,7 +14364,7 @@ msgid "You've carried out significant transactions on markets similar to the one
 msgstr "ท่านได้ดำเนินการธุรกรรมในตลาดคล้ายกับที่เราได้นำเสนอ เฉลี่ยรวม 10 ธุรกรรม ต่อ ไตรมาส ภายในระยะเวลา 4 ไตรมาสที่ผ่านมา"
 
 msgid "You've made no transactions of this type up to this date."
-msgstr ""
+msgstr "คุณไม่ได้ทําธุรกรรมประเภทนี้จนถึงวันที่นี้"
 
 msgid "You've worked in the financial sector for at least one year in a role that requires knowledge of your intended transactions on our platform"
 msgstr "ท่านมีประสบการณ์ทำงานในภาคการเงินมาก่อนอย่างน้อยหนึ่งปีในตำแหน่งที่ต้องใช้ความรู้ของธุรกรรมที่ท่านตั้งใจจะใช้กับแพลตฟอร์มของเรา"
@@ -14369,8 +14408,8 @@ msgstr "บัญชีของท่านไม่มีประวัติ
 msgid "Your account is fully authenticated and your withdrawal limits have been lifted."
 msgstr "บัญชีของท่านได้รับการยืนยันตัวตนอย่างสมบูรณ์แล้ว และวงเงินการถอนเงินของท่านได้รับการยกระดับโดยการเพิ่มวงเงินแล้ว"
 
-msgid "Your account is now closed"
-msgstr "บัญชีของคุณถูกปิดแล้ว"
+msgid "Your account is now deactivated."
+msgstr "บัญชีของคุณถูกปิดใช้งานในขณะนี้"
 
 msgid "Your account is restricted. Kindly %1contact customer support%2 for assistance."
 msgstr "บัญชีของท่านถูกระงับ โปรด %1ติดต่อฝ่ายลูกค้าสัมพันธ์%2 เพื่อดำเนินการต่อไป"
@@ -14510,6 +14549,9 @@ msgstr "เลขที่อ้างอิงของธุรกรรมข
 msgid "Your transaction reference number is %1"
 msgstr "หมายเลขอ้างอิงของธุรกรรมของท่าน คือ %1"
 
+msgid "Your virtual balance has been reset."
+msgstr "ยอดคงเหลือเสมือนของคุณถูกรีเซ็ตแล้ว"
+
 msgid "Your web browser (%1) is out of date and may affect your trading experience. Proceed at your own risk. %2Update browser%3"
 msgstr "เว็บเบราเซอร์ของท่าน (%1) ไม่ได้ปรับปรุงให้ทันสมัย ซึ่งส่งผลต่อการใช้งานในการซื้อขายของท่าน โปรดดำเนินการเพื่อแก้ไขความเสี่ยงนี้โดยตัวท่านเองสามารถ %2 ปรับปรุงเบราเซอร์ให้เหมาะกับการใช้งาน %3"
 
@@ -14525,8 +14567,11 @@ msgstr "วงเงินการถอนของคุณ คือ %1%2"
 msgid "You’ll be logged out automatically."
 msgstr "คุณจะออกจากระบบโดยอัตโนมัติ"
 
-msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
-msgstr "คุณได้ปิดบัญชีเรียบร้อยแล้ว เราจะส่งอีเมลยืนยันไปที่ %1"
+msgid "ZEC vs US dollar"
+msgstr "ZEC เทียบกับดอลลาร์สหรัฐ"
+
+msgid "ZEC/USD"
+msgstr "ZEC/USD"
 
 msgid "ZingPay is a payment facility that allows online bank transfers for clients in South Africa."
 msgstr "ZingPay เป็นระบบการชำระเงินที่อนุญาตให้โอนเงินผ่านธนาคารออนไลน์สำหรับลูกค้าในแอฟริกาใต้"

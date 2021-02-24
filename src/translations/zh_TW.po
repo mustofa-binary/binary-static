@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-01-26 02:55\n"
+"PO-Revision-Date: 2021-02-19 05:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,17 @@ msgstr "5"
 msgid "10"
 msgstr "10"
 
+msgid "40"
+msgstr "40"
+
+msgid "50"
+msgstr "50"
+
 msgid "404"
 msgstr "404"
+
+msgid "500"
+msgstr "500"
 
 msgid " (account created)"
 msgstr " (已開立帳戶)"
@@ -523,14 +532,8 @@ msgstr "0-1 年"
 msgid "0-5 transactions in the past 12 months"
 msgstr "過去12個月內0-5次交易"
 
-msgid "0.2%"
-msgstr "0.2%"
-
 msgid "0.20"
 msgstr "0.20"
-
-msgid "0.3%"
-msgstr "0.3%"
 
 msgid "0.4%"
 msgstr "0.4%"
@@ -1876,8 +1879,20 @@ msgstr "二、開始"
 msgid "B. Scope"
 msgstr "二、範圍"
 
+msgid "BCH/USD"
+msgstr "比特幣現金/美元"
+
+msgid "BNB vs US dollar"
+msgstr "幣安幣兌美元"
+
+msgid "BNB/USD"
+msgstr "幣安幣/美元"
+
 msgid "BTC"
 msgstr "比特幣"
+
+msgid "BTC/USD"
+msgstr "比特幣/美元"
 
 msgid "Bachelor's degree in computer science, or an equivalent combination of technical education, training, and work experience"
 msgstr "電腦科學系學士，或具備同等技術教育、培訓背景及工作經驗的人員"
@@ -2635,8 +2650,8 @@ msgstr "客戶也被告知，如果客戶提供錯誤的資訊，其權利可能
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) who wish to trade CFDs on financial instruments and cryptocurrencies can have MetaTrader 5 accounts under Deriv (BVI) Ltd. %1 is not available in the British Virgin Islands."
 msgstr "全球其他地區(除了一些國家如美國、加拿大和香港) 想要進行金融工具和加密貨幣差價合約交易的客戶可在 Deriv (BVI) Ltd. 擁有MetaTrader 5帳戶。%1在英屬維爾京群島不能使用。"
 
-msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. %1 is not available in the Republic of Vanuatu."
-msgstr "全球其他地區的客戶(不包括某些國家如美國、加拿大、香港) 可在 Deriv (V) Ltd. 開設外匯和差價合約 Metatrader 5 帳戶。%1在萬那杜不能使用。"
+msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, Hong Kong) will have their FX and CFD Metatrader 5 account opened with Deriv (V) Ltd. This company does not offer CFDs on cryptocurrencies. %1 is not available in the Republic of Vanuatu."
+msgstr ""
 
 msgid "Clients from the rest of the world (excluding certain countries such as the USA, Canada, and Hong Kong) will have their account opened with Deriv (SVG) LLC."
 msgstr "全球其他地區的客戶(不包括某些國家如美國、加拿大和香港) 可在 Deriv (SVG) LLC開設帳戶。"
@@ -2649,6 +2664,12 @@ msgstr "客戶有機會考慮是否通過向 compliance@binary.com 發送電子�
 
 msgid "Clients hereby declare that they are dealing with DIEL outside the scope of their economic or professional activity, and DIEL will therefore treat the client as an individual retail client for the purposes of EMIR compliance, unless advised otherwise."
 msgstr "客戶在此聲明，其與DIEL之間的活動範圍屬於其當前的經濟或職業之外。除非另行通知，DIEL將視客戶為符合EMIR規則的個人零售客戶。"
+
+msgid "Clients in the European Union who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
+msgstr "想要進行產品博彩交易的歐盟客戶將透過 Deriv (Europe) Limited 開設帳戶。"
+
+msgid "Clients in the Isle of Man and the UK who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
+msgstr "想要進行產品博彩交易的曼島和英國客戶將透過 Deriv (MX) Ltd 開設帳戶。"
 
 msgid "Clients may trade on our platforms only when they are using their own money and are drawing on funds that have been acquired honestly. If you have any suspicion that clients are using money that has been acquired dishonestly, you must inform %1.  In such cases, we may decide to conduct checks on the client’s status and background. %2 management will decide what information needs to be reported to government officials and through what channels."
 msgstr "如果要在我們的平台交易，客戶必須使用自己的資金，且這些資金須是通過誠實的方式獲得的。如果您懷疑客戶使用的款項是以不誠實的途徑獲得，您必須通知％1。在這種情況下，我們可能決定檢查客戶的狀況和背景。％2管理層將決定需要通過什麼渠道向政府官員報告哪些資訊。"
@@ -3277,17 +3298,11 @@ msgstr "加密"
 msgid "Cryptocurrencies"
 msgstr "加密貨幣"
 
-msgid "Cryptocurrencies commission per round trade. For example, a round trade of 1 lot of BTC/USD with spot price of 10,000 USD will pay 30 USD on financial accounts and 20 USD on financial STP accounts."
-msgstr "每回合交易的加密貨幣佣金。例如: 1手比特幣/美元的一回合交易, 如現貨價格為 10,000美元，金融帳戶將支付30美元，金融STP帳戶則支付20美元。"
-
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital assets that enable instant payments to anywhere in the world."
 msgstr "像比特幣和以太幣這樣的加密貨幣是分散式的數字資產，可以在全世界任何地方即時支付。"
 
 msgid "Cryptocurrencies such as Bitcoin and Ethereum are decentralised digital currencies on the blockchain."
 msgstr "比特幣和以太幣等加密貨幣是區塊鏈上的分散式數字貨幣。"
-
-msgid "Cryptocurrencies**"
-msgstr "加密貨幣**"
 
 msgid "Cryptocurrency"
 msgstr "加密貨幣"
@@ -3408,6 +3423,9 @@ msgstr "DIEL 保留接受或拒絕任何分類變更請求的權利。"
 
 msgid "DIEL shall not be obliged to provide professional clients with the following:"
 msgstr "DIEL不可向專業客戶提供以下服務:"
+
+msgid "DSH/USD"
+msgstr "DSH/美元"
 
 msgid "Daily Reset Indices – Daily Reset Indices replicate markets with a bullish and bearish trend with a constant volatility. The Bull Market and Bear Market indices start at 00:00 GMT each day, replicating bullish and bearish markets respectively."
 msgstr "每日重置指數 - 每日重置指數複製具看漲和看跌走勢與持續波動的市場。牛市和熊市指數每天從格林威治時間00:00開始，分別複製看漲和看跌市場。"
@@ -3598,8 +3616,8 @@ msgstr "Deriv (歐洲) 有限公司"
 msgid "Deriv (Europe) Limited,"
 msgstr "Deriv (Europe) Limited,"
 
-msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta. Licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta  (licence no. %2) - %3view licence%4 and also maintains an Irish licence. For UK clients by the UK Gambling Commission - %5view licence%4."
-msgstr "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta。公司經馬爾他博彩局授予執照並受其監管（僅博彩產品-%1的綜合指數），（執照號 %2） - %3檢視執照%4。同時也擁有愛爾蘭執照。而英國客戶由英國博彩委員會授予執照和監管 - %5檢視執照%4。"
+msgid "Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta, is licensed and regulated (for gambling products only - %1's Synthetic Indices) by the Malta Gaming Authority in Malta (%2licence no. MGA/B2C/102/2000%4), by the Gambling Commission for clients in Great Britain under (%3account no. 39495%4), and by the Revenue Commissioners for clients in Ireland (licence no. 1010285)."
+msgstr "Deriv  (Europe) Limited，地址為 W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta，(%1的綜合指數交易 - 僅博彩產品) 由位於馬爾他的馬爾他博彩局授予執照和監管（%2執照號MGA/B2C/102/2000%4), ，英國客戶由博彩委員會通過(%3帳號 39495%4)授予執照和監管， 及愛爾蘭客戶由稅務局授予執照和監管(執照號: 1010285)。"
 
 msgid "Deriv (Europe) Limited, or"
 msgstr "Deriv (Europe) Limited, 或"
@@ -3622,8 +3640,8 @@ msgstr "Deriv (FX) Ltd: 納閩，馬來西亞直轄區"
 msgid "Deriv (MX) Ltd"
 msgstr "Deriv (MX) Ltd"
 
-msgid "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW. Licensed and regulated by the Gambling Supervision Commission in the Isle of Man (current online gambling licence granted on the 31 August 2017) - %1view licence%2 and for UK clients by the UK Gambling Commission - %3view licence%2."
-msgstr "Deriv (MX) Ltd, First Floor, Millennium House, Victoria Road, Douglas, Isle of Man, IM2 4RW。公司經曼島博彩監管委員會授予執照並受其監管（目前線上博彩執照的授予時間是2017 年8 月31 日）- %1檢視執照%2，而英國客戶由英國博彩委員會授予執照和監管 - %3檢視執照%2。"
+msgid "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man, is licensed and regulated in Great Britain by the Gambling Commission under %1account no. 39172%3 and by the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man，已經在英國由博彩委員會通過%1帳號39172%3及由曼島博彩監管委員會授予執照和監管 (%2 檢視執照%3）。"
 
 msgid "Deriv (MX) Ltd."
 msgstr "Deriv (MX) Ltd."
@@ -3916,6 +3934,9 @@ msgstr "下載MT5"
 msgid "Download MT5 for Linux"
 msgstr "Linux版MT5下載"
 
+msgid "Download MT5 for Mac"
+msgstr "Mac版MT5下載"
+
 msgid "Download MT5 for Windows"
 msgstr "Windows版MT5下載"
 
@@ -4026,6 +4047,12 @@ msgstr "EGR操作員獎"
 
 msgid "EOS vs US dollar"
 msgstr "EOS兌美元"
+
+msgid "EOS/USD"
+msgstr "EOS/美元"
+
+msgid "ETH/USD"
+msgstr "以太幣/美元"
 
 msgid "EU Passport Rights"
 msgstr "歐盟金融護照權利"
@@ -4317,9 +4344,6 @@ msgstr "歐元兌土耳其里拉"
 
 msgid "Euro vs US dollar"
 msgstr "歐元兌美元"
-
-msgid "European Union residents who wish to trade gambling products will have their accounts opened with Deriv (Europe) Limited."
-msgstr "想要進行產品博彩交易的歐盟居民將在 Deriv (歐洲) 有限公司開設帳戶。"
 
 msgid "European Union residents who wish to trade investment products will have their accounts opened with Deriv Investments (Europe) Limited."
 msgstr "想要進行產品博彩交易的歐盟居民將在 Deriv Investments (Europe) Limited 開設帳戶。"
@@ -6100,8 +6124,8 @@ msgstr "歐盟國家的金融產品交易由 Deriv Investments (Europe) Limited 
 msgid "In the EU, financial products are offered by Deriv Investments (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta, regulated as a Category 3 Investment Services provider by the Malta Financial Services Authority (%1licence no. IS/70156%2)."
 msgstr "歐盟國家的金融產品交易由 Deriv Investments (Europe) Limited 提供，地址為W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta，由馬爾他金融服務機構監管為3級投資服務提供商 (執照號碼為%1IS/70156%2)。"
 
-msgid "In the Isle of Man and the UK, Synthetic Indices are offered by Deriv (MX) Ltd., First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles; licensed and regulated respectively by (1) the Gambling Supervision Commission in the Isle of Man (current licence issued on 31 August 2017) and by (2) the Gambling Commission in the UK (licence %1reference no: 39172%2)."
-msgstr "英國和曼島的綜合指數交易由Deriv (MX) Ltd. 提供，地址為：First Floor, Millennium House, Victoria Road, Douglas, IM2 4RW, Isle of Man, British Isles；(1) 由不列顛群島曼島投資監管委員會授予執照和監管，目前線上博彩執照於2012 年8 月31 日頒發；及(2) 由英國博彩委員會授予執照和監管(執照 %1編號: 39172%2)-"
+msgid "In the Isle of Man and the UK, Synthetic indices are offered by Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man; licensed and regulated in Great Britain by (1) the Gambling Commission under %1account no. 39172%3 and by (2) the Gambling Supervision Commission in the Isle of Man (%2view licence%3)."
+msgstr "英國和曼島的綜合指數交易由 Deriv (MX) Ltd. 提供，地址為：Deriv (MX) Ltd, Millennium House, Level 1, Victoria Road, Douglas IM2 4RW, Isle of Man，已經在英國由(1)博彩委員會通過%1帳號39172%3及由 (2) 曼島博彩監管委員會授予執照和監管 (%2 檢視執照%3）。"
 
 msgid "In the UK, our clients trade through Deriv (MX) Ltd and Deriv Investments (Europe) Limited. In the Isle of Man, they trade through Deriv (MX) Ltd. In the European Union (except UK), they trade through Deriv (Europe) Limited and Deriv Investments (Europe) Limited. In the rest of the world, they trade through Deriv (SVG) LLC, Deriv (V) Ltd, Deriv (BVI) Ltd and Deriv (FX) Ltd."
 msgstr "在英國，我們的客戶通過 Deriv (MX) Ltd 和 Deriv Investments (Europe) Limited 進行交易。在曼島，他們通過 Deriv (MX) Ltd 進行交易。在歐盟（除了英國），他們通過 Deriv (Europe) Limited 和 Deriv Investments (Europe) Limited 進行交易。在全世界其他地區，他們通過 Deriv (SVG) LLC，Deriv (V) Ltd，Deriv (BVI) Ltd 和 Deriv (FX) Ltd 進行交易。"
@@ -6133,8 +6157,8 @@ msgstr "交易日結束前如果公司沒有收到客戶對持倉頭寸決定平
 msgid "In the event that the Company is aware of an Affiliate who is in breach of any of the above provisions, the Company shall have the right, in addition to any other right or remedy available to it under this Agreement or applicable law, to immediately block the Affiliate's access to this programme. The Affiliate hereby irrevocably waives their rights to, and shall indemnify the Company and any member of the Deriv group of companies for, any claims or demands made against the Company or any member of the Deriv group of companies, their directors, officers, shareholders, or employees or against the %1 website if the Company revokes the Affiliate's access to the programme."
 msgstr "如公司發現聯盟會員違反任何上述規定，除了擁有根據本協議或適用法律的任何其他權利或賠償權利，公司有權立即阻止該聯盟會員對公司的存取。該聯盟會員因此不可撤銷地放棄其權利，而且如果公司撤銷該聯盟會員對公司的存取，聯盟會員須對公司及任何 Deriv 集團公司成員、其董事、職員、股東、僱員或由公司針對%1網站的任何索賠或要求索賠作出賠償。"
 
-msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority in Malta (%1licence no. MGA/B2C/102/2000%4 issued on 01 August 2018), for UK clients by (2) the UK Gambling Commission (licence %2reference no: 39495%4), and for Irish clients by (3) the Revenue Commissioners in Ireland (Remote Bookmaker's Licence no. 1010285 issued on 1 July 2017). View complete %3Regulatory Information%4."
-msgstr "歐盟其它國家的綜合指數交易由Deriv  (Europe) Limited提供，地址為 W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta。由(1) 馬爾他的馬爾他博彩局授予執照並受其監管（%1執照號MGA/B2C/102/2000%4, 發照日期為2018年8月01日）。英國客戶由(2) 英國博彩委員會授予執照和監管(執照%2編號: 39495%4)， 及愛爾蘭客戶由(3) 愛爾蘭的稅務局授予執照和監管(遠程博彩公司執照號: 1010285，發照日期為2017年7月1日)。查閱完整的%3監管資訊%4。"
+msgid "In the rest of the EU, Synthetic Indices are offered by Deriv (Europe) Limited, W Business Centre, Level 3, Triq Dun Karm, Birkirkara BKR 9033, Malta; licensed and regulated by (1) the Malta Gaming Authority (%1licence no. MGA/B2C/102/2000%4), by (2) the Gambling Commission for clients in Great Britain under %2account no. 39495%4, and by (3) the Revenue Commissioners for clients in Ireland (licence no. 1010285). View complete %3Regulatory Information%4."
+msgstr "歐盟其他地區的綜合指數交易由Deriv (Europe) Limited提供，地址為 W Business Centre, Level 3, Triq Dun Karm, Birkirkara, BKR 9033, Malta，由(1) 馬爾他博彩局授予執照和監管（%1執照號MGA/B2C/102/2000%4), ， (2) 英國客戶由博彩委員會通過%2帳號 39495%4授予執照和監管， 及 (3) 愛爾蘭客戶由稅務局授予執照和監管(執照號: 1010285)。查閱完整的%3監管資訊%4。"
 
 msgid "In this Agreement, unless the context otherwise requires, the following definitions hold:"
 msgstr "本協議中，除非上下文另有解釋，否則以下定義應適用："
@@ -6574,6 +6598,9 @@ msgstr "吉隆坡辦公室"
 msgid "L. Manifest Error"
 msgstr "十二、明顯錯誤"
 
+msgid "LTC/USD"
+msgstr "萊特幣/美元"
+
 msgid "Labuan"
 msgstr "納閩"
 
@@ -6760,8 +6787,8 @@ msgstr "與您的電腦連接"
 msgid "Links"
 msgstr "連結"
 
-msgid "Linux"
-msgstr "Linux"
+msgid "Linux or MacOs"
+msgstr "Linux 或 MacOs"
 
 msgid "Liquidity solutions"
 msgstr "流動性解決方案"
@@ -6843,9 +6870,6 @@ msgstr "回顧選項目前僅適用于 %1綜合指數%2。"
 
 msgid "Looking for %1 app?"
 msgstr "正在查找 %1 應用程式？"
-
-msgid "Looking for desktop apps?"
-msgstr "正在查找桌面應用程式？"
 
 msgid "Looking for the %1 Desktop app?"
 msgstr "正在查找 %1 桌面應用程式？"
@@ -6937,6 +6961,9 @@ msgstr "Windows版MT5"
 msgid "MT5 for iOS"
 msgstr "IOS版MT5"
 
+msgid "MT5 for macOS"
+msgstr "macOS版MT5"
+
 msgid "MT5 real-money account for Synthetic Indices only."
 msgstr "綜合指數專用的MT5真實資金帳戶。"
 
@@ -6948,6 +6975,9 @@ msgstr "MT5網上平台"
 
 msgid "MT5 withdrawals have been disabled on your account. Please check your email for more details."
 msgstr "您的MT5帳戶已被禁提款。請檢查您的電子郵件, 以瞭解更多詳情。"
+
+msgid "MacOs or Windows"
+msgstr "MacOs 或 Windows"
 
 msgid "Made an impression in the first interview? We'll invite you to a second interview with our CEO and/or hiring manager."
 msgstr "在第一次面試中留下了印象？我們將邀請您與首席執行官和/或招聘經理進行第二次面談。"
@@ -8089,8 +8119,8 @@ msgstr "我們的 MetaTrader 5 財務帳戶適用于新手和經驗豐富的交�
 msgid "Our Synthetic account allows you to trade CFDs on Synthetic Indices - our proprietary synthetic assets that simulate market forces."
 msgstr "我們的綜合帳戶允許您對綜合指數進行差價交易 - 這是我們專有的綜合資產，可模擬市場力量。"
 
-msgid "Our active client base is expected to reach over 175,000 total clients this year."
-msgstr "我們今年的預計活躍客戶總數將超過17萬5千人。"
+msgid "Our active client base is expected to reach over 790,000 total clients this year."
+msgstr "我們今年的預計活躍客戶總數將超過79萬人。"
 
 msgid "Our business is founded on collaboration and we aim to build long-term, mutually beneficial relationships with our partners. However, we will never compromise our commitment to business integrity. In cases where our partners are unwilling or unable to abide by our principles, we reserve the right to withdraw from the business relationship."
 msgstr "我們的業務建立在合作基礎上，我們旨在與合作夥伴建立長期的互利關係。但是，我們絕不會對業務誠信的堅持作出妥協。如果我們的合作夥伴不願意或無法遵守我們的原則，我們保留退出業務關係的權利。"
@@ -8850,6 +8880,9 @@ msgstr "價格/定價資料"
 
 msgid "Primary"
 msgstr "主要"
+
+msgid "Prime Brokerage Services Limited"
+msgstr "Prime Brokerage Services 有限公司"
 
 msgid "Prior to placing an Order, which results in opening a position, the client acknowledges that it is their responsibility to ensure that their Account Free Margin is sufficient to cover the Margin required in relation to the opening of the position (the \"Margin Requirement\"), and to continuously meet the Margin Requirement."
 msgstr "下單開盤交易前，客戶確認確保其帳戶可用保證金足以支付開盤交易所須的保證金（「要求保證金」），並持續滿足保證金要求是客戶的責任。"
@@ -10405,7 +10438,7 @@ msgstr "掉期配置"
 msgid "Swaps Long (per annum)"
 msgstr "多頭掉期 (每年)"
 
-msgid "Swaps short (per annum)"
+msgid "Swaps Short (per annum)"
 msgstr "空頭掉期 (每年)"
 
 msgid "Swiss franc vs Japanese yen"
@@ -11284,8 +11317,8 @@ msgstr "推介經紀的義務"
 msgid "The Investor Compensation Scheme"
 msgstr "投資者補償方案"
 
-msgid "The MT5 desktop app is not supported by macOS, Windows XP, Windows 2003, and Windows Vista."
-msgstr "MacOS Catalina、Windows XP、Windows 2003 和 Windows Vista 不支援 MT5 桌面應用程式。"
+msgid "The MT5 desktop app is not supported by Windows XP, Windows 2003, and Windows Vista."
+msgstr "Windows XP、Windows 2003 和 Windows Vista 不支援 MT5 桌面應用程式。"
 
 msgid "The Margin Level of the client's MT5 Real Account reaches or falls below the Stop Out Level."
 msgstr "客戶的MT5真實帳戶保證金層級已達到或低於強制平倉層級。"
@@ -12322,9 +12355,6 @@ msgstr "這項義務包括禁止非法付款或向公職人員、業務夥伴、
 msgid "This page is only available to logged out clients."
 msgstr "此頁面僅適用於已登出的客戶。"
 
-msgid "This page will redirect to the %1 homepage after 10 seconds."
-msgstr "十秒鐘後此頁面將重新導入%1首頁。"
-
 msgid "This policy applies to clients classified as retail or professional. Clients classified as eligible counterparties are outside the scope of this policy."
 msgstr "本政策適用于歸類為零售或專業的客戶。被列為符合條件的交易對手的客戶不在本政策的範圍之內。"
 
@@ -12712,6 +12742,9 @@ msgstr "交易時間"
 msgid "Trading and Withdrawal Limits"
 msgstr "交易和取款限額"
 
+msgid "Trading and deposits have been disabled on your account. Kindly allow us some time to review the account."
+msgstr "您的帳戶已被禁交易和存款。請稍候，我們正在評估帳戶。"
+
 msgid "Trading and withdrawals have been disabled on your account. Kindly %1contact customer support%2 for assistance."
 msgstr "您的帳戶已被禁交易和提款。請 %1聯繫客服部%2尋求幫助。"
 
@@ -12927,9 +12960,6 @@ msgstr "交易類型"
 
 msgid "UI/UX Designer"
 msgstr "UI/UX 設計員"
-
-msgid "UK and Manx residents who wish to trade gambling products will have their accounts opened with Deriv (MX) Ltd."
-msgstr "想要進行產品博彩交易的歐盟和曼島居民將在 Deriv (MX)  Ltd 開設帳戶。"
 
 msgid "US Patents"
 msgstr "美國專利"
@@ -13522,9 +13552,6 @@ msgstr "我們將把它與您的文檔比較"
 msgid "We're almost there"
 msgstr "快全部就緒了"
 
-msgid "We're expected to generate over 2 USD billion in turnover this year, bringing our total turnover since inception to over 9.2 USD billion."
-msgstr "我們今年的預計營業額將超過20億美元, 自成立以來的總營業額超過92億美元。"
-
 msgid "We're granted patents for 'Computer trading system and method for speculating on a financial market' and 'Computer trading system for offering custom financial market speculations'. The patents show our ability to innovate and stay ahead of the pack."
 msgstr "我們獲得「用於金融市場投機的電腦交易系統及方法」和「用於自訂金融市場投機的電腦交易系統」的專利授權。這些專利表明我們的創新和保持領先群雄的能力。"
 
@@ -13537,14 +13564,17 @@ msgstr "我們沒有義務進行適當性測試, 也沒有義務向您提供任�
 msgid "We're now ready to verify your identity"
 msgstr "我們現在準備驗證您的身份"
 
-msgid "We're projected to register over 377 million transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 1.42 billion."
-msgstr "我們預計今年將有超過3億7700萬筆交易, 成立以來我們平台的購入和售出合約總數超過14億2000萬。"
+msgid "We're projected to register over 1.1 billion transactions this year, bringing the total number of contracts that were bought and sold on our platform since inception to over 2.8 billion."
+msgstr "我們預計今年將有超過11億筆交易, 成立以來我們平台的購入和售出合約總數超過28億。"
 
 msgid "We're really proud of this award. We're strongly committed to offering an ethical and customer-focused trading experience, and the award shows that BetOnMarkets is a trusted brand that listens and caters to customers, whether they are experienced traders or novices. We offer customer services in English, Indonesian, Russian, Chinese and Spanish."
 msgstr "獲得這個獎項，我們真的很自豪。我們堅定地致力於提供一個合乎道德和以客戶為中心的交易體驗。獲取獎項表明 BetOnMarkets 是一個值得信賴的品牌，接受客戶意見，能夠滿足客戶的需求，無論他們是經驗豐富的交易者還是交易新手。我們為客戶提供英語、印尼語、俄語、中文和西班牙語服務。"
 
-msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across four offices in Malaysia, Malta, Paraguay and Dubai. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
-msgstr "多年來，無論在人力和辦公室方面， 我們的規模不斷擴大。目前在馬來西亞、馬爾他、巴拉圭和杜拜有四個辦事處和%1多名員工。預計今年的員工人數將進一步增長, 以滿足我們產品和服務需求的增加。"
+msgid "We're sorry to see you leave."
+msgstr "很遺憾您不再繼續使用。"
+
+msgid "We've grown in size over the years - both in terms of manpower and offices. We currently have over %1 employees across 10 offices in Malta, Dubai, Malaysia, Paraguay, Cyprus, Rwanda, and Belarus. Further growth in headcount is expected this year to cater to the increased demand in our products and services."
+msgstr "多年來，無論在人力和辦公室方面， 我們的規模不斷擴大。目前在馬爾他、杜拜、馬來西亞、巴拉圭、塞普勒斯、盧安達和白俄羅斯有十個辦事處和%1多名員工。預計今年的員工人數將進一步增長, 以滿足我們產品和服務需求的增加。"
 
 msgid "We've sent a secure link to %{number}"
 msgstr "已傳送安全連結至%{number}"
@@ -13912,8 +13942,8 @@ msgstr "贏取乘數值乘以最高值減去收盤值。"
 msgid "Win the multiplier times the high minus low."
 msgstr "贏取乘數值乘以最高值減去最低值。"
 
-msgid "Windows"
-msgstr "Windows"
+msgid "Windows or Linux"
+msgstr "Windows 或 Linux"
 
 msgid "Winning the contract"
 msgstr "合約盈利"
@@ -14031,6 +14061,15 @@ msgstr "為我們的網站和應用程式編寫強大、高品質和生產就緒
 
 msgid "Written limits and self-exclusion"
 msgstr "書面限制和自我禁止"
+
+msgid "XMR vs US dollar"
+msgstr "門羅幣兌美元"
+
+msgid "XMR/USD"
+msgstr "門羅幣/美元"
+
+msgid "XRP/USD"
+msgstr "瑞波幣/美元"
 
 msgid "Yes"
 msgstr "是的"
@@ -14365,8 +14404,8 @@ msgstr "您的帳戶沒有登入/登出活動。"
 msgid "Your account is fully authenticated and your withdrawal limits have been lifted."
 msgstr "您的帳戶已經得到完全驗證，且您的取款限額已經取消。"
 
-msgid "Your account is now closed"
-msgstr "您的帳戶已關閉"
+msgid "Your account is now deactivated."
+msgstr "您的帳戶已停用."
 
 msgid "Your account is restricted. Kindly %1contact customer support%2 for assistance."
 msgstr "您的帳戶已被限制交易。請%1聯繫客服部%2，以取得協助。"
@@ -14506,6 +14545,9 @@ msgstr "您的交易參考號是"
 msgid "Your transaction reference number is %1"
 msgstr "您的交易號是 %1"
 
+msgid "Your virtual balance has been reset."
+msgstr "您的虛擬餘額已重設。"
+
 msgid "Your web browser (%1) is out of date and may affect your trading experience. Proceed at your own risk. %2Update browser%3"
 msgstr "您的網絡瀏覽器 (%1) 已過時，並可能會影響您的交易操作。繼續操作須自行承擔風險。%2更新瀏覽器%3"
 
@@ -14521,8 +14563,11 @@ msgstr "您的取款限額是%1%2。"
 msgid "You’ll be logged out automatically."
 msgstr "您將自動登出。"
 
-msgid "You’ve successfully closed your account. We’ll send a confirmation email to %1."
-msgstr "您的帳戶已成功關閉。我們將傳送確認郵件到%1。"
+msgid "ZEC vs US dollar"
+msgstr "大零幣兌美元"
+
+msgid "ZEC/USD"
+msgstr "大零幣/美元"
 
 msgid "ZingPay is a payment facility that allows online bank transfers for clients in South Africa."
 msgstr "ZingPay 是允許南非客戶進行網上銀行轉帳的支付工具。"
