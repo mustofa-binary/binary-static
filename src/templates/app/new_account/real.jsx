@@ -16,7 +16,8 @@ import {
     AddressPostcode,
     AddressState,
     Jurisdiction,
-    Phone,
+    // TODO: Removed due to Critical Path blocking
+    // Phone,
     RiskDisclaimer,
     SecretQuestion,
     SecretAnswer,
@@ -39,7 +40,8 @@ const Real = () => (
                 <Citizenship row_class='invisible' />
                 <FormRow type='select' id='place_of_birth' label={it.L('Place of birth')} attributes={{ single: 'single' }} />
                 <Residence />
-                <Phone />
+                {/* TODO: Removed due to Critical Path blocking */}
+                {/* <Phone /> */}
                 <AccountOpeningReason />
             </Fieldset>
 
