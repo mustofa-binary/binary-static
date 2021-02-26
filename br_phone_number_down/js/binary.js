@@ -11211,7 +11211,7 @@ var Header = function () {
 
             var hasMissingRequiredField = function hasMissingRequiredField() {
                 // eslint-disable-next-line no-nested-ternary
-                var required_fields = is_svg ? [].concat(_toConsumableArray(necessary_signup_fields), _toConsumableArray(necessary_withdrawal_fields)) : Client.isAccountOfType('financial') ? ['account_opening_reason', 'address_line_1', 'address_city', 'phone', 'tax_identification_number', 'tax_residence'].concat(_toConsumableArray(Client.get('residence') === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? ['address_postcode'] : [])) : [];
+                var required_fields = is_svg ? [].concat(_toConsumableArray(necessary_signup_fields), _toConsumableArray(necessary_withdrawal_fields)) : Client.isAccountOfType('financial') ? ['account_opening_reason', 'address_line_1', 'address_city', 'tax_identification_number', 'tax_residence'].concat(_toConsumableArray(Client.get('residence') === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? ['address_postcode'] : [])) : [];
 
                 var get_settings = State.getResponse('get_settings');
                 // date_of_birth can be 0 as a valid epoch, so we should only check missing values, '', null, or undefined
