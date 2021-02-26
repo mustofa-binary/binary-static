@@ -286,7 +286,6 @@ const Header = (() => {
                         'account_opening_reason',
                         'address_line_1',
                         'address_city',
-                        'phone',
                         'tax_identification_number',
                         'tax_residence',
                         ...(Client.get('residence') === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? ['address_postcode'] : []),
