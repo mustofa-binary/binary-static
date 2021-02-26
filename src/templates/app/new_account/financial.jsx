@@ -18,7 +18,8 @@ import {
     AddressState,
     AddressPostcode,
     Jurisdiction,
-    Phone,
+    // TODO: Removed due to Critical Path blocking
+    // Phone,
     RiskDisclaimer,
     SecretQuestion,
     SecretAnswer,
@@ -46,7 +47,8 @@ const Financial = () => (
                     <FormRow type='select' id='place_of_birth' label={it.L('Place of birth')} attributes={{ single: 'single' }} />
                     <Residence />
                     <AccountOpeningReason />
-                    <Phone />
+                    {/* TODO: Removed due to Critical Path blocking */}
+                    {/* <Phone /> */}
                 </Fieldset>
 
                 <Fieldset legend={it.L('Tax information')}>
