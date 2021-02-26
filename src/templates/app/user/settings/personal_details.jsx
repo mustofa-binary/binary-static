@@ -10,7 +10,8 @@ import {
     DateOfBirth,
     FirstName,
     LastName,
-    Phone,
+    // TODO: Removed due to Critical Path blocking
+    // Phone,
     Salutation,
     TaxInformationForm,
 }                                                       from '../../../_common/components/forms_common_rows.jsx';
@@ -55,7 +56,8 @@ const PersonalDetails = () => (
                 <FormRow type='label'  label={it.L('Email address')} is_bold id='email' row_id='row_lbl_email' />
                 <div className='invisible RealAcc'>
                     <FormRow type='label'  label={it.L('Account opening reason')} id='lbl_account_opening_reason' row_id='row_lbl_account_opening_reason' row_class='invisible' />
-                    <Phone row_class='invisible' row_id='row_phone' />
+                    {/* TODO: Removed due to Critical Path blocking */}
+                    {/* <Phone row_class='invisible' row_id='row_phone' /> */}
                     <AccountOpeningReason row_id='row_account_opening_reason' row_class='invisible' />
                 </div>
             </Fieldset>
