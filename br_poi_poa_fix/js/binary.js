@@ -1446,7 +1446,10 @@ var LiveChat = function () {
                             threadId = _window$LiveChatWidge.threadId;
 
                         if (threadId) {
-                            customerSDK.deactivateChat({ chatId: chatId });
+                            customerSDK.deactivateChat({ chatId: chatId }).catch(function (error) {
+                                // eslint-disable-next-line no-console
+                                console.error(error);
+                            });
                         }
                     }
                     resolve();
