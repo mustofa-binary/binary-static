@@ -986,8 +986,6 @@ const Authenticate = (() => {
 
         if (has_personal_details_error) {
             $('#personal_details_error').setVisibility(1);
-        } else if (has_maximum_attempts) {
-            $('#msg_personal_details').setVisibility(1);
         } else if (has_rejected_reasons && has_submission_attempts) {
             const maximum_reasons = last_rejected_reasons.slice(0, 3);
             const has_minimum_reasons = last_rejected_reasons.length > 3;
@@ -1040,6 +1038,7 @@ const Authenticate = (() => {
             }
             switch (identity.status) {
                 case 'none':
+                    $('#msg_personal_details').setVisibility(1);
                     if (onfido_unsupported) {
                         $('#not_authenticated_uns').setVisibility(1);
                         initUnsupported();
