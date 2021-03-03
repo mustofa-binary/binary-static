@@ -27650,14 +27650,14 @@ var Authenticate = function () {
                             return _context2.abrupt('break', 59);
 
                         case 47:
-                            $('#upload_complete').setVisibility(1);
-
                             if (needs_verification.includes('document')) {
                                 $('#text_poa_required').setVisibility(1);
                                 $('#button_poa_required').setVisibility(1);
                             } else {
                                 $('#text_poi_pending').setVisibility(1);
                             }
+
+                            $('#upload_complete').setVisibility(1);
                             return _context2.abrupt('break', 59);
 
                         case 50:
@@ -27708,14 +27708,13 @@ var Authenticate = function () {
                             return _context2.abrupt('break', 81);
 
                         case 69:
-                            $('#pending_poa').setVisibility(1);
-
                             if (needs_verification.includes('identity')) {
                                 $('#text_poi_required').setVisibility(1);
                                 $('#button_poi_required').setVisibility(1);
                             } else {
                                 $('#text_poa_pending').setVisibility(1);
                             }
+                            $('#pending_poa').setVisibility(1);
                             return _context2.abrupt('break', 81);
 
                         case 72:
