@@ -158,7 +158,7 @@ const Authenticate = () => (
                                 </div>
 
                                 <div id='pending_poa' className='center-text gr-gutter gr-padding-20 invisible'>
-                                    <img className='gr-padding-20' src={it.url_for('images/pages/authenticate/letter.svg')} />
+                                    <img className='gr-padding-20' src={it.url_for('images/pages/authenticate/valid.svg')} />
                                     <h1 className='gr-padding-10'>{it.L('Your proof of address was submitted successfully')}</h1>
                                     <p id='poa_pending'>{it.L('Your document is being reviewed, please check back in 1-3 days.')}</p>
                                     <p id='text_poi_required'>{it.L('Your document is being reviewed, please check back in 1-3 days. You must also submit a proof of identity.')}</p>
