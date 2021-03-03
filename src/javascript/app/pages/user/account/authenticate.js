@@ -26,6 +26,7 @@ const Authenticate = (() => {
     let is_any_upload_failed     = false;
     let is_any_upload_failed_uns = false;
     let onfido_unsupported       = false;
+    let needs_verifications      = [];
     let file_checks          = {};
     let file_checks_uns      = {};
     let onfido,
@@ -770,6 +771,13 @@ const Authenticate = (() => {
             $('.submit-status').setVisibility(0);
             $('#not_authenticated').setVisibility(0);
             $('#pending_poa').setVisibility(1);
+
+            if (needs_verifications.includes('identity')) {
+                $('#text_poi_required').setVisibility(1);
+                $('#button_poi_required').setVisibility(1);
+            } else {
+                $('#text_poa_pending').setVisibility(1);
+            }
         });
     };
 
@@ -781,6 +789,13 @@ const Authenticate = (() => {
             $('.submit-status-uns').setVisibility(0);
             $('#not_authenticated_uns').setVisibility(0);
             $('#upload_complete').setVisibility(1);
+
+            if (needs_verifications.includes('document')) {
+                $('#text_poa_required').setVisibility(1);
+                $('#button_poa_required').setVisibility(1);
+            } else {
+                $('#text_poi_pending').setVisibility(1);
+            }
         });
     };
 
@@ -888,6 +903,13 @@ const Authenticate = (() => {
                     $('#upload_complete').setVisibility(1);
                     Header.displayAccountStatus();
                     $('#authentication_loading').setVisibility(0);
+
+                    if (needs_verifications.includes('document')) {
+                        $('#text_poa_required').setVisibility(1);
+                        $('#button_poa_required').setVisibility(1);
+                    } else {
+                        $('#text_poi_pending').setVisibility(1);
+                    }
                 });
             }, 4000);
         });
@@ -968,6 +990,7 @@ const Authenticate = (() => {
         }
 
         const { identity, needs_verification, document } = authentication_status;
+        needs_verifications = needs_verification;
 
         const is_fully_authenticated = identity.status === 'verified' && document.status === 'verified';
         const should_allow_resubmission = needs_verification.includes('identity') || needs_verification.includes('document');
