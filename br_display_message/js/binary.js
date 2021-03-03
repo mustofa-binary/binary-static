@@ -11360,7 +11360,7 @@ var Header = function () {
                     return buildMessage(localizeKeepPlaceholders('Please [_1]complete your account profile[_2] to lift your withdrawal and trading limits.'), 'user/settings/detailsws');
                 },
                 unwelcome: function unwelcome() {
-                    return buildMessage('Trading and deposits have been disabled on your account. Kindly allow us some time to review the account.');
+                    return localize('Trading and deposits have been disabled on your account. Kindly allow us some time to review the account.');
                 },
                 withdrawal_locked_review: function withdrawal_locked_review() {
                     return localize('Withdrawals have been disabled on your account. Please wait until your uploaded documents are verified.');
@@ -12509,7 +12509,7 @@ var AccountOpening = function () {
     var commonValidations = function commonValidations() {
         var req = [{ selector: '#salutation', validations: ['req'] }, { selector: '#first_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 50 }]] }, { selector: '#last_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 50 }]] }, { selector: '#date_of_birth', validations: ['req'] }, { selector: '#address_line_1', validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: '#address_line_2', validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: '#address_city', validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol', ['length', { min: 0, max: 35 }]] }, { selector: '#address_postcode', validations: [Client.get('residence') === 'gb' || State.getResponse('authorize.upgradeable_landing_companies').some(function (lc) {
                 return lc === 'iom';
-            }) ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 8, max: 35, value: function value() {
+            }) ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 9, max: 35, value: function value() {
                     return $('#phone').val().replace(/\D/g, '');
                 } }]] }, { selector: '#secret_question', validations: ['req'] }, { selector: '#secret_answer', validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: '#tnc', validations: [['req', { message: localize('Please accept the terms and conditions.') }]], exclude_request: 1 }, { selector: '#tax_residence', validations: ['req', ['length', { min: 1, max: 20 }]] }, { selector: '#tax_identification_number', validations: ['req'] }, { request_field: 'residence', value: Client.get('residence') }, { request_field: 'client_type', value: function value() {
                 return $('#chk_professional').is(':checked') ? 'professional' : 'retail';
@@ -14384,7 +14384,7 @@ var Validation = function () {
         return value === '' || /^[A-Za-z0-9][A-Za-z0-9\s-]*$/.test(value);
     };
     var validPhone = function validPhone(value) {
-        return (/^\+((-|\s)*[0-9])*$/.test(value)
+        return (/^\+?((-|\s)*[0-9])*$/.test(value)
         );
     };
     var validRegular = function validRegular(value, options) {
@@ -14497,7 +14497,7 @@ var Validation = function () {
                 address: { func: validAddress, message: localize('Only letters, numbers, space, and these special characters are allowed: [_1]', '- . \' # ; : ( ) , @ /') },
                 letter_symbol: { func: validLetterSymbol, message: localize('Only letters, space, hyphen, period, and apostrophe are allowed.') },
                 postcode: { func: validPostCode, message: localize('Only letters, numbers, space, and hyphen are allowed.') },
-                phone: { func: validPhone, message: localize('Please enter a valid phone number, including the country code (e.g. +15417541234).') },
+                phone: { func: validPhone, message: localize('Please enter a valid phone number (e.g. +15417541234).') },
                 compare: { func: validCompare, message: localize('The two passwords that you entered do not match.') },
                 not_equal: { func: validNotEqual, message: localizeKeepPlaceholders('[_1] and [_2] cannot be the same.') },
                 min: { func: validMin, message: localizeKeepPlaceholders('Minimum of [_1] characters required.') },
@@ -15969,6 +15969,7 @@ var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./sr
 
 var Cashier = function () {
     var href = '';
+    var default_virtual_balance = 10000;
 
     var showContent = function showContent() {
         Client.activateByClientType();
@@ -16075,6 +16076,10 @@ var Cashier = function () {
         }());
     };
 
+    var isDefaultVirtualBalance = function isDefaultVirtualBalance() {
+        return +Client.get('balance') === default_virtual_balance;
+    };
+
     var displayResetButton = function displayResetButton() {
         var el_virtual_topup_info = getElementById('virtual_topup_info');
         var top_up_id = '#VRT_topup_link';
@@ -16083,6 +16088,10 @@ var Cashier = function () {
         var new_el = { class: 'toggle button', html: $a.html(), id: $a.attr('id') };
         href = href || Url.urlFor('/cashier/top_up_virtualws');
         new_el.href = href;
+        if (isDefaultVirtualBalance()) {
+            new_el.class = 'toggle button button-disabled';
+            new_el.href = '';
+        }
         el_virtual_topup_info.innerText = localize('Reset the balance of your virtual account to [_1] anytime.', [Client.get('currency') + ' 10,000.00']);
         $a.replaceWith($('<a/>', new_el));
         $(top_up_id).parent().setVisibility(1);
@@ -16209,13 +16218,17 @@ var Cashier = function () {
     };
 
     var onLoad = function onLoad() {
+        var is_virtual = Client.get('is_virtual');
+        if (is_virtual && isDefaultVirtualBalance()) {
+            getElementById('VRT_topup_link').classList.add('button-disabled');
+        }
         if (Client.isLoggedIn()) {
             BinarySocket.send({ statement: 1, limit: 1 });
             BinarySocket.wait('authorize', 'mt5_login_list', 'statement', 'get_account_status', 'landing_company').then(function () {
                 checkStatusIsLocked(State.getResponse('get_account_status'));
                 var residence = Client.get('residence');
                 var currency = Client.get('currency');
-                if (Client.get('is_virtual')) {
+                if (is_virtual) {
                     displayResetButton();
                 } else if (currency) {
                     var is_p2p_allowed_currency = currency === 'USD';
@@ -17860,6 +17873,7 @@ var toggleDownloadPage = function toggleDownloadPage(target) {
         (0, _common_functions.getElementById)(target + '-description').setVisibility(1);
     }
     (0, _common_functions.getElementById)('mt5_download_' + (target === 'mac' ? 'mac_' : '') + 'platforms').setVisibility(1);
+    (0, _common_functions.getElementById)('mt5_download_' + (target !== 'mac' ? 'mac_' : '') + 'platforms').setVisibility(0);
 };
 var DownloadMetatrader = function () {
     var onLoad = function onLoad() {
@@ -27531,7 +27545,7 @@ var Authenticate = function () {
                             documents_supported = identity.services.onfido.documents_supported;
                             country_code = identity.services.onfido.country_code;
                             has_submission_attempts = !!identity.services.onfido.submissions_left;
-                            is_rejected = identity.status === 'rejected';
+                            is_rejected = identity.status === 'rejected' || identity.status === 'suspected';
                             last_rejected_reasons = identity.services.onfido.last_rejected;
                             has_rejected_reasons = !!last_rejected_reasons.length && is_rejected;
 
@@ -31037,7 +31051,7 @@ var PersonalDetails = function () {
             var is_gaming = Client.isAccountOfType('gaming');
             var is_tax_req = isTaxReq();
 
-            validations = [{ selector: '#salutation', validations: ['req'] }, { selector: '#first_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 50 }]] }, { selector: '#last_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 50 }]] }, { selector: '#address_line_1', validations: ['req', 'address'] }, { selector: '#address_line_2', validations: ['address'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: [residence === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#email_consent' }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 8, max: 35, value: function value() {
+            validations = [{ selector: '#salutation', validations: ['req'] }, { selector: '#first_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 50 }]] }, { selector: '#last_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 50 }]] }, { selector: '#address_line_1', validations: ['req', 'address'] }, { selector: '#address_line_2', validations: ['address'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: [residence === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#email_consent' }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 9, max: 35, value: function value() {
                         return $('#phone').val().replace(/\D/g, '');
                     } }]] }, { selector: '#place_of_birth', validations: ['req'] }, { selector: '#account_opening_reason', validations: ['req'] }, { selector: '#date_of_birth', validations: ['req'] },
 
@@ -32597,9 +32611,7 @@ module.exports = TopUpVirtualPopup;
 "use strict";
 
 
-var Client = __webpack_require__(/*! ../../../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../../../base/socket */ "./src/javascript/app/base/socket.js");
-var formatMoney = __webpack_require__(/*! ../../../../common/currency */ "./src/javascript/app/common/currency.js").formatMoney;
 var localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 
 var TopUpVirtual = function () {
@@ -32618,7 +32630,7 @@ var TopUpVirtual = function () {
             if (response.error) {
                 showMessage(response.error.message, false);
             } else {
-                showMessage(localize('[_1] has been credited into your Virtual Account: [_2].', [formatMoney(response.topup_virtual.currency, response.topup_virtual.amount), Client.get('loginid')]), true);
+                showMessage(localize('Your virtual balance has been reset.'), true);
             }
             $('.barspinner').setVisibility(0);
         });
@@ -33540,7 +33552,6 @@ var MetaTraderConfig = function () {
 
     var fields = {
         new_account: {
-            txt_name: { id: '#txt_name', request_field: 'name' },
             txt_main_pass: { id: '#txt_main_pass', request_field: 'mainPassword' },
             txt_re_main_pass: { id: '#txt_re_main_pass' },
             ddl_trade_server: { id: '#ddl_trade_server', is_radio: true },
@@ -33548,7 +33559,11 @@ var MetaTraderConfig = function () {
             additional_fields: function additional_fields(acc_type) {
                 var sample_account = getSampleAccount(acc_type);
                 var is_demo = /^demo_/.test(acc_type);
+                var get_settings = State.getResponse('get_settings');
+                // First name is not set when user has no real account
+                var name = get_settings.first_name && get_settings.last_name ? get_settings.first_name + ' ' + get_settings.last_name : sample_account.title;
                 return _extends({
+                    name: name,
                     account_type: is_demo ? 'demo' : sample_account.market_type,
                     email: Client.get('email'),
                     leverage: sample_account.leverage
@@ -33614,7 +33629,7 @@ var MetaTraderConfig = function () {
 
     var validations = function validations() {
         return {
-            new_account: [{ selector: fields.new_account.txt_name.id, validations: [['req', { hide_asterisk: true }], 'letter_symbol', ['length', { min: 2, max: 101 }]] }, { selector: fields.new_account.txt_main_pass.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'] }, { selector: fields.new_account.txt_re_main_pass.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.ddl_trade_server.id, validations: [['req', { hide_asterisk: true }]] }],
+            new_account: [{ selector: fields.new_account.txt_main_pass.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'] }, { selector: fields.new_account.txt_re_main_pass.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.new_account.txt_main_pass.id }]] }, { selector: fields.new_account.ddl_trade_server.id, validations: [['req', { hide_asterisk: true }]] }],
             password_change: [{ selector: fields.password_change.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_old_password.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_change.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', ['not_equal', { to: fields.password_change.txt_old_password.id, name1: localize('Current password'), name2: localize('New password') }], 'compare_to_email'], re_check_field: fields.password_change.txt_re_new_password.id }, { selector: fields.password_change.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_change.txt_new_password.id }]] }],
             password_reset: [{ selector: fields.password_reset.ddl_password_type.id, validations: [['req', { hide_asterisk: true }]] }, { selector: fields.password_reset.txt_new_password.id, validations: [['req', { hide_asterisk: true }], 'password', 'compare_to_email'], re_check_field: fields.password_reset.txt_re_new_password.id }, { selector: fields.password_reset.txt_re_new_password.id, validations: [['req', { hide_asterisk: true }], ['compare', { to: fields.password_reset.txt_new_password.id }]] }],
             verify_password_reset_token: [{ selector: fields.verify_password_reset_token.txt_verification_code.id, validations: [['req', { hide_asterisk: true }], 'token'], exclude_request: 1 }],
@@ -34918,12 +34933,6 @@ var MetaTraderUI = function () {
 
         if (step === 2) {
             _$form.find('input').not(':input[type=radio]').val('');
-
-            var get_settings = State.getResponse('get_settings');
-
-            if (get_settings.first_name && get_settings.last_name) {
-                _$form.find('#txt_name').val(get_settings.first_name + ' ' + get_settings.last_name);
-            }
 
             var trading_servers = State.getResponse('trading_servers');
             var $view_2_button_container = _$form.find('#view_2-buttons');
