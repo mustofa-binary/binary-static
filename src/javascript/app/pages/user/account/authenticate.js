@@ -1046,14 +1046,14 @@ const Authenticate = (() => {
                     }
                     break;
                 case 'pending':
-                    $('#upload_complete').setVisibility(1);
-
                     if (needs_verification.includes('document')) {
                         $('#text_poa_required').setVisibility(1);
                         $('#button_poa_required').setVisibility(1);
                     } else {
                         $('#text_poi_pending').setVisibility(1);
                     }
+
+                    $('#upload_complete').setVisibility(1);
                     break;
                 case 'rejected':
                     $('#unverified').setVisibility(1);
@@ -1087,14 +1087,13 @@ const Authenticate = (() => {
                     break;
                 }
                 case 'pending':
-                    $('#pending_poa').setVisibility(1);
-
                     if (needs_verification.includes('identity')) {
                         $('#text_poi_required').setVisibility(1);
                         $('#button_poi_required').setVisibility(1);
                     } else {
                         $('#text_poa_pending').setVisibility(1);
                     }
+                    $('#pending_poa').setVisibility(1);
                     break;
                 case 'rejected':
                     $('#unverified_poa').setVisibility(1);
