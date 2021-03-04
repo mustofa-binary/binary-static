@@ -880,16 +880,12 @@ const Authenticate = (() => {
     };
 
     const showCTAButton = (type, status) => {
-        const { identity, needs_verification, document } = authentication_object;
+        const { needs_verification } = authentication_object;
         const type_required = type === 'identity' ? 'poi' : 'poa';
         const type_pending = type === 'identity' ? 'poa' : 'poi';
-        const status_allowed = ['pending', 'verified'];
         const description_status = status !== 'verified';
-        let authentication_allowed = false;
-        if (isAuthenticationAllowed()) {
-            authentication_allowed = type === 'identity' ? !status_allowed.includes(identity.status) : !status_allowed.includes(document.status);
-        }
-        if (needs_verification.includes(type) || authentication_allowed) {
+
+        if (needs_verification.includes(type)) {
             $(`#text_${status}_${type_required}_required`).setVisibility(1);
             $(`#button_${status}_${type_required}_required`).setVisibility(1);
         } else if (description_status) {
