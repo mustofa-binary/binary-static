@@ -27443,7 +27443,7 @@ var Authenticate = function () {
         var description_status = status !== 'verified';
         var authentication_allowed = false;
         if (isAuthenticationAllowed()) {
-            authentication_allowed = type === 'identity' ? status_allowed.includes(identity.status) : status_allowed.includes(document.status);
+            authentication_allowed = type === 'identity' ? !status_allowed.includes(identity.status) : !status_allowed.includes(document.status);
         }
         if (needs_verification.includes(type) || authentication_allowed) {
             $('#text_' + status + '_' + type_required + '_required').setVisibility(1);
