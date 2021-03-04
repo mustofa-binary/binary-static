@@ -27433,19 +27433,13 @@ var Authenticate = function () {
 
     var showCTAButton = function showCTAButton(type, status) {
         var _authentication_objec = authentication_object,
-            identity = _authentication_objec.identity,
-            needs_verification = _authentication_objec.needs_verification,
-            document = _authentication_objec.document;
+            needs_verification = _authentication_objec.needs_verification;
 
         var type_required = type === 'identity' ? 'poi' : 'poa';
         var type_pending = type === 'identity' ? 'poa' : 'poi';
-        var status_allowed = ['pending', 'verified'];
         var description_status = status !== 'verified';
-        var authentication_allowed = false;
-        if (isAuthenticationAllowed()) {
-            authentication_allowed = type === 'identity' ? !status_allowed.includes(identity.status) : !status_allowed.includes(document.status);
-        }
-        if (needs_verification.includes(type) || authentication_allowed) {
+
+        if (needs_verification.includes(type)) {
             $('#text_' + status + '_' + type_required + '_required').setVisibility(1);
             $('#button_' + status + '_' + type_required + '_required').setVisibility(1);
         } else if (description_status) {
