@@ -3,6 +3,7 @@ const BinarySocket   = require('./socket');
 const Client         = require('../base/client');
 const isEuCountry    = require('../common/country_base').isEuCountry;
 const getElementById = require('../../_common/common_functions').getElementById;
+const GTM            = require('../../_common/gtm');
 const LocalStore     = require('../../_common/storage').LocalStore;
 const State          = require('../../_common/storage').State;
 
@@ -78,6 +79,7 @@ const Footer = (() => {
                         el_footer.style.paddingBottom = '0px';
                         $status_notification.css('bottom', `${gap_to_notification}px`);
                         Cookies.set('CookieConsent', 1, { sameSite: 'strict', secure: true });
+                        GTM.loadGTMElements();
                     });
                 window.addEventListener('resize', () => {
                     adjustElevioAndScrollup($dialog_notification.height() + gap_dialog_to_elevio,
