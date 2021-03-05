@@ -2945,6 +2945,7 @@ module.exports = Crowdin;
 
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var createElement = __webpack_require__(/*! ./utility */ "./src/javascript/_common/utility.js").createElement;
+var BinarySocket = __webpack_require__(/*! ../app/base/socket */ "./src/javascript/app/base/socket.js");
 var isEuCountry = __webpack_require__(/*! ../app/common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
 
 var GTM = function () {
@@ -2966,13 +2967,15 @@ var GTM = function () {
      * initialize GTM appending script to body
      */
     var init = function init() {
-        if (isEuCountry()) {
-            if (Cookies.get('CookieConsent')) {
+        BinarySocket.wait('website_status', 'landing_company').then(function () {
+            if (isEuCountry()) {
+                if (Cookies.get('CookieConsent')) {
+                    loadGTMElements();
+                }
+            } else {
                 loadGTMElements();
             }
-        } else {
-            loadGTMElements();
-        }
+        });
     };
 
     return {
