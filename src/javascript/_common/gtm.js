@@ -2,7 +2,7 @@ const Cookies       = require('js-cookie');
 const createElement = require('./utility').createElement;
 const isEuCountry   = require('../app/common/country_base').isEuCountry;
 
-const Crowdin = (() => {
+const GTM = (() => {
 
     const loadGTMElements = () => {
         if (document.body) {
@@ -35,4 +35,4 @@ const Crowdin = (() => {
     };
 })();
 
-module.exports = Crowdin;
+module.exports = GTM;
