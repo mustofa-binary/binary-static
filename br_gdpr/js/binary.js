@@ -10844,6 +10844,7 @@ var Client = __webpack_require__(/*! ../base/client */ "./src/javascript/app/bas
 var isEuCountry = __webpack_require__(/*! ../common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
 var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var GTM = __webpack_require__(/*! ../../_common/gtm */ "./src/javascript/_common/gtm.js");
+var GTMStore = __webpack_require__(/*! ../../_common/base/gtm */ "./src/javascript/_common/base/gtm.js");
 var LocalStore = __webpack_require__(/*! ../../_common/storage */ "./src/javascript/_common/storage.js").LocalStore;
 var State = __webpack_require__(/*! ../../_common/storage */ "./src/javascript/_common/storage.js").State;
 
@@ -10920,6 +10921,7 @@ var Footer = function () {
                     $status_notification.css('bottom', gap_to_notification + 'px');
                     Cookies.set('CookieConsent', 1, { sameSite: 'strict', secure: true });
                     GTM.loadGTMElements();
+                    GTMStore.pushDataLayer({ event: 'page_load' });
                 });
                 window.addEventListener('resize', function () {
                     adjustElevioAndScrollup($dialog_notification.height() + gap_dialog_to_elevio, $dialog_notification.height() + gap_dialog_to_elevio + gap_elevio_to_scrollup);
