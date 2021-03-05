@@ -2947,7 +2947,7 @@ var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src
 var createElement = __webpack_require__(/*! ./utility */ "./src/javascript/_common/utility.js").createElement;
 var isEuCountry = __webpack_require__(/*! ../app/common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
 
-var Crowdin = function () {
+var GTM = function () {
 
     var loadGTMElements = function loadGTMElements() {
         if (document.body) {
@@ -2978,7 +2978,7 @@ var Crowdin = function () {
     };
 }();
 
-module.exports = Crowdin;
+module.exports = GTM;
 
 /***/ }),
 
