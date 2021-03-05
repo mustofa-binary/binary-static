@@ -1,5 +1,6 @@
 const Cookies       = require('js-cookie');
 const createElement = require('./utility').createElement;
+const BinarySocket  = require('../app/base/socket');
 const isEuCountry   = require('../app/common/country_base').isEuCountry;
 
 const GTM = (() => {
@@ -21,13 +22,16 @@ const GTM = (() => {
      * initialize GTM appending script to body
      */
     const init = () => {
-        if (isEuCountry()) {
-            if (Cookies.get('CookieConsent')) {
+        BinarySocket.wait('website_status', 'landing_company').then(() => {
+            if (isEuCountry()) {
+                if (Cookies.get('CookieConsent')) {
+                    loadGTMElements();
+                }
+            } else {
                 loadGTMElements();
             }
-        } else {
-            loadGTMElements();
-        }
+        });
+        
     };
 
     return {
