@@ -158,6 +158,8 @@ const Regulation = () => {
                             <FillBox id='crypto_fillbox' padding='4' center border='border-dark-gray' href={it.url_for(`/download/key_information_document/${lang_KID}/Crypto.pdf`)} target='_blank' text={it.L('Cryptocurrencies')} />
                             <FillBox id='cfd_fillbox' padding='4' center className='margin-right-0' border='border-dark-gray' href={it.url_for(`/download/key_information_document/${lang_KID}/Commodities.pdf`)} target='_blank' text={it.L('Commodities')} />
                             <FillBox id='fx_fillbox' padding='4' center className='margin-left-0'  border='border-dark-gray' href={it.url_for(`/download/key_information_document/${lang_KID}/Forex.pdf`)} target='_blank' text={it.L('Forex')} />
+                            <FillBox id='fx_fillbox' padding='4' center className='margin-right-0'  border='border-dark-gray' href={it.url_for(`/download/key_information_document/${lang_KID}/Stocks.pdf`)} target='_blank' text={it.L('Stocks')} />
+                            <FillBox id='fx_fillbox' padding='4' center className='margin-left-0'  border='border-dark-gray' href={it.url_for(`/download/key_information_document/${lang_KID}/Stock-Indices.pdf`)} target='_blank' text={it.L('Stock Indices')} />
                         </div>
                     </div>
 
@@ -316,6 +318,49 @@ const Regulation = () => {
                                 className='margin-top-17 align-start'
                                 image='images/pages/regulation/xlsx-icon.svg'
                                 href={it.url_for('/download/rts27_2020/Q3/Table_6.xlsx')}
+                                target='_blank'
+                                text={it.L('Table 6 - Likelihood of execution information')}
+                            />
+                        </div>
+                        <div className='gr-6 gr-12-m gr-padding-30'>
+                            <h3>{it.L('Q4 2020')}</h3>
+                            <FillBox
+                                align_left
+                                center
+                                border='border-dark-gray'
+                                className='margin-top-17 align-start'
+                                image='images/pages/regulation/xlsx-icon.svg'
+                                href={it.url_for('/download/rts27_2020/Q4/Table_1.xlsx')}
+                                target='_blank'
+                                text={it.L('Table 1 - Type of execution venue')}
+                            />
+                            <FillBox
+                                align_left
+                                center
+                                border='border-dark-gray'
+                                className='margin-top-17 align-start'
+                                image='images/pages/regulation/xlsx-icon.svg'
+                                href={it.url_for('/download/rts27_2020/Q4/Table_3.xlsx')}
+                                target='_blank'
+                                text={it.L('Table 3 - Intra-Day Price information')}
+                            />
+                            <FillBox
+                                align_left
+                                center
+                                border='border-dark-gray'
+                                className='margin-top-17 align-start'
+                                image='images/pages/regulation/xlsx-icon.svg'
+                                href={it.url_for('/download/rts27_2020/Q4/Table_4.xlsx')}
+                                target='_blank'
+                                text={it.L('Table 4 - Daily Price information')}
+                            />
+                            <FillBox
+                                align_left
+                                center
+                                border='border-dark-gray'
+                                className='margin-top-17 align-start'
+                                image='images/pages/regulation/xlsx-icon.svg'
+                                href={it.url_for('/download/rts27_2020/Q4/Table_6.xlsx')}
                                 target='_blank'
                                 text={it.L('Table 6 - Likelihood of execution information')}
                             />
