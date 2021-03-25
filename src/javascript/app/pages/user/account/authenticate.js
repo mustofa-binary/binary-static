@@ -785,6 +785,7 @@ const Authenticate = (() => {
 
             showCTAButton('document', 'pending');
             $('#upload_complete').setVisibility(1);
+            $('#msg_personal_details').setVisibility(0);
         });
     };
 
@@ -903,6 +904,7 @@ const Authenticate = (() => {
             $('#authentication_loading').setVisibility(1);
             setTimeout(() => {
                 BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(() => {
+                    $('#msg_personal_details').setVisibility(0);
                     $('#upload_complete').setVisibility(1);
                     Header.displayAccountStatus();
                     $('#authentication_loading').setVisibility(0);
