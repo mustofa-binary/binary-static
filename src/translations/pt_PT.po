@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: binary-static\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2021-03-22 03:05\n"
+"PO-Revision-Date: 2021-03-30 03:19\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -41,10 +41,10 @@ msgid "500"
 msgstr "500"
 
 msgid " (Region added)"
-msgstr ""
+msgstr " (Região acrescentada)"
 
 msgid " (Temporarily unavailable)"
-msgstr ""
+msgstr " (Temporariamente indisponível)"
 
 msgid " All calls are recorded for training and monitoring purposes."
 msgstr " Todas as chamadas são gravadas para fins de treinamento e monitoramento."
@@ -526,7 +526,7 @@ msgstr "\n"
 "* Os pares de criptomoedas não estão disponíveis para contas financeiras DMT5 registradas com Deriv (V) Ltd."
 
 msgid "+ Add region"
-msgstr ""
+msgstr "+ Adicionar região"
 
 msgid "0 – 19.999%"
 msgstr "0 a 19,999%"
@@ -7448,9 +7448,6 @@ msgstr "Não representar corretamente a Binary ou os serviços oferecidos pela B
 msgid "Misrepresent the services that the Agent provides to the clients"
 msgstr "Deturpar os serviços que o agente fornece aos clientes"
 
-msgid "Miss"
-msgstr "Srta."
-
 msgid "Mo"
 msgstr "Seg"
 
@@ -7532,9 +7529,6 @@ msgstr "\n"
 
 msgid "Mr"
 msgstr "Sr."
-
-msgid "Mrs"
-msgstr "Sra."
 
 msgid "Ms"
 msgstr "Sra."
