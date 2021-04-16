@@ -1096,6 +1096,7 @@ const Authenticate = (() => {
                 $('#not_authenticated_uns').setVisibility(1);
                 initUnsupported();
             } else {
+                $('#msg_personal_details').setVisibility(1);
                 initOnfido(service_token_response.token, documents_supported, country_code);
             }
         }
