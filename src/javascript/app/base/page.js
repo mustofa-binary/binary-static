@@ -33,10 +33,10 @@ require('../../_common/lib/polyfills/string.includes');
 const Page = (() => {
     const init = () => {
         State.set('is_loaded_by_pjax', false);
+        GTM.init();
         Url.init();
         Elevio.init();
         PushNotification.init();
-        GTM.init();
         onDocumentReady();
         Crowdin.init();
     };
@@ -132,6 +132,13 @@ const Page = (() => {
             }
         }
         TrafficSource.setData();
+
+        BinarySocket.wait('authorize', 'website_status', 'landing_company').then(() => {
+            const is_uk_residence = (Client.get('residence') === 'gb' || State.getResponse('website_status.clients_country') === 'gb');
+            if (is_uk_residence || Client.get('landing_company_shortcode') === 'iom') {
+                getElementById('gamstop_uk_display').setVisibility(1);
+            }
+        });
     };
 
     const recordAffiliateExposure = () => {
