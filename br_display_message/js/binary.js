@@ -1052,11 +1052,11 @@ var Elevio = function () {
     var addEventListenerGTM = function addEventListenerGTM() {
         window._elev.on('widget:opened', function () {
             // eslint-disable-line no-underscore-dangle
-            GTM.pushDataLayer({ event: 'elevio_widget_opened' });
+            GTM.pushDataLayer({ event: 'elevio_widget_opened', is_elevio: true });
         });
         window._elev.on('page:view', function () {
             // eslint-disable-line no-underscore-dangle
-            GTM.pushDataLayer({ event: 'elevio_page_views' });
+            GTM.pushDataLayer({ event: 'elevio_page_views', is_elevio: true });
         });
     };
 
@@ -1159,7 +1159,7 @@ var GTM = function () {
 
     var pushDataLayer = function pushDataLayer(data) {
         if (isGtmAvailable()) {
-            if (isGtmApplicable() && !isLoginPages()) {
+            if (isGtmApplicable() && (!isLoginPages() || data.is_elevio)) {
                 dataLayer.push(_extends({}, getCommonVariables(), data));
             }
         }
@@ -1580,7 +1580,7 @@ var Login = function () {
     };
 
     var initOneAll = function initOneAll() {
-        ['google', 'facebook'].forEach(function (provider) {
+        ['google', 'facebook', 'apple'].forEach(function (provider) {
             $('#button_' + provider).off('click').on('click', function (e) {
                 e.preventDefault();
 
@@ -9908,7 +9908,6 @@ var BinaryLoader = function () {
         window.addEventListener('beforeunload', beforeContentChange);
         container.addEventListener('binarypjax:after', afterContentChange);
         BinaryPjax.init(container, '#content');
-
         ThirdPartyLinks.init();
     };
 
@@ -10162,6 +10161,7 @@ var Home = __webpack_require__(/*! ../../static/pages/home */ "./src/javascript/
 var KeepSafe = __webpack_require__(/*! ../../static/pages/keep_safe */ "./src/javascript/static/pages/keep_safe.js");
 var JobDetails = __webpack_require__(/*! ../../static/pages/job_details */ "./src/javascript/static/pages/job_details.js");
 var Platforms = __webpack_require__(/*! ../../static/pages/platforms */ "./src/javascript/static/pages/platforms.js");
+var Mt5Signals = __webpack_require__(/*! ../../static/pages/mt5_signals */ "./src/javascript/static/pages/mt5_signals.js");
 var Regulation = __webpack_require__(/*! ../../static/pages/regulation */ "./src/javascript/static/pages/regulation.js");
 var StaticPages = __webpack_require__(/*! ../../static/pages/static_pages */ "./src/javascript/static/pages/static_pages.js");
 var TermsAndConditions = __webpack_require__(/*! ../../static/pages/tnc */ "./src/javascript/static/pages/tnc.js");
@@ -10247,6 +10247,7 @@ var pages_config = {
     'ib-faq': { module: StaticPages.IBProgrammeFAQ },
     'job-details': { module: JobDetails },
     'keep-safe': { module: KeepSafe },
+    'mt5-signals': { module: Mt5Signals },
     'new-account': { module: NewAccount, not_authenticated: true },
     'open-positions': { module: StaticPages.OpenPositions },
     'open-source-projects': { module: StaticPages.OpenSourceProjects },
@@ -11813,10 +11814,10 @@ __webpack_require__(/*! ../../_common/lib/polyfills/string.includes */ "./src/ja
 var Page = function () {
     var init = function init() {
         State.set('is_loaded_by_pjax', false);
+        GTM.init();
         Url.init();
         Elevio.init();
         PushNotification.init();
-        GTM.init();
         onDocumentReady();
         Crowdin.init();
     };
@@ -11912,6 +11913,13 @@ var Page = function () {
             }
         }
         TrafficSource.setData();
+
+        BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+            var is_uk_residence = Client.get('residence') === 'gb' || State.getResponse('website_status.clients_country') === 'gb';
+            if (is_uk_residence || Client.get('landing_company_shortcode') === 'iom') {
+                getElementById('gamstop_uk_display').setVisibility(1);
+            }
+        });
     };
 
     var recordAffiliateExposure = function recordAffiliateExposure() {
@@ -14866,7 +14874,7 @@ var Guide = function () {
             event_type: 'next',
             nextButton: btn_next
         }, {
-            selector: '#contracts_list',
+            selector: '#contract_prices_container',
             description: '<h1>' + localize('Step') + ' 4</h1>' + localize('Predict the direction<br />and purchase'),
             event_type: 'next',
             nextButton: btn_finish
@@ -27995,6 +28003,7 @@ var Authenticate = function () {
                                 $('#not_authenticated_uns').setVisibility(1);
                                 initUnsupported();
                             } else {
+                                $('#msg_personal_details').setVisibility(1);
                                 initOnfido(service_token_response.token, documents_supported, country_code);
                             }
 
@@ -32440,6 +32449,13 @@ var StatementInit = function () {
                 //     .on('click', () => { StatementUI.exportCSV(); });
             }
         }
+
+        if (['deposit', 'withdrawal'].includes(filter)) {
+            document.querySelectorAll('#statement-table .details').forEach(function (item) {
+                return item.remove();
+            });
+        }
+
         showLocalTimeOnHover('td.date');
     };
 
@@ -39080,6 +39096,68 @@ var KeepSafe = function () {
 }();
 
 module.exports = KeepSafe;
+
+/***/ }),
+
+/***/ "./src/javascript/static/pages/mt5_signals.js":
+/*!****************************************************!*\
+  !*** ./src/javascript/static/pages/mt5_signals.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var BinarySocket = __webpack_require__(/*! ../../app/base/socket */ "./src/javascript/app/base/socket.js");
+var isIndonesia = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isIndonesia;
+var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var TabSelector = __webpack_require__(/*! ../../_common/tab_selector */ "./src/javascript/_common/tab_selector.js");
+var isBinaryApp = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").isBinaryApp;
+
+var os_list = [{
+    name: 'mac',
+    url_test: /\.dmg$/
+}, {
+    name: 'windows',
+    url_test: /\.exe$/
+}];
+
+var Mt5Signals = function () {
+    var onLoad = function onLoad() {
+        BinarySocket.wait('website_status').then(function () {
+            $('.desktop-app').setVisibility(isIndonesia() && !isBinaryApp());
+        });
+        TabSelector.onLoad();
+        $.getJSON('https://api.github.com/repos/binary-com/binary-desktop-installers/releases/latest', function () {
+            var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { assets: [] };
+
+            data.assets.some(function (asset) {
+                if (os_list.every(function (os) {
+                    return os.download_url;
+                })) {
+                    return true;
+                }
+                os_list.forEach(function (os) {
+                    if (!os.download_url && os.url_test.test(asset.browser_download_url)) {
+                        os.download_url = asset.browser_download_url;
+                    }
+                });
+                return false;
+            });
+            os_list.forEach(function (os) {
+                var el_button = getElementById('app_' + os.name);
+                el_button.setAttribute('href', os.download_url);
+            });
+        });
+    };
+
+    return {
+        onLoad: onLoad
+    };
+}();
+
+module.exports = Mt5Signals;
 
 /***/ }),
 
