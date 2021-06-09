@@ -64,6 +64,7 @@ release:
 releaseci:
   - 'default'
   - 'shell:compile_production'
+
 release_test_link:
   - 'copy'
   - 'css'
